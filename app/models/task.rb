@@ -1,4 +1,6 @@
 class Task < ActiveRecord::Base
+
+
   validates :title, presence: true
 
   scope :incomplete, -> { where(completed_at: nil) }
