@@ -1,4 +1,7 @@
 class Task < ActiveRecord::Base
+
+  #acts_as_xlsx
+
   validates :title, presence: true
 
   scope :incomplete, -> { where(completed_at: nil) }
@@ -7,8 +10,12 @@ class Task < ActiveRecord::Base
 
   # This method completes a task by setting the completed_at date
   def complete!
-    update_attributes(completed_at: Time.now)
-    pause!
+    if Task.running.exists?(self)
+      update_attributes(completed_at: Time.now)
+      pause!
+    else
+      update_attributes(completed_at: Time.now)
+    end
   end
 
   # This method starts the task!

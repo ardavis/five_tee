@@ -8,6 +8,9 @@ Rails.application.routes.draw do
   post '/tasks/:id/start' => 'tasks#start', as: 'start_task'
   post '/tasks/:id/pause' => 'tasks#pause', as: 'pause_task'
 
+  #for downloading into xlsx file
+  get '/download/' => 'tasks#download', as: 'download_task'
+
 
 
   # The priority is based upon order of creation: first created -> highest priority.

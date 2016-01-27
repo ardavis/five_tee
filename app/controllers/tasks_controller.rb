@@ -56,6 +56,12 @@ class TasksController < ApplicationController
     redirect_to tasks_path
   end
 
+  def download
+    #grab all the tasks, and pass them to the ruby code in the axlsx file, gem handles everything
+    @tasks = Task.all
+    render xlsx: 'download.xlsx.axlsx',filename: "taskSheet.xlsx"
+  end
+
   private
 
   def get_task
