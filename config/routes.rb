@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   post '/tasks/:id/complete' => 'tasks#complete', as: 'complete_task'
   post '/tasks/:id/start' => 'tasks#start', as: 'start_task'
   post '/tasks/:id/pause' => 'tasks#pause', as: 'pause_task'
+  post '/tasks/:id/restart' => 'tasks#restart', as: 'restart_task'
 
 
 

@@ -7,7 +7,10 @@
 
     .col-md-4
       Duration:
-      = distance_of_time_in_words_to_now(task.duration.to_i.seconds.ago)
+      - if task.duration
+        = distance_of_time_in_words_to_now(task.duration.to_i.seconds.ago)
+      - else
+        Not started
 
     .col-md-4
       .pull-right
@@ -25,13 +28,19 @@
           %span.glyphicon.glyphicon-trash
 
 %h1 Completed Tasks
-
 - @completed_tasks.each do |task|
   .row.well
-    .col-md-6
+    .col-md-4
       = link_to task.title, task
 
-    .col-md-6
+    .col-md-4
+      Time took:
+      = distance_of_time_in_words_to_now(task.duration.to_i.seconds.ago)
+
+    .col-md-4
+      Finished
+      = distance_of_time_in_words_to_now(task.completed_at)
+      ago
       .pull-right
-        = distance_of_time_in_words_to_now(task.completed_at)
-        ago
+        = link_to restart_task_path(task), method: :post, class: 'btn btn-default' do
+          %span.glyphicon.glyphicon-arrow-up

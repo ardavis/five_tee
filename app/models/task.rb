@@ -8,7 +8,7 @@ class Task < ActiveRecord::Base
   # This method completes a task by setting the completed_at date
   def complete!
     update_attributes(completed_at: Time.now)
-    pause!
+    pause! if Task.running.exists?(self)
   end
 
   # This method starts the task!
@@ -20,6 +20,11 @@ class Task < ActiveRecord::Base
 
     # Start the clock on this task
     update_attributes(started_at: Time.now)
+  end
+
+  # This method restarts the task
+  def restart!
+    update_attributes(completed_at: nil)
   end
 
   # This method pauses the task!
