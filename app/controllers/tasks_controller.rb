@@ -8,10 +8,6 @@ class TasksController < ApplicationController
     @completed_tasks = Task.completed
   end
 
-  def status
-
-  end
-
   def show
   end
 
