@@ -6,8 +6,10 @@
       = link_to task.title, task
 
     .col-md-4
-      Duration:
-      - if task.duration
+      - if task.started_at
+        In Progress
+      - elsif task.duration
+        Duration:
         = distance_of_time_in_words_to_now(task.duration.to_i.seconds.ago)
       - else
         Not started
