@@ -7,7 +7,7 @@
 
     .col-md-4
       Duration:
-      = distance_of_time_in_words_to_now(task.duration.seconds.ago)
+      = distance_of_time_in_words_to_now(task.duration.to_i.seconds.ago)
 
     .col-md-4
       .pull-right
