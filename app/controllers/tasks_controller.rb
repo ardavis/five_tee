@@ -6,7 +6,10 @@ class TasksController < ApplicationController
   def index
     @incomplete_tasks = Task.incomplete
     @completed_tasks = Task.completed
-    running_update
+  end
+
+  def status
+
   end
 
   def show
@@ -66,14 +69,6 @@ class TasksController < ApplicationController
   def restart
     @task.restart!
     redirect_to tasks_path
-  end
-
-  def running_update
-    @task = Task.running.first
-    if @task
-      @task.pause!
-      @task.start!
-    end
   end
 
   private
