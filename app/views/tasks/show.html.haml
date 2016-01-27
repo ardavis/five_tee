@@ -4,6 +4,8 @@
 %p= @task.due_date
 %p= @task.started_at
 %p
+  Completed at:  #{@task.completed_at}
+%p
   Duration: #{distance_of_time_in_words_to_now(@task.duration.to_i.seconds.ago)}
 
 

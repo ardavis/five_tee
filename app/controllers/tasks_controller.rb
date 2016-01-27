@@ -1,11 +1,12 @@
 class TasksController < ApplicationController
 
   before_action :get_task, only: [:show, :edit, :update, :destroy, :complete,
-                                  :start, :pause]
+                                  :start, :restart, :pause]
 
   def index
     @incomplete_tasks = Task.incomplete
     @completed_tasks = Task.completed
+    running_update
   end
 
   def show
@@ -60,6 +61,19 @@ class TasksController < ApplicationController
     #grab all the tasks, and pass them to the ruby code in the axlsx file, gem handles everything
     @tasks = Task.all
     render xlsx: 'download.xlsx.axlsx',filename: "taskSheet.xlsx"
+  end
+
+  def restart
+    @task.restart!
+    redirect_to tasks_path
+  end
+
+  def running_update
+    @task = Task.running.first
+    if @task
+      @task.pause!
+      @task.start!
+    end
   end
 
   private
