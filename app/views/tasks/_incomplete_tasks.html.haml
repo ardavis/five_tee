@@ -1,0 +1,18 @@
+%h1 Completed Tasks
+- @completed_tasks.each do |task|
+  .row.well
+    .col-md-4
+      = link_to task.title, task
+
+    .col-md-4
+      Time took:
+      = distance_of_time_in_words_to_now(task.duration.to_i.seconds.ago)
+
+
+    .col-md-4
+      Finished
+      = distance_of_time_in_words_to_now(task.completed_at)
+      ago
+      .pull-right
+        = link_to restart_task_path(task), method: :post, class: 'btn btn-default' do
+          %span.glyphicon.glyphicon-arrow-up

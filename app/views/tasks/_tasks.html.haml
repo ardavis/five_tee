@@ -1,0 +1,30 @@
+%h1 Tasks
+- @incomplete_tasks.each do |task|
+  .row.well
+
+    .col-md-4
+      = link_to task.title, task
+
+    .col-md-4
+      - if task.started_at
+        In Progress
+      - elsif task.duration
+        Duration:
+        = distance_of_time_in_words_to_now(task.duration.to_i.seconds.ago)
+      - else
+        Not started
+
+    .col-md-4
+      .pull-right
+        -# If the task has a started_at, show a pause button, because it's running
+        - if task.started_at
+          = link_to pause_task_path(task), method: :post, class: 'btn btn-default' do
+            %span.glyphicon.glyphicon-pause
+        - else
+          = link_to start_task_path(task), method: :post, class: 'btn btn-default' do
+            %span.glyphicon.glyphicon-play
+
+        = link_to complete_task_path(task), method: :post, class: 'btn btn-success' do
+          %span.glyphicon.glyphicon-ok
+        = link_to task, class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure you want to delete this task?' } do
+          %span.glyphicon.glyphicon-trash
