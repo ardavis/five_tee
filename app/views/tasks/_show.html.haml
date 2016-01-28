@@ -1,0 +1,18 @@
+/ Modal
+#showModal.modal.fade{:role => "dialog"}
+  .modal-dialog
+    / Modal content
+    .modal-content
+      .modal-header
+        %button.close{"data-dismiss" => "modal", :type => "button"} &times;
+        %h4.modal-title#show-title
+      .modal-body
+        %p#desc
+        %p#due-date
+        %p#created-at
+        %p#completed-at
+        %p#duration
+        %span#edit-button
+        %span#delete-button
+      .modal-footer
+        %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close

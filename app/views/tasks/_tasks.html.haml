@@ -3,8 +3,7 @@
   .row.well
 
     .col-md-4
-      = link_to task.title, task
-
+      = link_to task.title, {:controller => "tasks", :action => "select", :format => :js, :remote => true, :task => task}
     .col-md-4
       - if task.started_at
         In Progress

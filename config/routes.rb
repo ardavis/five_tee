@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   post '/tasks/:id/start' => 'tasks#start', as: 'start_task'
   post '/tasks/:id/pause' => 'tasks#pause', as: 'pause_task'
   post '/tasks/:id/restart' => 'tasks#restart', as: 'restart_task'
+  get '/select' => 'tasks#select', as: 'select'
+  get '/edit' => 'tasks#edit', as: 'edit'
 
   #for downloading into xlsx file
   get '/download/' => 'tasks#download', as: 'download_task'

@@ -1,27 +1,37 @@
 class TasksController < ApplicationController
 
-  before_action :get_task, only: [:show, :edit, :update, :destroy, :complete,
+  before_action :get_task, only: [:show, :update, :destroy, :complete,
                                   :start, :restart, :pause]
 
   def index
-    @task = Task.new
+    @task = Task.new()
     @incomplete_tasks = Task.incomplete
     @completed_tasks = Task.completed
+  end
+
+  def select
+    @task = Task.find(params[:task])
+    respond_to do |format|
+      format.html
+      format.js { render 'select.js.erb' }
+    end
+  end
+
+
+  def edit
+    @task = Task.find(params[:task])
+    respond_to do |format|
+      format.html
+      format.js { render 'edit.js.erb' }
+    end
   end
 
   def show
   end
 
-  def new
-    @task = Task.new
-  end
-
-  def edit
-  end
 
   def create
     @task = Task.new(task_params)
-
     if @task.save
       redirect_to tasks_path
     else
@@ -31,7 +41,7 @@ class TasksController < ApplicationController
 
   def update
     if @task.update_attributes(task_params)
-      redirect_to task_path(@task)
+      redirect_to root_path
     else
       render :edit
     end
@@ -39,7 +49,7 @@ class TasksController < ApplicationController
 
   def destroy
     @task.destroy
-    redirect_to tasks_path
+    redirect_to root_path
   end
 
   def complete
