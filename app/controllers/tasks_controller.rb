@@ -4,6 +4,7 @@ class TasksController < ApplicationController
                                   :start, :restart, :pause]
 
   def index
+    @task = Task.new
     @incomplete_tasks = Task.incomplete
     @completed_tasks = Task.completed
   end
