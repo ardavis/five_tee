@@ -6,10 +6,34 @@
       .col-md-4
         = link_to task.title, task
 
+<<<<<<< HEAD
       .col-md-4
         Duration:
         - if task.duration
           = distance_of_time_in_words_to_now(task.duration.to_i.seconds.ago)
+=======
+%h1 Tasks
+- @incomplete_tasks.each do |task|
+  .row.well
+    .col-md-4
+      = link_to task.title, task
+
+    .col-md-4
+      - if task.started_at
+        In Progress
+      - elsif task.duration
+        Duration:
+        = distance_of_time_in_words_to_now(task.duration.to_i.seconds.ago)
+      - else
+        Not started
+
+    .col-md-4
+      .pull-right
+        -# If the task has a started_at, show a pause button, because it's running
+        - if task.started_at
+          = link_to pause_task_path(task), method: :post, class: 'btn btn-default' do
+            %span.glyphicon.glyphicon-pause
+>>>>>>> c11fc13c45ebb26fc937b7b122b035654f068702
         - else
           Not started
 
@@ -38,6 +62,7 @@
         Time took:
         = distance_of_time_in_words_to_now(task.duration.to_i.seconds.ago)
 
+
       .col-md-4
         Finished
         = distance_of_time_in_words_to_now(task.completed_at)
@@ -45,3 +70,4 @@
         .pull-right
           = link_to restart_task_path(task), method: :post, class: 'btn btn-default' do
             %span.glyphicon.glyphicon-arrow-up
+
