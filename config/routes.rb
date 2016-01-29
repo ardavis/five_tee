@@ -4,10 +4,11 @@ Rails.application.routes.draw do
 
   resources :tasks
 
-  post '/tasks/:id/complete' => 'tasks#complete', as: 'complete_task'
-  post '/tasks/:id/start' => 'tasks#start', as: 'start_task'
-  post '/tasks/:id/pause' => 'tasks#pause', as: 'pause_task'
-  post '/tasks/:id/restart' => 'tasks#restart', as: 'restart_task'
+  get '/tasks/:id/destroy' => 'tasks#destroy', as: 'destroy_task'
+  get '/tasks/:id/complete' => 'tasks#complete', as: 'complete_task'
+  get '/tasks/:id/start' => 'tasks#start', as: 'start_task'
+  get '/tasks/:id/pause' => 'tasks#pause', as: 'pause_task'
+  get '/tasks/:id/restart' => 'tasks#restart', as: 'restart_task'
   get '/new_task_form' => 'tasks#new_task_form', as: 'new_task_form'
   get '/select' => 'tasks#select', as: 'select'
   get '/edit' => 'tasks#edit', as: 'edit'
