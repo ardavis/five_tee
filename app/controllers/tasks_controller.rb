@@ -69,23 +69,35 @@ class TasksController < ApplicationController
 
 
   def destroy
-    @task.destroy
-    redirect_to root_path
+    respond_to do |format|
+      @task.destroy
+      get_sorted_tasks
+      format.js { render 'restart_reload.js.erb' }
+    end
   end
 
   def complete
-    @task.complete!
-    redirect_to tasks_path
+    respond_to do |format|
+      @task.complete!
+      get_sorted_tasks
+      format.js { render 'restart_reload.js.erb' }
+    end
   end
 
   def start
-    @task.start!
-    redirect_to tasks_path
+    respond_to do |format|
+      @task.start!
+      get_sorted_tasks
+      format.js { render 'restart_reload.js.erb' }
+    end
   end
 
   def pause
-    @task.pause!
-    redirect_to tasks_path
+    respond_to do |format|
+      @task.pause!
+      get_sorted_tasks
+      format.js { render 'restart_reload.js.erb' }
+    end
   end
 
   def download_all
@@ -107,8 +119,11 @@ class TasksController < ApplicationController
   end
 
   def restart
-    @task.restart!
-    redirect_to tasks_path
+    respond_to do |format|
+      @task.restart!
+      get_sorted_tasks
+      format.js { render 'restart_reload.js.erb' }
+    end
   end
 
 
