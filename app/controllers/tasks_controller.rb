@@ -25,7 +25,6 @@ class TasksController < ApplicationController
       format.html
       format.js { render 'edit.js.erb' }
     end
-    flash[:success] = "Task successfully edited!"
   end
 
   def show
@@ -59,11 +58,11 @@ class TasksController < ApplicationController
   def update
     respond_to do |format|
       if @task.update_attributes(task_params)
+        flash[:success] = "Task successfully edited!"
         get_sorted_tasks
         format.js { render 'reload_on_update.js.erb'}
       else
-        format.html {render action: "index"}
-        format.js {render 'reload_on_create'}
+        format.js {render 'reload_on_fail_update.js.erb'}
       end
     end
   end
