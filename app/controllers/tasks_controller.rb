@@ -20,6 +20,7 @@ class TasksController < ApplicationController
 
   def edit
     @task = Task.find(params[:task])
+    flash[:success] = nil
     respond_to do |format|
       format.html
       format.js { render 'edit.js.erb' }
@@ -29,23 +30,43 @@ class TasksController < ApplicationController
   def show
   end
 
+  def new_task_form
+    respond_to do |format|
+      @task = Task.new()
+      flash[:success] = nil
+      format.js { render 'new_task_form.js.erb' }
+    end
+  end
+
 
   def create
     @task = Task.new(task_params)
-    if @task.save
-      redirect_to tasks_path
-    else
-      render :new
+    respond_to do |format|
+      get_sorted_tasks
+      if @task.save
+        @task = Task.new()
+        get_sorted_tasks
+        format.js { render 'reload_on_create.js.erb'}
+        flash[:success] = "Task successfully created!"
+      else
+        format.js {render 'reload_on_fail_create.js.erb'}
+      end
     end
   end
 
+
   def update
-    if @task.update_attributes(task_params)
-      redirect_to root_path
-    else
-      render :edit
+    respond_to do |format|
+      if @task.update_attributes(task_params)
+        flash[:success] = "Task successfully edited!"
+        get_sorted_tasks
+        format.js { render 'reload_on_update.js.erb'}
+      else
+        format.js {render 'reload_on_fail_update.js.erb'}
+      end
     end
   end
+
 
   def destroy
     @task.destroy
@@ -67,15 +88,33 @@ class TasksController < ApplicationController
     redirect_to tasks_path
   end
 
-  def download
+  def download_all
     #grab all the tasks, and pass them to the ruby code in the axlsx file, gem handles everything
     @tasks = Task.all
-    render xlsx: 'download.xlsx.axlsx',filename: "taskSheet.xlsx"
+    render xlsx: 'download.xlsx.axlsx',filename: "allTasks.xlsx"
+  end
+
+  def download_incompleted
+    #grab all the tasks, and pass them to the ruby code in the axlsx file, gem handles everything
+    @tasks = Task.incomplete
+    render xlsx: 'download.xlsx.axlsx',filename: "incompletedTasks.xlsx"
+  end
+
+  def download_completed
+    #grab all the tasks, and pass them to the ruby code in the axlsx file, gem handles everything
+    @tasks = Task.completed
+    render xlsx: 'download.xlsx.axlsx',filename: "completedTasks.xlsx"
   end
 
   def restart
     @task.restart!
     redirect_to tasks_path
+  end
+
+
+  def get_sorted_tasks
+    @incomplete_tasks = Task.incomplete
+    @completed_tasks = Task.completed
   end
 
   private
@@ -85,6 +124,6 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:title, :desc)
+    params.require(:task).permit(:title, :desc, :due_date)
   end
 end

@@ -1,5 +1,9 @@
-= simple_form_for @task do |f|
-
+- unless flash[:success].nil?
+  .alert.alert-success #{flash[:success]}
+= simple_form_for @task, remote: true do |f|
   = f.input :title
+  = f.label :due_date
+  %br
+  = f.text_field :due_date, label: 'Due date', :placeholder => "YYYY-MM-DD"
   = f.input :desc
   = f.submit 'Save', class: 'btn btn-primary'

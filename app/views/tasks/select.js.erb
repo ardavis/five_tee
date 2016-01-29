@@ -1,6 +1,6 @@
 $('#show-title').html('<%=j @task.title %>');
 $('#desc').html('<%=j "Description: #{@task.desc}" %>');
-$('#due-date').html('<%=j @task.due_date %>');
+$('#due-date').html('<%=j "Due date: #{@task.due_date.to_s}" %>');
 $('#created-at').html('<%=j "Created at: #{@task.created_at}" %>');
 $('#completed-at').html('<%=j "Completed at: #{@task.completed_at}" %>');
 $('#duration').html('<%=j "Duration: #{distance_of_time_in_words_to_now(@task.duration.to_i.seconds.ago)}" %>');

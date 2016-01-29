@@ -5,8 +5,8 @@
     .modal-content
       .modal-header
         %button.close{"data-dismiss" => "modal", :type => "button"} &times;
-        %h4.modal-title Modal Header
-      .modal-body
+        %h4.modal-title New Task
+      .modal-body#new-modal-body
         = render 'form'
       .modal-footer
         %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close

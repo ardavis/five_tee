@@ -8,12 +8,19 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body
-    .navbar.navbar-default
+    .navbar.navbar-inverse
       .container-fluid
         %ul.nav.navbar-nav
           %li= link_to 'Five Tee', root_path
-          %li= link_to 'New Task', '#', {"data-target" => "#newModal", "data-toggle" => "modal", :type => "button"}
-          %li= link_to 'Download', download_task_path
+          %li= link_to 'New Task', {:controller => "tasks", :action => "new_task_form", :format => :js, :remote => true}
+          %li.dropdown
+            %a.dropdown-toggle{"aria-expanded" => "false", "aria-has-popup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+              Download
+              %span.caret
+            %ul.dropdown-menu
+              %li= link_to "Incompleted Tasks", download_incompleted_path
+              %li= link_to "Completed Tasks", download_completed_path
+              %li= link_to "All Tasks", download_all_path
 
     .container
       = yield
