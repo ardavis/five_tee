@@ -1,7 +1,12 @@
-- unless flash[:success].nil?
+- if flash[:success] == "Task successfully created!"
   .alert.alert-success #{flash[:success]}
 = simple_form_for @task, remote: true do |f|
   = f.input :title
+  = f.label :tag
+  = f.collection_select :tag_id, Tag.order('name ASC').all, :id, :name, include_blank: true
+  = link_to "Create new tag", {:controller => "tags", :action => "new_tag_form", :format => :js, :remote => true}
+  %br
+  %br
   = f.label :due_date
   %br
   = f.text_field :due_date, label: 'Due date', placeholder: "YYYY-MM-DD"

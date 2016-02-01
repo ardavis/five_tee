@@ -4,6 +4,11 @@ Rails.application.routes.draw do
 
   resources :tasks
 
+  resources :tags
+
+  get '/tag_form' => 'tags#new_tag_form', as: 'tag_form'
+  get '/tag/:id/destroy' => 'tags#destroy', as: 'destroy_tag'
+
   get '/tasks/:id/destroy' => 'tasks#destroy', as: 'destroy_task'
   get '/tasks/:id/complete' => 'tasks#complete', as: 'complete_task'
   get '/tasks/:id/start' => 'tasks#start', as: 'start_task'
