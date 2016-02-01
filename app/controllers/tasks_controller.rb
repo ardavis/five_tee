@@ -5,6 +5,7 @@ class TasksController < ApplicationController
 
   def index
     @task = Task.new()
+    @tag = Tag.new()
     @incomplete_tasks = Task.incomplete
     @completed_tasks = Task.completed
   end
@@ -40,6 +41,7 @@ class TasksController < ApplicationController
 
 
   def create
+    puts "\n\n\n\n hey \n\n\n\n"
     @task = Task.new(task_params)
     respond_to do |format|
       get_sorted_tasks
@@ -139,6 +141,6 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:title, :desc, :due_date)
+    params.require(:task).permit(:title, :desc, :due_date, :tag_id)
   end
 end
