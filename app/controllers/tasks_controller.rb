@@ -77,19 +77,23 @@ class TasksController < ApplicationController
   end
 
   def start
-    respond_to do |format|
-      @task.start!
-      get_sorted_tasks
-      format.js { render 'restart_reload.js.erb' }
-    end
+    @task.start!(current_user)
+    render nothing: true
+    # respond_to do |format|
+    #   @task.start!(current_user)
+    #   get_sorted_tasks
+    #   format.js { render 'restart_reload.js.erb' }
+    # end
   end
 
   def pause
-    respond_to do |format|
-      @task.pause!
-      get_sorted_tasks
-      format.js { render 'restart_reload.js.erb' }
-    end
+    @task.pause!
+    render nothing: true
+    # respond_to do |format|
+    #   @task.pause!
+    #   get_sorted_tasks
+    #   format.js { render 'restart_reload.js.erb' }
+    # end
   end
 
   def download_all

@@ -37,6 +37,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'better_errors'
 gem 'binding_of_caller'
 
+gem 'bootstrap-datepicker-rails'
+
 gem 'dotiw' # Better distance of time ago in words
 
 # Use ActiveModel has_secure_password

@@ -19,9 +19,9 @@ class Task < ActiveRecord::Base
   end
 
   # This method starts the task!
-  def start!
+  def start!(user)
     # Pause any previously running tasks
-    Task.running.each do |running_task|
+    user.tasks.running.each do |running_task|
       running_task.pause!
     end
 

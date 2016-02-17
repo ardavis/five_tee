@@ -5,10 +5,11 @@
   = f.label :tag
   = f.collection_select :tag_id, Tag.order('name ASC').all, :id, :name, include_blank: true
   = link_to "Create new tag", {:controller => "tags", :action => "new_tag_form", :format => :js, :remote => true}
-  %br
-  %br
-  = f.label :due_date
-  %br
-  = f.text_field :due_date, label: 'Due date', placeholder: "YYYY-MM-DD"
+
+  .form-group
+    = f.text_field :due_date, placeholder: "YYYY-MM-DD", class: 'form-control'
+
   = f.input :desc
-  = f.submit 'Save', class: 'btn btn-primary'
+
+  - content_for :save_button do
+    = f.submit 'Save', class: 'btn btn-primary', id: 'save_task_btn'
