@@ -41,7 +41,6 @@ class TasksController < ApplicationController
 
 
   def create
-    puts "\n\n\n\n hey \n\n\n\n"
     @task = Task.new(task_params)
     respond_to do |format|
       get_sorted_tasks
