@@ -4,10 +4,10 @@ class TasksController < ApplicationController
                                   :start, :restart, :pause]
 
   def index
-    @task = Task.new()
-    @tag = Tag.new()
-    @incomplete_tasks = Task.incomplete
-    @completed_tasks = Task.completed
+    @task = current_user.tasks.new
+    @tag = Tag.new
+    @incomplete_tasks = current_user.incomplete_tasks
+    @completed_tasks = current_user.completed_tasks
   end
 
   def select
@@ -31,17 +31,8 @@ class TasksController < ApplicationController
   def show
   end
 
-  def new_task_form
-    respond_to do |format|
-      @task = Task.new()
-      flash[:success] = nil
-      format.js { render 'new_task_form.js.erb' }
-    end
-  end
-
-
   def create
-    @task = Task.new(task_params)
+    @task = current_user.tasks.new(task_params)
     respond_to do |format|
       get_sorted_tasks
       if @task.save
@@ -129,8 +120,8 @@ class TasksController < ApplicationController
 
 
   def get_sorted_tasks
-    @incomplete_tasks = Task.incomplete
-    @completed_tasks = Task.completed
+    @incomplete_tasks = current_user.incomplete_tasks
+    @completed_tasks = current_user.completed_tasks
   end
 
   private

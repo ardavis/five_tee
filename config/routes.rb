@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  devise_for :users
   root 'tasks#index'
 
   resources :tasks
@@ -14,7 +15,6 @@ Rails.application.routes.draw do
   get '/tasks/:id/start' => 'tasks#start', as: 'start_task'
   get '/tasks/:id/pause' => 'tasks#pause', as: 'pause_task'
   get '/tasks/:id/restart' => 'tasks#restart', as: 'restart_task'
-  get '/new_task_form' => 'tasks#new_task_form', as: 'new_task_form'
   get '/select' => 'tasks#select', as: 'select'
   get '/edit' => 'tasks#edit', as: 'edit'
   post '/create' => 'tasks#create', as: 'create'

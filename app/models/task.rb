@@ -1,5 +1,6 @@
 class Task < ActiveRecord::Base
   belongs_to :tag
+  belongs_to :user
 
   validates :title, presence: true
 

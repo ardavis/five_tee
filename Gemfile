@@ -16,6 +16,8 @@ gem 'therubyracer', platforms: :ruby
 
 gem 'haml-rails'
 
+gem 'devise'
+
 gem 'bootstrap-sass'
 
 gem 'simple_form'
