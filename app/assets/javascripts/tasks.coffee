@@ -46,8 +46,21 @@ set_timer = ->
   })
 
 
+reload_new_modal = ->
+  title = $('#task_title').val()
+  due_date = $('#due_date').val()
+  desc = $('#desc').val()
+  $("#new-modal-body").html("<%=j render 'tasks/form' %>");
+  $('#task_title').val(title)
+  $('#due_date').val(due_date)
+  $('#desc').val(desc)
+  date_picker()
+
+
+
 window.set_timer = set_timer
 window.date_picker = date_picker
+window.reload_new_modal = reload_new_modal
 
 $(document).ready(ready)
 $(document).on('page:load', ready)
