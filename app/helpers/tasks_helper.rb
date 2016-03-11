@@ -1,11 +1,7 @@
 module TasksHelper
 
-  def show_pause_button?(task)
-    task.started_at.nil? ? 'hide' : ''
+  def duration_display(duration)
+    return "#{duration / 60} min #{duration % 60} sec" if duration < 59
+    "#{duration / 60} min #{duration % 60 < 10 ? '0' : ''}#{duration % 60} sec"
   end
-
-  def show_play_button?(task)
-    task.started_at ? 'hide' : ''
-  end
-
 end

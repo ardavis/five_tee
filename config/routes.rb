@@ -17,7 +17,9 @@ Rails.application.routes.draw do
   get '/tasks/:id/restart' => 'tasks#restart', as: 'restart_task'
   get '/select' => 'tasks#select', as: 'select'
   get '/edit' => 'tasks#edit', as: 'edit'
+  get '/new_task_form' => 'tasks#new_task_form', as: 'new_task_form'
   post '/create' => 'tasks#create', as: 'create'
+  post '/tasks/test' => 'tasks#test', as: 'test'
 
   #for downloading into xlsx file
   get '/download_all/' => 'tasks#download_all', as: 'download_all'

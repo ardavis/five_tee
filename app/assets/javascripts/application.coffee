@@ -4,4 +4,4 @@
 #= require bootstrap-sprockets
 #= require bootstrap-datepicker
 #= require timer
-#= require tasks
+#= require tasks.coffee
