@@ -1,25 +1,31 @@
 %h1 Tasks
 - @incomplete_tasks.each do |task|
-  .row.well.task{id: "task-#{task.id}", data: { running: (!!task.started_at).to_s }}
+  .row.well.task{id: "task-#{task.started_at.nil? ? "paused" : "running"}", data: { running: (!!task.started_at).to_s }}
 
     .col-md-4
       = link_to task.title, {action: "select", format: :js, remote: true, task: task}
-    .col-md-4.running_time{data: { duration: task.duration } }
-      - if task.started_at
-        In Progress
-      - elsif task.duration
-        = distance_of_time_in_words_to_now(task.duration.to_i.seconds.ago)
+    .col-md-4.running_time
+      = hidden_field_tag :duration_field, task.duration
+      = hidden_field_tag :started_field, task.started_at.to_i
+      - if task.duration
+        = duration_display(task.duration)
       - else
         Not started
 
     .col-md-4
+      = hidden_field_tag :running_time, task.duration
       .pull-right
         -# If the task has a started_at, show a pause button, because it's running
-        = link_to pause_task_path(task), class: "pause_btn #{ show_pause_button?(task) } btn btn-default", format: :js, remote: true do
-          %span.glyphicon.glyphicon-pause
 
-        = link_to start_task_path(task), class: "play_btn #{ show_play_button?(task) } btn btn-default", format: :js, remote: true do
-          %span.glyphicon.glyphicon-play
+        - if task.started_at.nil?
+          = link_to start_task_path(task), class: "play_btn btn btn-default", format: :js, remote: true do
+            %span.glyphicon.glyphicon-play
+
+        -else
+          = link_to pause_task_path(task), class: "pause_btn btn btn-default", format: :js, remote: true do
+            %span.glyphicon.glyphicon-pause
+
+
 
         = link_to complete_task_path(task), class: 'btn btn-success', format: :js, remote: true do
           %span.glyphicon.glyphicon-ok

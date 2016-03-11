@@ -1,0 +1,7 @@
+title = $('#task_title').val()
+$("#new-modal-body").html("<%=j render 'tasks/form' %>");
+$('#tag-modal-body').html('<%=j render '/tags/tag_form' %>');
+$('#task_title').val(title)
+date_picker()
+
+

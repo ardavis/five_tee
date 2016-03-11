@@ -8,7 +8,7 @@ class TagsController < ApplicationController
       if @tag.save
         @tag = Tag.new()
         @task = Task.new()
-        format.js { render 'new_tag.js.erb'}
+        format.js { render 'new_tag.js.coffee.erb'}
         flash[:success] = "Tag successfully created!"
       else
         format.js {render 'fail_tag.js.erb'}
@@ -20,7 +20,7 @@ class TagsController < ApplicationController
     respond_to do |format|
       @tag = Tag.new()
       flash[:success] = nil
-      format.js { render 'new_tag_form.js.erb' }
+      format.js { render 'new_tag_form.js.coffee.erb' }
     end
   end
 

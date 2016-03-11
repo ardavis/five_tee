@@ -3,12 +3,26 @@ class TasksController < ApplicationController
   before_action :get_task, only: [:show, :update, :destroy, :complete,
                                   :start, :restart, :pause]
 
+
   def index
-    @task = current_user.tasks.new
-    @tag = Tag.new
-    @incomplete_tasks = current_user.incomplete_tasks
-    @completed_tasks = current_user.completed_tasks
+    respond_to do |format|
+      @task = current_user.tasks.new
+      @tag = Tag.new
+      @incomplete_tasks = current_user.incomplete_tasks
+      @completed_tasks = current_user.completed_tasks
+      format.html
+      format.js { render 'playbutton.js.coffee.erb' }
+    end
   end
+
+  def new_task_form
+    respond_to do |format|
+      @task = Task.new()
+      format.html
+      format.js { render 'new.js.coffee.erb' }
+    end
+  end
+
 
   def select
     @task = Task.find(params[:task])
@@ -64,7 +78,7 @@ class TasksController < ApplicationController
     respond_to do |format|
       @task.destroy
       get_sorted_tasks
-      format.js { render 'restart_reload.js.erb' }
+      format.js { render 'restart_reload.js.coffee.erb' }
     end
   end
 
@@ -72,28 +86,24 @@ class TasksController < ApplicationController
     respond_to do |format|
       @task.complete!
       get_sorted_tasks
-      format.js { render 'restart_reload.js.erb' }
+      format.js { render 'restart_reload.js.coffee.erb' }
     end
   end
 
   def start
     @task.start!(current_user)
-    render nothing: true
-    # respond_to do |format|
-    #   @task.start!(current_user)
-    #   get_sorted_tasks
-    #   format.js { render 'restart_reload.js.erb' }
-    # end
+    respond_to do |format|
+      get_sorted_tasks
+      format.js { render 'playbutton.js.coffee.erb' }
+    end
   end
 
   def pause
-    @task.pause!
-    render nothing: true
-    # respond_to do |format|
-    #   @task.pause!
-    #   get_sorted_tasks
-    #   format.js { render 'restart_reload.js.erb' }
-    # end
+    respond_to do |format|
+      @task.pause!
+      get_sorted_tasks
+      format.js { render 'pausebutton.js.coffee.erb' }
+    end
   end
 
   def download_all
@@ -118,7 +128,7 @@ class TasksController < ApplicationController
     respond_to do |format|
       @task.restart!
       get_sorted_tasks
-      format.js { render 'restart_reload.js.erb' }
+      format.js { render 'restart_reload.js.coffee.erb' }
     end
   end
 
