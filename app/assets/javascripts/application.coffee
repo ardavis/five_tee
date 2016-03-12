@@ -5,3 +5,5 @@
 #= require bootstrap-datepicker
 #= require timer
 #= require tasks.coffee
+#= require jquery.timepicker.js
+#= require bootstrap-timepicker

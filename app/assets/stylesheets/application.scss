@@ -11,9 +11,12 @@
  * file per style scope.
  *
  *= require_self
+ *= require bootstrap-timepicker
+ *= require jquery.timepicker.css
  */
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "bootstrap-datepicker3";
 @import "tasks";
+

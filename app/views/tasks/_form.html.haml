@@ -1,15 +1,20 @@
-- if flash[:success] == "Task successfully created!"
+- unless flash[:success].to_s == ''
   .alert.alert-success #{flash[:success]}
 = simple_form_for @task, remote: true do |f|
   = f.input :title
+  %br
   = f.label :tag
   = f.collection_select :tag_id, Tag.order('name ASC').all, :id, :name, include_blank: true
   = link_to "Create new tag", {:controller => "tags", :action => "new_tag_form", :format => :js, :remote => true}
-
+  %br
+  %br
   .form-group
+    = f.label :due_date
     = f.text_field :due_date, placeholder: "YYYY-MM-DD", class: 'form-control'
+  %br
+  = f.input :desc, label: 'Description'
 
-  = f.input :desc
+  .input-group.bootstrap-timepicker.timepicker
+    = f.input :duration, id: "timepicker1", class: "form-control input-small", type: "text"
 
-  - content_for :save_button do
-    = f.submit 'Save', class: 'btn btn-primary', id: 'save_task_btn'
+  = f.submit 'Save', class: 'btn btn-primary', id: 'save_task_btn'

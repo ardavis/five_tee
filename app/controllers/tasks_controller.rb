@@ -16,6 +16,7 @@ class TasksController < ApplicationController
   end
 
   def new_task_form
+    flash[:success] = nil
     respond_to do |format|
       @task = Task.new()
       format.html
@@ -26,6 +27,10 @@ class TasksController < ApplicationController
 
   def select
     @task = Task.find(params[:task])
+    if @task.started_at
+      @task.pause!
+      @task.start!(current_user)
+    end
     respond_to do |format|
       format.html
       format.js { render 'select.js.erb' }
@@ -64,9 +69,9 @@ class TasksController < ApplicationController
   def update
     respond_to do |format|
       if @task.update_attributes(task_params)
-        flash[:success] = "Task successfully edited!"
         get_sorted_tasks
         format.js { render 'reload_on_update.js.erb'}
+        flash[:success] = "Task successfully edited!"
       else
         format.js {render 'reload_on_fail_update.js.erb'}
       end
