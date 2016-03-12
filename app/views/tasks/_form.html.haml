@@ -14,7 +14,10 @@
   %br
   = f.input :desc, label: 'Description'
 
-  .input-group.bootstrap-timepicker.timepicker
-    = f.input :duration, id: "timepicker1", class: "form-control input-small", type: "text"
+  .input-group
+    %input.duration-input#hours{:name => "hours", :type => "text", :value => "0"}
+    %input.duration-input#mins{:name => "mins", :type => "text", :value => "0"}
+    %input.duration-input#secs{:name => "secs", :type => "text", :value => "0"}
+
 
   = f.submit 'Save', class: 'btn btn-primary', id: 'save_task_btn'

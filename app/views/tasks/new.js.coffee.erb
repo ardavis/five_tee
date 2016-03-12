@@ -1,11 +1,24 @@
 $("#new-modal-body").html("<%=j render 'form' %>");
-$('#task_duration').timepicker({
-  hourStep: 1,
-  minuteStep: 1,
-  secondStep: 1,
-  showMeridian: false,
-  showSeconds: true,
-  defaultTime: $('#task_duration').val()
-})
+$("input[name='hours']").TouchSpin({
+  min: -1000000000,
+  max: 1000000000,
+  stepinterval: 50,
+  maxboostedstep: 10000000,
+  verticalbuttons: true
+});
+$("input[name='mins']").TouchSpin({
+  min: -1000000000,
+  max: 1000000000,
+  stepinterval: 50,
+  maxboostedstep: 10000000,
+  verticalbuttons: true
+});
+$("input[name='secs']").TouchSpin({
+  min: -1000000000,
+  max: 1000000000,
+  stepinterval: 50,
+  maxboostedstep: 10000000,
+  verticalbuttons: true
+});
 date_picker()
 $('#newModal').modal('toggle')
