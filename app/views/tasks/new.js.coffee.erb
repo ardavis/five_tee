@@ -1,24 +1,22 @@
 $("#new-modal-body").html("<%=j render 'form' %>");
-$("input[name='hours']").TouchSpin({
-  min: -1000000000,
-  max: 1000000000,
-  stepinterval: 50,
-  maxboostedstep: 10000000,
-  verticalbuttons: true
+$("input[name='hours_input']").TouchSpin({
+  verticalbuttons: true,
+  prefix: "hours: ",
+  max: 99,
+  min: 0
 });
-$("input[name='mins']").TouchSpin({
-  min: -1000000000,
-  max: 1000000000,
-  stepinterval: 50,
-  maxboostedstep: 10000000,
-  verticalbuttons: true
+$("input[name='mins_input']").TouchSpin({
+  verticalbuttons: true,
+  prefix: "Minutes: ",
+  max: 59,
+  min: 0
 });
-$("input[name='secs']").TouchSpin({
-  min: -1000000000,
-  max: 1000000000,
-  stepinterval: 50,
-  maxboostedstep: 10000000,
-  verticalbuttons: true
+$("input[name='secs_input']").TouchSpin({
+  verticalbuttons: true,
+  prefix: "Seconds: ",
+  max: 59,
+  min: 0
 });
+
 date_picker()
 $('#newModal').modal('toggle')

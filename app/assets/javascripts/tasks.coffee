@@ -6,8 +6,6 @@ ready = ->
 #
 
 
-
-
   set_timer()
 
 
@@ -25,6 +23,8 @@ ready = ->
 
   $('#newModal').on 'shown.bs.modal', ->
     $('#task_title').focus()
+
+
 
 
 date_picker = ->
@@ -59,11 +59,19 @@ reload_new_modal = ->
   $('#desc').val(desc)
   date_picker()
 
+set_duration_field = ->
+  console.log('yes!')
+  duration = $("input[name='hours_input']").val() * 3600
+  duration += $("input[name='mins_input']").val() * 60
+  duration += $("input[name='secs_input']").val()
+  $('#duration_submit').val(duration)
+
 
 
 window.set_timer = set_timer
 window.date_picker = date_picker
 window.reload_new_modal = reload_new_modal
+window.set_duration_field = set_duration_field
 
 $(document).ready(ready)
 $(document).on('page:load', ready)

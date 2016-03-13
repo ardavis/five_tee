@@ -18,8 +18,10 @@ Rails.application.routes.draw do
   get '/select' => 'tasks#select', as: 'select'
   get '/edit' => 'tasks#edit', as: 'edit'
   get '/new_task_form' => 'tasks#new_task_form', as: 'new_task_form'
+  get '/update_duration' => 'tasks#update_duration', as: 'update_duration'
   post '/create' => 'tasks#create', as: 'create'
   post '/tasks/test' => 'tasks#test', as: 'test'
+
 
   #for downloading into xlsx file
   get '/download_all/' => 'tasks#download_all', as: 'download_all'

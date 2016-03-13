@@ -24,6 +24,14 @@ class TasksController < ApplicationController
     end
   end
 
+  def update_duration
+    @task = Task.find(params[:task])
+    respond_to do |format|
+      format.html
+      format.js { render 'duration.js.erb' }
+    end
+  end
+
 
   def select
     @task = Task.find(params[:task])
@@ -150,6 +158,6 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:title, :desc, :due_date, :tag_id)
+    params.require(:task).permit(:title, :desc, :due_date, :tag_id, :duration)
   end
 end

@@ -13,11 +13,11 @@
     = f.text_field :due_date, placeholder: "YYYY-MM-DD", class: 'form-control'
   %br
   = f.input :desc, label: 'Description'
-
-  .input-group
-    %input.duration-input#hours{:name => "hours", :type => "text", :value => "0"}
-    %input.duration-input#mins{:name => "mins", :type => "text", :value => "0"}
-    %input.duration-input#secs{:name => "secs", :type => "text", :value => "0"}
+  - if @task.created_at
+    .form-group
+      = f.label :duration
+      = duration_display(@task.duration)
+      = link_to 'Edit', {action: "update_duration", format: :js, remote: true, task: @task}, class: 'btn btn-primary'
 
 
   = f.submit 'Save', class: 'btn btn-primary', id: 'save_task_btn'

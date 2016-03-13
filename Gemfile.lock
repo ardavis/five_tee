@@ -115,6 +115,8 @@ GEM
     erubis (2.7.0)
     execjs (2.6.0)
     ffi (1.9.10)
+    font-awesome-rails (4.5.0.1)
+      railties (>= 3.2, < 5.1)
     gherkin (3.2.0)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
@@ -280,6 +282,7 @@ DEPENDENCIES
   database_cleaner
   devise
   dotiw
+  font-awesome-rails
   haml-rails
   jbuilder (~> 2.0)
   jquery-rails
