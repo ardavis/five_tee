@@ -11,7 +11,6 @@ class TasksController < ApplicationController
       @incomplete_tasks = current_user.incomplete_tasks
       @completed_tasks = current_user.completed_tasks
       format.html
-      format.js { render 'playbutton.js.coffee.erb' }
     end
   end
 
@@ -20,15 +19,14 @@ class TasksController < ApplicationController
     respond_to do |format|
       @task = Task.new()
       format.html
-      format.js { render 'new.js.coffee.erb' }
+      format.js { render 'tasks/modal_scripts/new_modal.coffee.erb' }
     end
   end
 
   def update_duration_modal
     @task = Task.find(params[:task])
     respond_to do |format|
-      format.html
-      format.js { render 'duration.js.erb' }
+      format.js { render 'tasks/modal_scripts/duration_modal.coffee.erb' }
     end
   end
 
@@ -73,10 +71,11 @@ class TasksController < ApplicationController
       if @task.save
         @task = Task.new()
         get_sorted_tasks
-        format.js { render 'tasks/reload_scripts/reload_on_create.js.erb'}
+        format.js { render 'tasks/reload_scripts/reload_on_create.coffee.erb'}
         flash[:success] = "Task successfully created!"
       else
-        format.js {render 'tasks/reload_scripts/reload_on_fail_create.js.erb'}
+        format.js {render 'tasks/reload_scripts/reload_on_fail_create.coffee.erb'
+        }
       end
     end
   end
@@ -86,10 +85,12 @@ class TasksController < ApplicationController
     respond_to do |format|
       if @task.update_attributes(task_params)
         get_sorted_tasks
-        format.js { render 'tasks/reload_scripts/reload_on_update.js.erb'}
+        format.js { render 'tasks/reload_scripts/reload_on_update.coffee.erb'
+        }
         flash[:success] = task_params.has_key?(:duration) ? "Duration succesfully edited!" : "Task successfully updated"
       else
-        format.js {render 'tasks/reload_scripts/reload_on_fail_update.js.erb'}
+        format.js {render 'tasks/reload_scripts/reload_on_fail_update.coffee.erb'
+        }
       end
     end
   end
@@ -117,7 +118,7 @@ class TasksController < ApplicationController
     @task.start!(current_user)
     respond_to do |format|
       get_sorted_tasks
-      format.js { render 'playbutton.js.coffee.erb' }
+      format.js { render 'tasks/button_scripts/playbutton.coffee.erb' }
     end
   end
 
@@ -125,7 +126,7 @@ class TasksController < ApplicationController
     respond_to do |format|
       @task.pause!
       get_sorted_tasks
-      format.js { render 'pausebutton.js.coffee.erb' }
+      format.js { render 'tasks/button_scripts/pausebutton.coffee.erb' }
     end
   end
 

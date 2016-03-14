@@ -56,16 +56,13 @@ set_hidden_field = ->
 
 
 set_duration_field = ->
-  console.log('yes!')
   duration = $("input[name='hours_input']").val() * 3600
   duration += $("input[name='mins_input']").val() * 60
   duration += $("input[name='secs_input']").val()
   $('#duration_submit').val(duration)
 
 set_duration_spinners = ->
-
   current_duration = $('input#duration_update_input').val()
-
   hours = Math.floor(current_duration / 3600)
   min = Math.floor(current_duration / 60 % 60)
   sec = current_duration % 60
@@ -92,6 +89,9 @@ set_duration_spinners = ->
     min: 0,
     initval: sec
   })
+
+  $('.duration_input').on('input', set_hidden_field)
+  $('.bootstrap-touchspin-up, .bootstrap-touchspin-down').click (set_hidden_field)
 
 
 

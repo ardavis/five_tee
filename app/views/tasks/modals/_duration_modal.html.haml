@@ -4,9 +4,9 @@
     / Modal content
     .modal-content
       .modal-header
-        %button.close{"data-dismiss" => "modal", :type => "button"} &times;
+        %button.close{"data-dismiss": "modal", type: "button"} &times;
         %h4.modal-title Edit duration
       .modal-body#duration-modal-body
-        = render 'duration_update'
+        = render 'tasks/forms/duration_form'
       .modal-footer
-        %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close
+        %button.btn.btn-default{"data-dismiss": "modal", type: "button"} Close
