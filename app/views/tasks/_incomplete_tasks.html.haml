@@ -3,7 +3,7 @@
   .row.well.task{id: "task-#{task.started_at.nil? ? "paused" : "running"}", data: { running: (!!task.started_at).to_s }}
 
     .col-md-4
-      = link_to task.title, {action: "select", format: :js, remote: true, task: task}
+      = link_to task.title, {action: "show_modal", format: :js, remote: true, task: task}
     .col-md-4.running_time
       = hidden_field_tag :duration_field, task.duration
       = hidden_field_tag :started_field, task.started_at.to_i

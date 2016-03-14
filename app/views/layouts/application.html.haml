@@ -12,7 +12,7 @@
       .container-fluid
         %ul.nav.navbar-nav
           %li= link_to 'Five Tee', root_path
-          %li= link_to 'New Task', {:controller => "tasks", :action => "new_task_form", :format => :js, :remote => true}
+          %li= link_to 'New Task', new_task_form_path, remote: true
           %li.dropdown
             %a.dropdown-toggle{"aria-expanded" => "false", "aria-has-popup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
               Download

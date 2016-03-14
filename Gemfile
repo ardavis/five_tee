@@ -39,6 +39,13 @@ gem 'binding_of_caller'
 
 gem 'bootstrap-datepicker-rails'
 
+gem 'bootstrap-timepicker-rails'
+
+gem 'jquery-timepicker-rails'
+
+gem "font-awesome-rails"
+
+
 gem 'dotiw' # Better distance of time ago in words
 
 # Use ActiveModel has_secure_password

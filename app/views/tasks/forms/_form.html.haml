@@ -1,0 +1,23 @@
+- unless flash[:success].to_s == '' or flash[:success].to_s.split(' ').include? 'Duration'
+  .alert.alert-success #{flash[:success]}
+= simple_form_for @task, remote: true do |f|
+  = f.input :title
+  %br
+  = f.label :tag
+  = f.collection_select :tag_id, Tag.order('name ASC').all, :id, :name, include_blank: true
+  = link_to "Create new tag", {:controller => "tags", :action => "new_tag_form", :format => :js, :remote => true}
+  %br
+  %br
+  .form-group
+    = f.label :due_date
+    = f.text_field :due_date, placeholder: "YYYY-MM-DD", class: 'form-control'
+  %br
+  = f.input :desc, label: 'Description'
+  - if @task.created_at
+    .form-group
+      = f.label :duration
+      = duration_display(@task.duration)
+      = link_to 'Edit', {action: "update_duration_modal", format: :js, remote: true, task: @task}, class: 'btn btn-primary'
+
+
+  = f.submit 'Save', class: 'btn btn-primary', id: 'save_task_btn'
