@@ -45,7 +45,7 @@ set_timer = ->
   start_time = +duration_field.val() + now - started_field.val()
   running_time_element.timer({
     seconds: start_time,
-    format: '%m min %s sec'
+    format: '%h hr %m min %s sec'
   })
 
 
