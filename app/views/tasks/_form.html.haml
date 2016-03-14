@@ -1,4 +1,4 @@
-- unless flash[:success].to_s == ''
+- unless flash[:success].to_s == '' or flash[:success].to_s.split(' ').include? 'Duration'
   .alert.alert-success #{flash[:success]}
 = simple_form_for @task, remote: true do |f|
   = f.input :title
@@ -17,7 +17,7 @@
     .form-group
       = f.label :duration
       = duration_display(@task.duration)
-      = link_to 'Edit', {action: "update_duration", format: :js, remote: true, task: @task}, class: 'btn btn-primary'
+      = link_to 'Edit', {action: "update_duration_modal", format: :js, remote: true, task: @task}, class: 'btn btn-primary'
 
 
   = f.submit 'Save', class: 'btn btn-primary', id: 'save_task_btn'

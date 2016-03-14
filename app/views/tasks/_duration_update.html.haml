@@ -1,5 +1,5 @@
-= hidden_field_tag :duration_update_input, @task.duration
-
+- if flash[:success].to_s.split(' ').include? 'Duration'
+  .alert.alert-success #{flash[:success]}
 .container
   .row{style: "float: left;"}
     .col-xs-3{style: "width: 165px;"}
@@ -11,7 +11,10 @@
 
 %br
 
+= hidden_field_tag :duration_update_input, @task.duration
+
 .container
-  = simple_form_for @task, remote: true do |f|
+  = simple_form_for @task, url: update_duration_path, remote: true do |f|
+    = hidden_field_tag :id, @task.id
     = f.hidden_field :duration, id: "duration_submit"
     = f.submit 'Save', class: 'btn btn-primary', id: 'save_task_btn'

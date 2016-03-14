@@ -1,0 +1,11 @@
+$("#edit_modal-modal-body").html("<%=j render 'form' %>")
+$("#incomplete-tasks").html("<%=j raw render 'incomplete_tasks' %>")
+$("#complete-tasks").html("<%=j render 'complete_tasks' %>")
+$("#show-modal").html("<%=j render 'show_modal' %>")
+$("#duration-modal-body").html("<%=j render 'duration_update' %>")
+
+set_duration_spinners()
+
+$('.duration_input').on('input', set_hidden_field)
+
+$('.bootstrap-touchspin-up, .bootstrap-touchspin-down').click (set_hidden_field)

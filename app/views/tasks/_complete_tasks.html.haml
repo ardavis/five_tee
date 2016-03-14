@@ -2,11 +2,11 @@
 - @completed_tasks.each do |task|
   .row.well
     .col-md-4
-      = link_to task.title, {action: "select", format: :js, remote: true, task: task}
+      = link_to task.title, {action: "show_modal", format: :js, remote: true, task: task}
 
     .col-md-4
       Time took:
-      = distance_of_time_in_words_to_now(task.duration.to_i.seconds.ago)
+      = duration_display(task.duration)
 
 
     .col-md-4

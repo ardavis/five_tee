@@ -48,16 +48,12 @@ set_timer = ->
     format: '%h hr %m min %s sec'
   })
 
+set_hidden_field = ->
+  duration = $("input[name='hours_input']").val() * 3600
+  duration += $("input[name='mins_input']").val() % 60 * 60
+  duration += $("input[name='secs_input']").val() % 60
+  $('#duration_submit').val(duration)
 
-reload_new_modal = ->
-  title = $('#task_title').val()
-  due_date = $('#due_date').val()
-  desc = $('#desc').val()
-  $("#new-modal-body").html("<%=j render 'tasks/form' %>");
-  $('#task_title').val(title)
-  $('#due_date').val(due_date)
-  $('#desc').val(desc)
-  date_picker()
 
 set_duration_field = ->
   console.log('yes!')
@@ -66,12 +62,45 @@ set_duration_field = ->
   duration += $("input[name='secs_input']").val()
   $('#duration_submit').val(duration)
 
+set_duration_spinners = ->
+
+  current_duration = $('input#duration_update_input').val()
+
+  hours = Math.floor(current_duration / 3600)
+  min = Math.floor(current_duration / 60 % 60)
+  sec = current_duration % 60
+
+  $("input[name='hours_input']").TouchSpin({
+    verticalbuttons: true,
+    prefix: "hours: ",
+    max: 99,
+    min: 0,
+    initval: hours
+  })
+
+  $("input[name='mins_input']").TouchSpin({
+    verticalbuttons: true,
+    prefix: "Minutes: ",
+    max: 59,
+    min: 0,
+    initval: min
+  })
+  $("input[name='secs_input']").TouchSpin({
+    verticalbuttons: true,
+    prefix: "Seconds: ",
+    max: 59,
+    min: 0,
+    initval: sec
+  })
+
+
 
 
 window.set_timer = set_timer
 window.date_picker = date_picker
-window.reload_new_modal = reload_new_modal
 window.set_duration_field = set_duration_field
+window.set_hidden_field = set_hidden_field
+window.set_duration_spinners = set_duration_spinners
 
 $(document).ready(ready)
 $(document).on('page:load', ready)
