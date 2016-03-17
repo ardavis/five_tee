@@ -1,8 +1,10 @@
 - unless flash[:success].nil?
   .alert.alert-success #{flash[:success]}
 = simple_form_for @tag, remote: true do |f|
-  = f.input :name, placeholder: 'Tag Name', label: false
+  = f.input :name, placeholder: 'Tag Name', label: false, autofocus: true
   = f.submit 'Save', class: 'btn btn-primary'
+  = f.hidden_field :current_task, @task.id
+  = @task.id
 %br
 #tag-list
   - Tag.all.each do |tag|

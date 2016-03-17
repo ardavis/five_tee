@@ -4,6 +4,8 @@ $("#complete-tasks").html("<%=j render 'complete_tasks' %>")
 $("#show-modal").html("<%=j render 'tasks/modals/show_modal' %>")
 $("#duration-modal-body").html("<%=j render 'tasks/forms/duration_form' %>")
 
-set_duration_spinners()
+set_timer('task', 'string')
+set_timer($('.running_time'), $('.displays_timer'))
+set_timer($('.displays_timer'), $('.edit_timer'))
 
-set_timer()
+set_duration_spinners()
