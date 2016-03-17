@@ -4,9 +4,7 @@ ready = ->
 #  # Use the existing duration as the start time
 #
 #
-
-
-  set_timer()
+  set_timer('task', 'string')
 
 
   $('#new_task_btn').click ->
@@ -25,28 +23,46 @@ ready = ->
     $('#task_title').focus()
 
 
-
-
 date_picker = ->
-  $('#task_due_date').click (e) ->
+  $('.due_date').click (e) ->
     e.preventDefault()
-    $(this).datepicker
-      format: 'yyyy-mm-dd'
+    $(this).datepicker({
+      format: 'yyyy-mm-dd',
       todayHighlight: true
+    })
     $(this).datepicker('show')
 
 
-set_timer = ->
-  task_element = $("#task-running")
-  running_time_element = task_element.find('.running_time')
-  duration_field = task_element.find('input#duration_field')
-  started_field = task_element.find('input#started_field')
-  now = Date.now() / 1000 | 0
-  start_time = +duration_field.val() + now - started_field.val()
-  running_time_element.timer({
-    seconds: start_time,
-    format: '%h hr %m min %s sec'
-  })
+set_timer = (duration_source, target) ->
+  task_running = $('input#task_running').val() == 'true'
+  if duration_source == 'task'
+    task_element = $("#task-running")
+    running_time_element = task_element.find('.running_time')
+    duration_field = task_element.find('input#duration_field')
+    started_field = task_element.find('input#started_field')
+    now = Date.now() / 1000 | 0
+    start_time = +duration_field.val() + now - started_field.val()
+    target = running_time_element
+    task_running = true
+  else
+    duration_array = duration_source.html().split(' ')
+    start_time = +duration_array[0] * 3600
+    start_time += +duration_array[2] * 60
+    start_time += +duration_array[4]
+  if task_running
+    target.timer({
+      seconds: start_time,
+      format: '%h hr %m min %s sec'
+    })
+
+# set_show_timer = ->
+#   duration = $('input#duration_for_show_timer').val()
+#   if (duration != undefined)
+#     $('.displays_timer').timer({
+#       seconds: duration,
+#       format: '%h hr %m min %s sec'
+#     })
+
 
 set_hidden_field = ->
   duration = $("input[name='hours_input']").val() * 3600
@@ -62,10 +78,10 @@ set_duration_field = ->
   $('#duration_submit').val(duration)
 
 set_duration_spinners = ->
-  current_duration = $('input#duration_update_input').val()
-  hours = Math.floor(current_duration / 3600)
-  min = Math.floor(current_duration / 60 % 60)
-  sec = current_duration % 60
+  current_duration = $('.edit_timer').html().split(' ')
+  hours = +current_duration[0]
+  min = +current_duration[2]
+  sec = +current_duration[4]
 
   $("input[name='hours_input']").TouchSpin({
     verticalbuttons: true,
@@ -74,6 +90,7 @@ set_duration_spinners = ->
     min: 0,
     initval: hours
   })
+
 
   $("input[name='mins_input']").TouchSpin({
     verticalbuttons: true,
@@ -97,6 +114,7 @@ set_duration_spinners = ->
 
 
 window.set_timer = set_timer
+# window.set_show_timer = set_show_timer
 window.date_picker = date_picker
 window.set_duration_field = set_duration_field
 window.set_hidden_field = set_hidden_field

@@ -8,10 +8,11 @@ class TagsController < ApplicationController
       if @tag.save
         @tag = Tag.new()
         @task = Task.new()
-        format.js { render 'new_tag.js.coffee.erb'}
+        byebug
+        format.js { render 'new_tag.coffee.erb'}
         flash[:success] = "Tag successfully created!"
       else
-        format.js {render 'fail_tag.js.erb'}
+        format.js {render 'fail_tag.coffee.erb'}
       end
     end
   end
@@ -20,7 +21,7 @@ class TagsController < ApplicationController
     respond_to do |format|
       @tag = Tag.new()
       flash[:success] = nil
-      format.js { render 'new_tag_form.js.coffee.erb' }
+      format.js { render 'new_tag_form.coffee.erb' }
     end
   end
 
@@ -30,7 +31,7 @@ class TagsController < ApplicationController
       @tag.destroy
       @tag = Tag.new()
       flash[:success] = "Tag successfully deleted!"
-      format.js { render 'after_tag_delete.js.erb' }
+      format.js { render 'after_tag_delete.coffee.erb' }
     end
   end
 

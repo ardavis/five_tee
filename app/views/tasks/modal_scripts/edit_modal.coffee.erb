@@ -1,5 +1,6 @@
 $('#edit-modal-body').html('<%=j render 'tasks/forms/form' %>')
-
 $('#editModal').modal('toggle')
 $('#showModal').modal('toggle')
+date_picker()
 
+set_timer($('.displays_timer'), $('.edit_timer'))

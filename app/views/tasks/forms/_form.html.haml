@@ -1,5 +1,6 @@
 - unless flash[:success].to_s == '' or flash[:success].to_s.split(' ').include? 'Duration'
   .alert.alert-success #{flash[:success]}
+= hidden_field_tag :last_tag_made, Tag.order('created_at DESC').first.id if Tag.all.count > 0
 = simple_form_for @task, remote: true do |f|
   = f.input :title
   %br
@@ -10,13 +11,18 @@
   %br
   .form-group
     = f.label :due_date
-    = f.text_field :due_date, placeholder: "YYYY-MM-DD", class: 'form-control'
+    = f.text_field :due_date, placeholder: "YYYY-MM-DD", class: 'form-control due_date'
   %br
-  = f.input :desc, label: 'Description'
+  = f.input :desc, label: 'Description', id: 'desc_input'
   - if @task.created_at
     .form-group
       = f.label :duration
-      = duration_display(@task.duration)
+      %span Duration:
+      %span.edit_timer
+        - if @task and @task.duration
+          = duration_display(@task.duration)
+        - else
+          Not started
       = link_to 'Edit', {action: "update_duration_modal", format: :js, remote: true, task: @task}, class: 'btn btn-primary'
 
 
