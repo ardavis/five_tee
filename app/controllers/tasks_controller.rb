@@ -32,6 +32,10 @@ class TasksController < ApplicationController
 
   def update_duration
     respond_to do |format|
+      if @task.started_at
+        @task.pause!
+        @task.start!(current_user)
+      end
       if @task.update_attributes(task_params)
         get_sorted_tasks
         format.js { render 'tasks/reload_scripts/reload_updated_duration.coffee.erb'}
@@ -94,8 +98,6 @@ class TasksController < ApplicationController
       end
     end
   end
-
-
 
 
   def destroy

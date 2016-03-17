@@ -1,3 +1,6 @@
+Array::real_strings = ->
+  (elem for elem in this when elem != '' and elem != "\n")
+
 ready = ->
 #
 #  # If a task is running on page load, start the timer
@@ -6,11 +9,6 @@ ready = ->
 #
   set_timer('task', 'string')
 
-
-  $('#new_task_btn').click ->
-    # May need to re-render the form due to potential instance
-    # variable issues.
-    $('#newModal').modal('toggle')
 
   date_picker()
 
@@ -55,13 +53,6 @@ set_timer = (duration_source, target) ->
       format: '%h hr %m min %s sec'
     })
 
-# set_show_timer = ->
-#   duration = $('input#duration_for_show_timer').val()
-#   if (duration != undefined)
-#     $('.displays_timer').timer({
-#       seconds: duration,
-#       format: '%h hr %m min %s sec'
-#     })
 
 
 set_hidden_field = ->
@@ -78,7 +69,8 @@ set_duration_field = ->
   $('#duration_submit').val(duration)
 
 set_duration_spinners = ->
-  current_duration = $('.edit_timer').html().split(' ')
+  task_running = $('input#task_running').val() == 'true'
+  current_duration = $('.edit_timer').html().split(' ').real_strings()
   hours = +current_duration[0]
   min = +current_duration[2]
   sec = +current_duration[4]
@@ -114,7 +106,6 @@ set_duration_spinners = ->
 
 
 window.set_timer = set_timer
-# window.set_show_timer = set_show_timer
 window.date_picker = date_picker
 window.set_duration_field = set_duration_field
 window.set_hidden_field = set_hidden_field
