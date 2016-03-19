@@ -88,13 +88,12 @@ class TasksController < ApplicationController
   def update
     respond_to do |format|
       if @task.update_attributes(task_params)
+        @task.update_attributes(due_date: fix_date(task_params["due_date"]))
         get_sorted_tasks
-        format.js { render 'tasks/reload_scripts/reload_on_update.coffee.erb'
-        }
-        flash[:success] = task_params.has_key?(:duration) ? "Duration succesfully edited!" : "Task successfully updated"
+        flash[:success] = "Task succesfully edited!"
+        format.js { render 'tasks/reload_scripts/reload_on_update.coffee.erb' }
       else
-        format.js {render 'tasks/reload_scripts/reload_on_fail_update.coffee.erb'
-        }
+        format.js { render 'tasks/reload_scripts/reload_on_fail_update.coffee.erb' }
       end
     end
   end
@@ -173,4 +172,11 @@ class TasksController < ApplicationController
   def task_params
     params.require(:task).permit(:title, :desc, :due_date, :tag_id, :duration)
   end
+
+  def fix_date(date)
+    fixed_date = date[3..5]
+    fixed_date << date[0..2]
+    fixed_date << date[6..9]
+  end
+
 end

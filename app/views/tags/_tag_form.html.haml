@@ -3,8 +3,7 @@
 = simple_form_for @tag, remote: true do |f|
   = f.input :name, placeholder: 'Tag Name', label: false, autofocus: true
   = f.submit 'Save', class: 'btn btn-primary'
-  = f.hidden_field :current_task, @task.id
-  = @task.id
+  = hidden_field_tag :current_task, @task.id
 %br
 #tag-list
   - Tag.all.each do |tag|

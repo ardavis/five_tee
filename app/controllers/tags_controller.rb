@@ -7,8 +7,7 @@ class TagsController < ApplicationController
     respond_to do |format|
       if @tag.save
         @tag = Tag.new()
-        @task = Task.new()
-        byebug
+        @task = params[:current_task].present? ? Task.find(params[:current_task].to_i) : Task.new()
         format.js { render 'new_tag.coffee.erb'}
         flash[:success] = "Tag successfully created!"
       else
@@ -18,8 +17,9 @@ class TagsController < ApplicationController
   end
 
   def new_tag_form
+    @tag = Tag.new()
+    @task = params[:task_id].present? ? Task.find(params[:task_id].to_i) : Task.new()
     respond_to do |format|
-      @tag = Tag.new()
       flash[:success] = nil
       format.js { render 'new_tag_form.coffee.erb' }
     end

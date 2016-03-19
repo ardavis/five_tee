@@ -11,8 +11,7 @@
 
     .col-md-4
       Finished
-      = distance_of_time_in_words_to_now(task.completed_at)
-      ago
+      = finished_display(task.completed_at)
       .pull-right
         = link_to restart_task_path(task), class: 'btn btn-default', format: :js, remote: true do
           %span.glyphicon.glyphicon-arrow-up
