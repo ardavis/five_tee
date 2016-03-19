@@ -1,4 +1,5 @@
-$("#new-modal-body").html("<%=j render 'tasks/forms/form' %>");
+$('#edit-modal').html('')
+$('#new-modal').html("<%=j render 'tasks/modals/new_modal' %>")
 $('#newModal').modal('toggle')
 
 date_picker()

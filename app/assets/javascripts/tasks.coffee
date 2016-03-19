@@ -25,10 +25,23 @@ date_picker = ->
   $('.due_date').click (e) ->
     e.preventDefault()
     $(this).datepicker({
-      format: 'yyyy-mm-dd',
+      format: 'mm-dd-yyyy'
       todayHighlight: true
     })
     $(this).datepicker('show')
+
+    $('.due_date').on 'change', ->
+      $('.datepicker').hide()
+
+
+fix_date_input = ->
+  date_elem = $('.due_date')
+  unless date_elem.val() == ''
+    broken_date = date_elem.val()
+    fixed_date = broken_date[5..9]
+    fixed_date += '-'
+    fixed_date += broken_date[0..3]
+    date_elem.val(fixed_date)
 
 
 set_timer = (duration_source, target) ->
@@ -52,6 +65,11 @@ set_timer = (duration_source, target) ->
       seconds: start_time,
       format: '%h hr %m min %s sec'
     })
+
+set_all_timers = () ->
+  set_timer('task', 'string')
+  set_timer($('.running_time'), $('.displays_timer'))
+  set_timer($('.displays_timer'), $('.edit_timer'))
 
 
 
@@ -102,14 +120,29 @@ set_duration_spinners = ->
   $('.duration_input').on('input', set_hidden_field)
   $('.bootstrap-touchspin-up, .bootstrap-touchspin-down').click (set_hidden_field)
 
+store_form_state = () ->
+  title = $('#task_title').val()
+  due_date = $('.due_date').val()
+  desc = $('#task_desc').val()
+  tag = $('#task_tag_id').val()
+  return {'title': title, 'due_date': due_date, 'desc': desc, 'tag': tag}
 
+set_form_state = (state) ->
+  $('#task_title').val(state['title'])
+  $('.due_date').val(state['due_date'])
+  $('#task_desc').val(state['desc'])
+  $('#task_tag_id').val(state['tag'])
 
-
+window.fix_date_input = fix_date_input
 window.set_timer = set_timer
+window.set_all_timers = set_all_timers
 window.date_picker = date_picker
 window.set_duration_field = set_duration_field
 window.set_hidden_field = set_hidden_field
 window.set_duration_spinners = set_duration_spinners
+window.store_form_state = store_form_state
+window.set_form_state = set_form_state
+
 
 $(document).ready(ready)
 $(document).on('page:load', ready)

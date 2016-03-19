@@ -2,6 +2,6 @@ wb = xlsx_package.workbook
 wb.add_worksheet(name: "taskSheet") do |sheet|
     sheet.add_row ["Title", "Description", "Completed At", "Duration"]
     @tasks.each do |task|
-	sheet.add_row [task.title,task.desc,task.completed_at,"#{(task.duration.to_f/3600).round(3)} hr."]
+	sheet.add_row [task.title,task.desc,task.completed_at,"#{duration_display(task.duration)}"]
     end
 end

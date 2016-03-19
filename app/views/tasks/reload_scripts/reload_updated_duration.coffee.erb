@@ -1,11 +1,12 @@
+state = store_form_state() 
 $("#edit-modal-body").html("<%=j render 'tasks/forms/form' %>")
 $("#incomplete-tasks").html("<%=j render 'incomplete_tasks' %>")
 $("#complete-tasks").html("<%=j render 'complete_tasks' %>")
 $("#show-modal").html("<%=j render 'tasks/modals/show_modal' %>")
-$("#duration-modal-body").html("<%=j render 'tasks/forms/duration_form' %>")
+$("#durationModal").modal('toggle')
 
-set_timer('task', 'string')
-set_timer($('.running_time'), $('.displays_timer'))
-set_timer($('.displays_timer'), $('.edit_timer'))
+set_form_state(state)
+
+set_all_timers()
 
 set_duration_spinners()
