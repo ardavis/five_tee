@@ -70,6 +70,7 @@ class TasksController < ApplicationController
 
   def create
     @task = current_user.tasks.new(task_params)
+    @task.update_attributes(due_date: fix_date(task_params["due_date"]))
     respond_to do |format|
       get_sorted_tasks
       if @task.save
@@ -174,6 +175,7 @@ class TasksController < ApplicationController
   end
 
   def fix_date(date)
+    return '' if date.blank?
     fixed_date = date[3..5]
     fixed_date << date[0..2]
     fixed_date << date[6..9]

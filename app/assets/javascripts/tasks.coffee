@@ -133,6 +133,12 @@ set_form_state = (state) ->
   $('#task_desc').val(state['desc'])
   $('#task_tag_id').val(state['tag'])
 
+set_focus = (target) ->
+  setTimeout (->
+    target.focus()
+  ), 160
+
+window.set_focus = set_focus
 window.fix_date_input = fix_date_input
 window.set_timer = set_timer
 window.set_all_timers = set_all_timers
