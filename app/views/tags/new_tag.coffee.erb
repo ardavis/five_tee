@@ -7,5 +7,5 @@ set_form_state(state)
 last_tag_id = $('input#last_tag_made').val()
 $("select[name='task[tag_id]']").val(last_tag_id)
 date_picker()
-
+set_focus($('#task_title'))
 set_all_timers()

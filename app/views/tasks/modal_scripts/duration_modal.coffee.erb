@@ -1,4 +1,6 @@
 $("#duration-modal-body").html("<%=j render 'tasks/forms/duration_form' %>")
 set_duration_spinners()
 $('#durationModal').modal('toggle')
-
+$('#durationModal').on('hidden.bs.modal', function () {
+  set_focus($('#task_title'))
+})
