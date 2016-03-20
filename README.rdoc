@@ -3,3 +3,5 @@ To do:
 - Make due date display better
 
 - Make tag list better
+
+- Sort tasks dropdown

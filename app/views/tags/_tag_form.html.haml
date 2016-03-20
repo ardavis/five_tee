@@ -5,7 +5,7 @@
   = f.submit 'Save', class: 'btn btn-primary'
   = hidden_field_tag :current_task, @task.id
 %br
-#tag-list
+#tag-list.scroll
   - Tag.all.each do |tag|
     .row.well
       .col-sm-4
