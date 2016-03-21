@@ -6,8 +6,14 @@
   = f.label :tag, 'Tag:'
   .row
     .col-md-6
-      = f.collection_select :tag_id, current_user.tags.order('name ASC').all, :id, :name, include_blank: true, class: 'tag_select'
-      = link_to 'new tag', new_tag_modal_path(task_id: @task ? @task.id : nil), format: :js, remote: true
+      -#= f.collection_select :tag_id, current_user.tags.order('name ASC').all, :id, :name, include_blank: true, class: 'tag_select'
+      -#= link_to 'new tag', new_tag_modal_path(task_id: @task ? @task.id : nil), format: :js, remote: true
+      %button.btn.btn-default.dropdown-toggle{'data-toggle': 'dropdown', type: 'button'}
+        Action
+        %span.caret
+      %ul.dropdown-menu.p
+        %li 1
+        %li 2
   %br
   .form-group
     = f.label :due_date, 'Due date:'
