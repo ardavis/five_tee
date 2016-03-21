@@ -28,6 +28,7 @@ module TasksHelper
     if partial == 'task_form'
       return true if flash_array.include? 'Task'
       return true if flash_array.include? 'Duration'
+      return true if flash_array.include? 'Tag'
     elsif partial == 'tag_form'
       return true if flash_array.include? 'Tag'
     end

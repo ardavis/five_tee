@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :tasks
+  has_many :tags
 
   def incomplete_tasks
     tasks.incomplete

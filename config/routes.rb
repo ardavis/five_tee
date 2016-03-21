@@ -7,18 +7,19 @@ Rails.application.routes.draw do
 
   resources :tags
 
-  get '/tag_form' => 'tags#new_tag_form', as: 'tag_form'
+  get '/new_tag_modal' => 'modals#new_tag_modal', as: 'new_tag_modal'
   get '/tag/:id/destroy' => 'tags#destroy', as: 'destroy_tag'
+  get '/manage_tag_modal' => 'modals#manage_tag_modal', as: 'manage_tag_modal'
 
   get '/tasks/:id/destroy' => 'tasks#destroy', as: 'destroy_task'
   get '/tasks/:id/complete' => 'tasks#complete', as: 'complete_task'
   get '/tasks/:id/start' => 'tasks#start', as: 'start_task'
   get '/tasks/:id/pause' => 'tasks#pause', as: 'pause_task'
   get '/tasks/:id/restart' => 'tasks#restart', as: 'restart_task'
-  get '/show_modal' => 'tasks#show_modal', as: 'show_modal'
-  get '/edit_modal' => 'tasks#edit_modal', as: 'edit_modal'
-  get '/new_task_form' => 'tasks#new_task_form', as: 'new_task_form'
-  get '/update_duration_modal' => 'tasks#update_duration_modal', as: 'update_duration_modal'
+  get '/show_task_modal' => 'modals#show_task_modal', as: 'show_task_modal'
+  get '/edit_task_modal' => 'modals#edit_task_modal', as: 'edit_task_modal'
+  get '/new_task_modal' => 'modals#new_task_modal', as: 'new_task_modal'
+  get '/update_duration_modal' => 'modals#update_duration_modal', as: 'update_duration_modal'
   patch '/update_duration' => 'tasks#update_duration', as: 'update_duration'
   post '/create' => 'tasks#create', as: 'create'
   post '/tasks/test' => 'tasks#test', as: 'test'

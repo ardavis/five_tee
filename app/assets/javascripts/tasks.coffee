@@ -136,7 +136,9 @@ set_form_state = (state) ->
 set_focus = (target) ->
   setTimeout (->
     target.focus()
-  ), 160
+  ), 500
+
+
 
 window.set_focus = set_focus
 window.fix_date_input = fix_date_input

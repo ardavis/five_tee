@@ -1,7 +1,7 @@
 state = store_form_state()
 $("#new-modal-body").html("<%=j render 'tasks/forms/form' %>")
 $("#edit-modal-body").html("<%=j render 'tasks/forms/form' %>")
-$('#tagModal').modal('toggle')
+$('#newTagModal').modal('toggle')
 
 set_form_state(state)
 last_tag_id = $('input#last_tag_made').val()

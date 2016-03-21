@@ -1,29 +1,30 @@
 - if show_flash_for('task_form')
   .alert.alert-success #{flash[:success]}
-= hidden_field_tag :last_tag_made, Tag.order('created_at DESC').first.id if Tag.all.count > 0
+= hidden_field_tag :last_tag_made, current_user.tags.order('created_at DESC').first.id if current_user.tags.count > 0
 = simple_form_for @task, remote: true do |f|
-  = f.input :title
-  %br
-  = f.label :tag
-  = f.collection_select :tag_id, Tag.order('name ASC').all, :id, :name, include_blank: true, class: 'tag_select'
-  = link_to "Create new tag", {controller: "tags", action: "new_tag_form", task_id: @task ? @task.id : nil, format: :js, remote: true}
-  %br
+  = f.input :title, label: 'Title:'
+  = f.label :tag, 'Tag:'
+  .row
+    .col-md-6
+      = f.collection_select :tag_id, current_user.tags.order('name ASC').all, :id, :name, include_blank: true, class: 'tag_select'
+      = link_to 'new tag', new_tag_modal_path(task_id: @task ? @task.id : nil), format: :js, remote: true
   %br
   .form-group
-    = f.label :due_date
-    = f.text_field :due_date, placeholder: "YYYY-MM-DD", class: 'form-control due_date'
-  %br
-  = f.input :desc, label: 'Description', id: 'desc_input'
+    = f.label :due_date, 'Due date:'
+    = f.text_field :due_date, placeholder: 'MM-DD-YYYY', class: 'form-control due_date'
+  = f.input :desc, label: 'Description:', id: 'desc_input'
   - if @task.created_at
     .form-group
-      = f.label :duration
-      %span Duration:
-      %span.edit_timer
-        - if @task and @task.duration
-          = duration_display(@task.duration)
-        - else
-          Not started
-      = link_to 'Edit', {controller: 'tasks', action: "update_duration_modal", format: :js, remote: true, task: @task}, class: 'btn btn-primary'
+      = f.label :duration, 'Duration:'
+      .row
+        .col-md-6
+          %span.edit_timer
+            - if @task and @task.duration
+              = duration_display(@task.duration)
+            - else
+              Not started
+          %span= link_to 'edit duration', update_duration_modal_path(id: @task.id), format: :js, remote: true
+
 
 
   = f.submit 'Save', class: 'btn btn-primary', id: 'save_task_btn'

@@ -1,0 +1,9 @@
+$('#new-tag-modal-body').html('<%=j render '/tags/new_tag_form' %>')
+$('#newTagModal').modal('toggle')
+
+$('#newTagModal').on('hidden.bs.modal', function () {
+  set_focus($('#task_title'))
+})
+
+set_focus($('#tag_name'))
+

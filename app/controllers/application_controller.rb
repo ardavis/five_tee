@@ -4,4 +4,15 @@ class ApplicationController < ActionController::Base
   # protect_from_forgery with: :exception
 
   before_action :authenticate_user!
+
+  def call_coffeescript(path)
+    respond_to do |format|
+      format.js {render path}
+    end
+  end
+
+  def reset_flash
+    flash[:success] = nil
+  end
+
 end

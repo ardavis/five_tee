@@ -1,0 +1,8 @@
+- unless flash[:success].nil?
+  .alert.alert-success #{flash[:success]}
+= simple_form_for @tag, remote: true do |f|
+  = f.input :name, placeholder: 'Tag Name', label: false, autofocus: true
+  = f.input :user_id, as: :hidden, input_html: {value: current_user.id}
+  = f.submit 'Save', class: 'btn btn-primary'
+  = hidden_field_tag :current_task, @task.id
+  = link_to 'Manage tags', manage_tag_modal_path, format: :js, remote: true
