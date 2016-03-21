@@ -3,7 +3,6 @@ class TasksController < ApplicationController
   before_action :get_task, only: [:show, :update, :update_duration, :destroy, :complete,
                                   :start, :restart, :pause]
 
-
   def index
     respond_to do |format|
       @task = current_user.tasks.new
@@ -46,6 +45,7 @@ class TasksController < ApplicationController
 
 
   def show_modal
+    flash[:success] = nil
     @task = Task.find(params[:task])
     if @task.started_at
       @task.pause!

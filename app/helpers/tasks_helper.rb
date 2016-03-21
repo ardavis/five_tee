@@ -27,6 +27,7 @@ module TasksHelper
     flash_array = flash[:success].to_s.split(' ')
     if partial == 'task_form'
       return true if flash_array.include? 'Task'
+      return true if flash_array.include? 'Duration'
     elsif partial == 'tag_form'
       return true if flash_array.include? 'Tag'
     end

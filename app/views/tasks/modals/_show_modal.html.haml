@@ -4,6 +4,8 @@
     / Modal content
     .modal-content
       .modal-header
+        - if show_flash_for('task_form')
+          .alert.alert-success #{flash[:success]}
         %button.close{"data-dismiss" => "modal", :type => "button"} &times;
         %h4.modal-title= @task.title
       .modal-body#show-modal-body
