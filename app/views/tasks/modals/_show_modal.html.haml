@@ -11,8 +11,13 @@
       .modal-body#show-modal-body
         = hidden_field_tag :task_running, @task.running?
 
-        = label :desc, 'Description:'
-        %p= @task.desc
+        .row
+          .col-md-8
+            = label :desc, 'Description:'
+            %p= @task.desc
+          .col-xs-4
+            = label :tag, 'Tag:'
+            %p= @task.tag.name if @task.tag
         .row.table-bordered
           .col-xs-4
             = label :due_date, 'Due date:'
@@ -24,11 +29,13 @@
             = label :completed_at, 'Completed at:'
             %p= @task.completed_at.strftime('%m/%d/%Y') if @task.completed_at
         = label :duration, 'Duration:'
-        .displays_timer
-          - if @task and @task.duration
-            = duration_display(@task.duration)
-          - else
-            Not started
+        .row
+          .displays_timer.col-xs-4
+            - if @task and @task.duration
+              = duration_display(@task.duration)
+            - else
+              Not started
+
 
         %br
         %br

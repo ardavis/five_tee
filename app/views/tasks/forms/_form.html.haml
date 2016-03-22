@@ -3,17 +3,11 @@
 = hidden_field_tag :last_tag_made, current_user.tags.order('created_at DESC').first.id if current_user.tags.count > 0
 = simple_form_for @task, remote: true do |f|
   = f.input :title, label: 'Title:'
-  = f.label :tag, 'Tag:'
   .row
-    .col-md-6
-      -#= f.collection_select :tag_id, current_user.tags.order('name ASC').all, :id, :name, include_blank: true, class: 'tag_select'
-      -#= link_to 'new tag', new_tag_modal_path(task_id: @task ? @task.id : nil), format: :js, remote: true
-      %button.btn.btn-default.dropdown-toggle{'data-toggle': 'dropdown', type: 'button'}
-        Action
-        %span.caret
-      %ul.dropdown-menu.p
-        %li 1
-        %li 2
+    .col-xs-3
+      = f.input :tag, collection: current_user.tags, input_html: {class: '.form-control', id: 'tag_dropdown', selected: @task ? @task.tag : nil }
+    .col-xs-5
+      = link_to 'new tag', new_tag_modal_path(task_id: @task ? @task.id : nil), format: :js, remote: true
   %br
   .form-group
     = f.label :due_date, 'Due date:'

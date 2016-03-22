@@ -22,6 +22,7 @@ class TasksController < ApplicationController
   end
 
   def create
+    byebug
     @task = current_user.tasks.new(task_params)
     @task.update_attributes(due_date: fix_date(task_params['due_date']))
       get_sorted_tasks
@@ -110,7 +111,7 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:title, :desc, :due_date, :tag_id, :duration)
+    params.require(:task).permit(:title, :desc, :due_date, :tag, :duration)
   end
 
   def fix_date(date)
