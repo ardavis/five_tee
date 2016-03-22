@@ -12,7 +12,6 @@ ready = ->
 
   set_timer('task', 'string')
 
-
   date_picker()
 
 
@@ -155,6 +154,7 @@ set_tag_select_to_last = ->
   select_name = $('#last_tag_name').val()
   $('#select_tag').html(select_name)
   $('#hidden_tag_input').val(select_id)
+
 
 window.set_tag_select_to_last = set_tag_select_to_last
 window.set_tag_select_listener = set_tag_select_listener
