@@ -2,7 +2,7 @@
 - @completed_tasks.each do |task|
   .row.well
     .col-md-4
-      = link_to task.title, {action: "show_modal", format: :js, remote: true, task: task}
+      = link_to task.title, show_task_modal_path, format: :js, remote: true, task: task
 
     .col-md-4
       Time took:

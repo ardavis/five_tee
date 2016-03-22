@@ -5,6 +5,9 @@ $("#complete-tasks").html("<%=j render 'complete_tasks' %>")
 $("#show-modal").html("<%=j render 'tasks/modals/show_modal' %>")
 $("#durationModal").modal('toggle')
 
+set_focus($('#task_title'))
+
+
 set_form_state(state)
 
 set_all_timers()

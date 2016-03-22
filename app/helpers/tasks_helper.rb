@@ -27,10 +27,18 @@ module TasksHelper
     flash_array = flash[:success].to_s.split(' ')
     if partial == 'task_form'
       return true if flash_array.include? 'Task'
+      return true if flash_array.include? 'Duration'
+      return true if flash_array.include? 'Tag'
     elsif partial == 'tag_form'
       return true if flash_array.include? 'Tag'
     end
     false
+  end
+
+  def tag_dropdown_options()
+    list = [['Create new tag', nil]]
+    current_user.tags.order('name ASC').each {|t| list << [t.name, t.id]}
+    list
   end
 
 end

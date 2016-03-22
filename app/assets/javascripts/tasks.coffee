@@ -7,6 +7,9 @@ ready = ->
 #  # Use the existing duration as the start time
 #
 #
+
+#  $.get '/new_tag_modal', {remote: true}
+
   set_timer('task', 'string')
 
 
@@ -56,7 +59,7 @@ set_timer = (duration_source, target) ->
     target = running_time_element
     task_running = true
   else
-    duration_array = duration_source.html().split(' ')
+    duration_array = duration_source.html().split(' ').real_strings()[-6..-1]
     start_time = +duration_array[0] * 3600
     start_time += +duration_array[2] * 60
     start_time += +duration_array[4]
@@ -68,8 +71,9 @@ set_timer = (duration_source, target) ->
 
 set_all_timers = () ->
   set_timer('task', 'string')
-  set_timer($('.running_time'), $('.displays_timer'))
-  set_timer($('.displays_timer'), $('.edit_timer'))
+  if $('.running_time').html()
+    set_timer($('.running_time'), $('.displays_timer'))
+    set_timer($('.displays_timer'), $('.edit_timer'))
 
 
 
@@ -133,6 +137,28 @@ set_form_state = (state) ->
   $('#task_desc').val(state['desc'])
   $('#task_tag_id').val(state['tag'])
 
+set_focus = (target) ->
+  setTimeout (->
+    target.focus()
+  ), 500
+
+
+set_tag_select_listener = ->
+  $('.tag_option').on 'click', ->
+    select_name = $(this).html()
+    select_id = +$(this).attr('value')
+    $('#select_tag').html(select_name)
+    $('#hidden_tag_input').val(select_id)
+
+set_tag_select_to_last = ->
+  select_id =  $('#last_tag_id').val()
+  select_name = $('#last_tag_name').val()
+  $('#select_tag').html(select_name)
+  $('#hidden_tag_input').val(select_id)
+
+window.set_tag_select_to_last = set_tag_select_to_last
+window.set_tag_select_listener = set_tag_select_listener
+window.set_focus = set_focus
 window.fix_date_input = fix_date_input
 window.set_timer = set_timer
 window.set_all_timers = set_all_timers
