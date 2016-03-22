@@ -1,12 +1,12 @@
 #tag-list.scroll
-  - current_user.tags.all.each do |tag|
+  - current_user.tags.order('name ASC').each do |tag|
     .row.well
       .col-sm-4
         = tag.name
       .col-sm-4
         Tasks:
         - current_user.tasks.where(tag_id: tag.id).all.each do |task|
-          = task.name
+          = task.title
       .col-sm-4
         .pull-right
           = link_to destroy_tag_path(tag), class: 'btn btn-danger', format: :js, remote: true, data: { confirm: 'Are you sure you want to delete this tag?' } do

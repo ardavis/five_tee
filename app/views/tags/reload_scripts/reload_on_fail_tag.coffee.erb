@@ -1,1 +1,12 @@
-$('#new-tag-modal-body').html('<%=j render '/tags/tag_form' %>');
+state = store_form_state()
+$("#new-modal-body").html("<%=j render 'tasks/forms/form' %>")
+$("#edit-modal-body").html("<%=j render 'tasks/forms/form' %>")
+$("#new-tag-modal-body").html("<%=j render 'tags/new_tag_form' %>")
+
+set_form_state(state)
+last_tag_id = $('input#last_tag_made').val()
+$('#tag_dropdown').val(last_tag_id)
+date_picker()
+set_focus($('#task_title'))
+set_all_timers()
+set_tag_select_to_last()

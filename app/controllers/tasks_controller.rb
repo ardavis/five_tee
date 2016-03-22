@@ -16,13 +16,11 @@ class TasksController < ApplicationController
     end
     if @task.update_attributes(task_params)
       get_sorted_tasks
-      flash[:success] = 'Duration succesfully edited!'
       call_coffeescript('tasks/reload_scripts/reload_updated_duration.coffee.erb')
     end
   end
 
   def create
-    byebug
     @task = current_user.tasks.new(task_params)
     @task.update_attributes(due_date: fix_date(task_params['due_date']))
       get_sorted_tasks
@@ -40,7 +38,6 @@ class TasksController < ApplicationController
     if @task.update_attributes(task_params)
       @task.update_attributes(due_date: fix_date(task_params['due_date']))
       get_sorted_tasks
-      flash[:success] = 'Task succesfully edited!'
       call_coffeescript('tasks/reload_scripts/reload_on_update.coffee.erb')
     else
       call_coffeescript('tasks/reload_scripts/reload_on_fail_update.coffee.erb')
@@ -111,7 +108,7 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:title, :desc, :due_date, :tag, :duration)
+    params.require(:task).permit(:title, :desc, :due_date, :tag_id, :duration)
   end
 
   def fix_date(date)

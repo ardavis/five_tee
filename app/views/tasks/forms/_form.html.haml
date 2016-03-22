@@ -1,13 +1,28 @@
 - if show_flash_for('task_form')
   .alert.alert-success #{flash[:success]}
-= hidden_field_tag :last_tag_made, current_user.tags.order('created_at DESC').first.id if current_user.tags.count > 0
+- if current_user.tags.count > 0
+  = hidden_field_tag :last_tag_id, current_user.tags.last.id
+  = hidden_field_tag :last_tag_name, current_user.tags.last.name
 = simple_form_for @task, remote: true do |f|
   = f.input :title, label: 'Title:'
   .row
     .col-xs-3
-      = f.input :tag, collection: current_user.tags, input_html: {class: '.form-control', id: 'tag_dropdown', selected: @task ? @task.tag : nil }
-    .col-xs-5
-      = link_to 'new tag', new_tag_modal_path(task_id: @task ? @task.id : nil), format: :js, remote: true
+      = label :tag_id, 'Tag:'
+      = f.input :tag_id, as: :hidden, input_html: {id: 'hidden_tag_input', value: @task.tag ? @task.tag.id : nil}
+      .dropdown
+        %button.btn.btn-secondary.dropdown-toggle{'data-toggle': 'dropdown', type: 'button'}
+          %span#select_tag= @task.tag ? @task.tag.name : '-----'
+          %span.caret
+        %ul.dropdown-menu#tag_dropdown
+          %li
+            = link_to 'Create New Tag', new_tag_modal_path(task: @task), class: 'dropdown-item', remote: true
+          %option
+            .divider
+          - current_user.tags.order('name ASC').each do |tag|
+            %li
+              = link_to tag.name, '#', value: tag.id, class: 'tag_option dropdown-item'
+
+
   %br
   .form-group
     = f.label :due_date, 'Due date:'

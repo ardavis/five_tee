@@ -4,7 +4,7 @@
 
     .col-md-4
       = link_to task.title, show_task_modal_path(id: task.id), format: :js, remote: true
-    .col-md-4.running_time
+    .col-md-4{class: task.started_at ? 'running_time' : ''}
       = hidden_field_tag :duration_field, task.duration
       = hidden_field_tag :started_field, task.started_at.to_i
       - if task.duration
