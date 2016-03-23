@@ -35,10 +35,15 @@ module TasksHelper
     false
   end
 
-  def tag_dropdown_options()
+  def tag_dropdown_options
     list = [['Create new tag', nil]]
     current_user.tags.order('name ASC').each {|t| list << [t.name, t.id]}
     list
   end
 
+  def sort_by_options
+    list = []
+    list << {label: 'Alphabetical', sql: 'title ASC'}
+    list << {label: 'Newest to Oldest', sql: 'created_at DESC'}
+  end
 end

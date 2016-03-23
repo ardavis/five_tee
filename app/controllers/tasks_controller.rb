@@ -3,6 +3,8 @@ class TasksController < ApplicationController
   before_action :get_task, only: [:show, :update, :update_duration, :destroy, :complete,
                                   :start, :restart, :pause]
 
+  before_action :get_filter_tag, only: [:start, :pause, :complete, :destroy, :restart]
+
   def index
     get_task
     @tag = current_user.tags.new
@@ -97,7 +99,19 @@ class TasksController < ApplicationController
     @completed_tasks = current_user.completed_tasks
   end
 
+
+  def filter_sort_by
+    byebug
+    get_sorted_tasks
+    @sort_option = params[:option]
+    call_coffeescript('tasks/reload_scripts/restart_reload.coffee.erb')
+  end
+
   private
+
+  def get_filter_tag
+    @filter_tag = params[:selected_tag]
+  end
 
   def get_task
     if params[:id]

@@ -157,6 +157,8 @@ set_tag_select_to_last = ->
   $('#hidden_tag_input').val(select_id)
 
 
+
+
 window.set_tag_select_to_last = set_tag_select_to_last
 window.set_tag_select_listener = set_tag_select_listener
 window.set_focus = set_focus

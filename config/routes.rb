@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   get '/tag/:id/destroy' => 'tags#destroy', as: 'destroy_tag'
   get '/manage_tag_modal' => 'modals#manage_tag_modal', as: 'manage_tag_modal'
 
+  get '/filter_sort_by' => 'tasks#filter_sort_by', as: 'filter_sort_by'
+
   get '/tasks/:id/destroy' => 'tasks#destroy', as: 'destroy_task'
   get '/tasks/:id/complete' => 'tasks#complete', as: 'complete_task'
   get '/tasks/:id/start' => 'tasks#start', as: 'start_task'

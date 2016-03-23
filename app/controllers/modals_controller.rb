@@ -4,6 +4,7 @@ class ModalsController < TasksController
   before_action :reset_flash, only: [:new_task_modal, :show_task_modal, :edit_task_modal, :update_duration_modal]
 
   def new_task_modal
+    byebug
     call_coffeescript('tasks/modal_scripts/new_modal.coffee.erb')
   end
 

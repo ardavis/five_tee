@@ -1,17 +1,17 @@
 %h1 Completed Tasks
-- @completed_tasks.each do |task|
+- @completed_tasks.where(tag_id: @selected_tag ? @selected_tag : current_user.tags.pluck(:id)).each do |task|
   .row.well
     .col-md-4
-      = link_to task.title, show_task_modal_path, format: :js, remote: true, task: task
+      %h4= link_to task.title, show_task_modal_path, format: :js, remote: true, task: task
 
-    .col-md-4
+    .col-md-4{style: 'margin-top: 10px;'}
       Time took:
       = duration_display(task.duration)
 
 
-    .col-md-4
+    .col-md-4{style: 'margin-top: 10px;'}
       Finished
       = finished_display(task.completed_at)
-      .pull-right
-        = link_to restart_task_path(task), class: 'btn btn-default', format: :js, remote: true do
+      .pull-right{style: 'margin-top: -8px;'}
+        = link_to restart_task_path(task, selected_tag: @selected_tag), class: 'btn btn-default', format: :js, remote: true do
           %span.glyphicon.glyphicon-arrow-up
