@@ -15,4 +15,9 @@
   = simple_form_for @task, url: update_duration_path, remote: true do |f|
     = hidden_field_tag :id, @task.id
     = f.hidden_field :duration, id: 'duration_submit'
+    #duration_form_filter_sort
+      = hidden_field_tag :filter_tag_id
+      = hidden_field_tag :sort_sql
+      = hidden_field_tag :sort_label
+
     = f.submit 'Save', class: 'btn btn-primary', id: 'save_task_btn'

@@ -42,6 +42,9 @@
               Not started
           %span= link_to 'edit duration', update_duration_modal_path(id: @task.id), format: :js, remote: true
 
-
-
+  .form_filter_sort_fields
+    = hidden_field_tag :filter_tag_id
+    = hidden_field_tag :sort_sql
+    = hidden_field_tag :sort_label
   = f.submit 'Save', class: 'btn btn-primary', id: 'save_task_btn'
+

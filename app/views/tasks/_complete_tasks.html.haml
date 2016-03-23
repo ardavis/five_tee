@@ -1,5 +1,5 @@
 %h1 Completed Tasks
-- @completed_tasks.where(tag_id: @selected_tag ? @selected_tag : current_user.tags.pluck(:id)).each do |task|
+- @completed_tasks.where(tag_id: @filter_sort[:filter_tag_id].to_i != 0 ? @filter_sort[:filter_tag_id] : current_user.tags.pluck(:id)).each do |task|
   .row.well
     .col-md-4
       %h4= link_to task.title, show_task_modal_path, format: :js, remote: true, task: task
@@ -13,5 +13,5 @@
       Finished
       = finished_display(task.completed_at)
       .pull-right{style: 'margin-top: -8px;'}
-        = link_to restart_task_path(task, selected_tag: @selected_tag), class: 'btn btn-default', format: :js, remote: true do
+        = link_to restart_task_path(task, filter_tag_id: @filter_sort[:filter_tag_id], sort_sql: @filter_sort[:sort], sort_label: @filter_sort[:sort_label]), class: 'btn btn-default', format: :js, remote: true do
           %span.glyphicon.glyphicon-arrow-up

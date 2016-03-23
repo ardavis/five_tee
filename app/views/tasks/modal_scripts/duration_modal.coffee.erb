@@ -4,3 +4,9 @@ $('#durationModal').modal('toggle')
 $('#durationModal').on('hidden.bs.modal', function () {
   set_focus($('#task_title'))
 })
+
+
+$('#duration_form_filter_sort > #filter_tag_id').val($('#store_filter_tag_id').val())
+$('#duration_form_filter_sort > #sort_sql').val($('#store_sort_sql').val())
+$('#duration_form_filter_sort > #sort_label').val($('#store_sort_label').val())
+

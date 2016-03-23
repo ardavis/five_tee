@@ -2,6 +2,11 @@ $('#new-modal').html('')
 $('#edit-modal').html("<%=j render 'tasks/modals/edit_modal' %>")
 $('#editModal').modal('toggle')
 $('#showModal').modal('toggle')
+
+$('#filter_tag_id').val($('#store_filter_tag_id').val())
+$('#sort_sql').val($('#store_sort_sql').val())
+$('#sort_label').val($('#store_sort_label').val())
+
 set_focus($('#task_title'))
 date_picker()
 fix_date_input()

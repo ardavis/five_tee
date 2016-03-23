@@ -45,5 +45,7 @@ module TasksHelper
     list = []
     list << {label: 'Alphabetical', sql: 'title ASC'}
     list << {label: 'Newest to Oldest', sql: 'created_at DESC'}
+    list << {label: 'Oldest to Newest', sql: 'created_at ASC'}
+    list << {label: 'Duration', sql: 'duration ASC'}
   end
 end

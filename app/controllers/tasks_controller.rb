@@ -3,10 +3,12 @@ class TasksController < ApplicationController
   before_action :get_task, only: [:show, :update, :update_duration, :destroy, :complete,
                                   :start, :restart, :pause]
 
-  before_action :get_filter_tag, only: [:start, :pause, :complete, :destroy, :restart]
+  before_action :get_filter_sort_options, only: [:filter_sort_by, :start, :pause,
+                                 :complete, :destroy, :restart, :create, :update, :update_duration]
 
   def index
     get_task
+    @filter_sort = Hash.new()
     @tag = current_user.tags.new
     get_sorted_tasks
   end
@@ -101,7 +103,6 @@ class TasksController < ApplicationController
 
 
   def filter_sort_by
-    byebug
     get_sorted_tasks
     @sort_option = params[:option]
     call_coffeescript('tasks/reload_scripts/restart_reload.coffee.erb')
@@ -109,8 +110,11 @@ class TasksController < ApplicationController
 
   private
 
-  def get_filter_tag
-    @filter_tag = params[:selected_tag]
+  def get_filter_sort_options
+    @filter_sort = Hash.new()
+    @filter_sort[:filter_tag_id] = params[:filter_tag_id]
+    @filter_sort[:sort_sql] = params[:sort_sql] ? params[:sort_sql] : "title ASC"
+    @filter_sort[:sort_label] = params[:sort_label] ? params[:sort_label] : "Alphabetical"
   end
 
   def get_task
