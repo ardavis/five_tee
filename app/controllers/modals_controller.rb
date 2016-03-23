@@ -24,7 +24,7 @@ class ModalsController < TasksController
   end
 
   def new_tag_modal
-    @tag = Tag.new()
+    @tag = current_user.tags.new()
     @task = params[:task].present? ? Task.find(params[:task].to_i) : Task.new()
     flash[:success] = nil
     call_coffeescript('tags/modal_scripts/new_tag_modal.coffee.erb')

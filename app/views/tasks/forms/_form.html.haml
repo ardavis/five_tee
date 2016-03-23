@@ -1,8 +1,8 @@
 - if show_flash_for('task_form')
   .alert.alert-success #{flash[:success]}
 - if current_user.tags.count > 0
-  = hidden_field_tag :last_tag_id, current_user.tags.last.id
-  = hidden_field_tag :last_tag_name, current_user.tags.last.name
+  = hidden_field_tag :last_tag_id, Tag.where(user_id: current_user.id).last.id
+  = hidden_field_tag :last_tag_name, Tag.where(user_id: current_user.id).last.name
 = simple_form_for @task, remote: true do |f|
   = f.input :title, label: 'Title:'
   .row
@@ -11,12 +11,12 @@
       = f.input :tag_id, as: :hidden, input_html: {id: 'hidden_tag_input', value: @task.tag ? @task.tag.id : nil}
       .dropdown
         %button.btn.btn-secondary.dropdown-toggle{'data-toggle': 'dropdown', type: 'button'}
-          %span#select_tag= @task.tag ? @task.tag.name : '-----'
+          %span#select_tag= @task.tag ? @task.tag.name : '------'
           %span.caret
         %ul.dropdown-menu#tag_dropdown
           %li
             = link_to 'Create New Tag', new_tag_modal_path(task: @task), class: 'dropdown-item', remote: true
-          %option
+          %li
             .divider
           - current_user.tags.order('name ASC').each do |tag|
             %li

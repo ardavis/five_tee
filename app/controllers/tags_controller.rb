@@ -3,10 +3,10 @@ class TagsController < ApplicationController
   before_action :get_tag, only: [:destroy]
 
   def create
-    @tag = Tag.new(tag_params)
-    @task = params[:current_task].present? ? Task.find(params[:current_task].to_i) : Task.new()
+    @tag = current_user.tags.new(tag_params)
+    @task = params[:current_task].present? ? current_user.tasks.find(params[:current_task].to_i) : current_user.tasks.new()
     if @tag.save
-      @tag = Tag.new()
+      @tag = current_user.tags.new()
       call_coffeescript('tags/reload_scripts/reload_on_new_tag.coffee.erb')
     else
       call_coffeescript('tags/reload_scripts/reload_on_fail_tag.coffee.erb')
@@ -14,9 +14,10 @@ class TagsController < ApplicationController
   end
 
   def destroy
-    @task = Task.new()
+
+    @task = current_user.tasks.new()
     @tag.destroy
-    @tag = Tag.new()
+    @tag = current_user.tags.new()
     call_coffeescript('tags/reload_scripts/reload_on_tag_delete.coffee.erb')
   end
 
@@ -28,7 +29,7 @@ class TagsController < ApplicationController
   end
 
   def get_tag
-    @tag = Tag.find(params[:id])
+    @tag = current_user.tags.find(params[:id])
   end
 
 

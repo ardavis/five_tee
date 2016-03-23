@@ -70,19 +70,19 @@ class TasksController < ApplicationController
 
   def download_all
     #grab all the tasks, and pass them to the ruby code in the axlsx file, gem handles everything
-    @tasks = Task.all
+    @tasks = current_user.tasks.all
     render xlsx: 'download.xlsx.axlsx',filename: "allTasks.xlsx"
   end
 
   def download_incompleted
     #grab all the tasks, and pass them to the ruby code in the axlsx file, gem handles everything
-    @tasks = Task.incomplete
+    @tasks = current_user.tasks.incomplete
     render xlsx: 'download.xlsx.axlsx',filename: "incompletedTasks.xlsx"
   end
 
   def download_completed
     #grab all the tasks, and pass them to the ruby code in the axlsx file, gem handles everything
-    @tasks = Task.completed
+    @tasks = current_user.tasks.completed
     render xlsx: 'download.xlsx.axlsx',filename: "completedTasks.xlsx"
   end
 
@@ -101,7 +101,7 @@ class TasksController < ApplicationController
 
   def get_task
     if params[:id]
-      @task = Task.find(params[:id])
+      @task = current_user.tasks.find(params[:id])
     else
       @task = current_user.tasks.new
     end
