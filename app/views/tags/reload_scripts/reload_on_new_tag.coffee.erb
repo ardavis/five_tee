@@ -2,6 +2,7 @@ state = store_form_state()
 if (('<%=j "#{!!@task}" %>') == "true")
   $("#edit-modal-body").html("<%=j render 'tasks/forms/form' %>")
 else
+  console.log()
   $("#new-modal-body").html("<%=j render 'tasks/forms/form' %>")
 $('#newTagModal').modal('toggle')
 set_form_state(state)
@@ -12,9 +13,3 @@ date_picker()
 set_focus($('#task_title'))
 set_all_timers()
 set_tag_select_to_last()
-
-
-
-$('#duration_form_filter_sort > #filter_tag_id').val($('#store_filter_tag_id').val())
-$('#duration_form_filter_sort > #sort_sql').val($('#store_sort_sql').val())
-$('#duration_form_filter_sort > #sort_label').val($('#store_sort_label').val())

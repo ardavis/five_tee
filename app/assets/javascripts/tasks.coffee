@@ -148,6 +148,8 @@ set_tag_select_listener = ->
     select_id = +$(this).attr('value')
     $('#select_tag').html(select_name)
     $('#hidden_tag_input').val(select_id)
+    console.log(select_id)
+
 
 set_tag_select_to_last = ->
   select_id =  $('#last_tag_id').val()
@@ -155,6 +157,7 @@ set_tag_select_to_last = ->
   select_name = $('#last_tag_name').val()
   $('#select_tag').html(select_name)
   $('#hidden_tag_input').val(select_id)
+  console.log(select_id)
 
 
 

@@ -4,6 +4,6 @@ $('#newTagModal').modal('toggle')
 $('#newTagModal').on('hidden.bs.modal', function () {
   set_focus($('#task_title'))
 })
-
+set_tag_select_listener()
 set_focus($('#tag_name'))
 

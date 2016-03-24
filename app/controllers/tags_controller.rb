@@ -3,6 +3,8 @@ class TagsController < ApplicationController
   before_action :get_tag, only: [:destroy]
 
   def create
+    @incomplete_tasks = current_user.incomplete_tasks
+    @completed_tasks = current_user.completed_tasks
     @tag = current_user.tags.new(tag_params)
     @task = params[:current_task].present? ? current_user.tasks.find(params[:current_task].to_i) : current_user.tasks.new()
     if @tag.save
@@ -14,7 +16,10 @@ class TagsController < ApplicationController
   end
 
   def destroy
-
+    @incomplete_tasks = current_user.incomplete_tasks
+    @completed_tasks = current_user.completed_tasks
+    @session = current_user.session
+    @session.update_attributes(filter_tag_id: nil) if @session.filter_tag_id == @tag.id
     @task = current_user.tasks.new()
     @tag.destroy
     @tag = current_user.tags.new()

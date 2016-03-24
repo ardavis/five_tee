@@ -2,7 +2,6 @@ class ModalsController < TasksController
 
   before_action :get_task, only: [:new_task_modal, :show_task_modal, :edit_task_modal, :update_duration_modal]
   before_action :reset_flash, only: [:new_task_modal, :show_task_modal, :edit_task_modal, :update_duration_modal]
-  before_action :get_filter_sort_options
 
   def new_task_modal
     call_coffeescript('tasks/modal_scripts/new_modal.coffee.erb')
