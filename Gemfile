@@ -45,6 +45,8 @@ gem 'jquery-timepicker-rails'
 
 gem 'dotiw' # Better distance of time ago in words
 
+gem 'faker'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

@@ -5,9 +5,11 @@ class SessionsController < Devise::SessionsController
   before_action :update_filter_sort, only: [:update]
 
   def session_init
-    current_user.session.destroy if current_user.session
-    @session = Session.create(user_id: current_user.id)
-    current_user.update_attributes(session_id: @session.id)
+    if current_user
+      current_user.session.destroy if current_user.session
+      @session = Session.create(user_id: current_user.id)
+      current_user.update_attributes(session_id: @session.id)
+    end
   end
 
   def update_filter_sort
