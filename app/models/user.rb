@@ -4,8 +4,9 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :tasks
-  has_many :tags
+  has_many :tasks, dependent: :destroy
+  has_many :tags, dependent: :destroy
+  has_one :session, dependent: :destroy
 
   def incomplete_tasks
     tasks.incomplete

@@ -1,5 +1,22 @@
 module TasksHelper
 
+  def filter_tag_label
+    tag_id = current_user.session.filter_tag_id
+    tag_id ? Tag.find(tag_id).name : 'All Tags'
+  end
+
+  def filtered_sorted_tasks(tasks)
+    id = current_user.session.filter_tag_id
+    filtered_tasks = id ? tasks.where(tag_id: id) : tasks
+    filtered_tasks.order(current_user.session.sort_sql)
+  end
+
+  def sort_label
+    sql = current_user.session.sort_sql
+    sort_options.each { |option| return option[:label] if option[:sql] == sql }
+    return 'Alphabetical'
+  end
+
   def duration_display(duration)
     return "Not started" unless duration
     duration_string = "#{duration % 60} sec"
@@ -35,10 +52,18 @@ module TasksHelper
     false
   end
 
-  def tag_dropdown_options()
+  def tag_dropdown_options
     list = [['Create new tag', nil]]
     current_user.tags.order('name ASC').each {|t| list << [t.name, t.id]}
     list
   end
 
+  def sort_options
+    list = []
+    list << {label: 'Alphabetical', sql: 'lower(title) ASC'}
+    list << {label: 'Newest to Oldest', sql: 'created_at DESC'}
+    list << {label: 'Oldest to Newest', sql: 'created_at ASC'}
+    list << {label: 'Duration', sql: 'duration ASC'}
+    list << {label: 'Due soonest', sql: 'due_date ASC'}
+  end
 end

@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  devise_for :users
+  devise_for :users, :controllers => {:sessions => 'sessions'}
   root 'tasks#index'
 
   resources :tasks
@@ -10,6 +10,10 @@ Rails.application.routes.draw do
   get '/new_tag_modal' => 'modals#new_tag_modal', as: 'new_tag_modal'
   get '/tag/:id/destroy' => 'tags#destroy', as: 'destroy_tag'
   get '/manage_tag_modal' => 'modals#manage_tag_modal', as: 'manage_tag_modal'
+
+  devise_scope :user do
+    get '/session/update_filter_sort' => 'sessions#update_filter_sort', as: 'update_filter_sort'
+  end
 
   get '/tasks/:id/destroy' => 'tasks#destroy', as: 'destroy_task'
   get '/tasks/:id/complete' => 'tasks#complete', as: 'complete_task'

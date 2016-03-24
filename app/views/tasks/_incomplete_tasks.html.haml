@@ -1,10 +1,33 @@
-%h1 Tasks
-- @incomplete_tasks.each do |task|
-  .row.well.task{id: "task-#{task.started_at.nil? ? "paused" : "running"}", data: { running: (!!task.started_at).to_s }}
+.row
+  .col-md-6
+    %h1 Tasks
+  .col-xs-5.filter.dropdown
+    %span Filter by:
+    %span.tag_filter
+      %button.btn.btn-secondary.dropdown-toggle{'data-toggle': 'dropdown', type: 'button'}
+        %span= filter_tag_label
+        %span.caret
+      %ul.dropdown-menu#tag_dropdown{style: 'margin-left: 50px;'}
+        %li= link_to 'All Tags', update_filter_sort_path(filter_tag_id: 0), remote: true
+        %li
+          .divider
+        - current_user.tags.order('name ASC').each do |tag|
+          %li
+            = link_to tag.name, update_filter_sort_path(filter_tag_id: tag.id), remote: true
+    %span Sort by:
+    %span.tag_sort
+      %button.btn.btn-secondary.dropdown-toggle{'data-toggle': 'dropdown', type: 'button'}
+        %span= sort_label
+        %span.caret
+      %ul.dropdown-menu#tag_dropdown{style: 'margin-left: 200px;'}
+        - sort_options.each do |option|
+          %li= link_to option[:label], update_filter_sort_path(sort_sql: option[:sql]), remote: true
+- filtered_sorted_tasks(@incomplete_tasks).each do |task|
+  .row.well.task{id: "task-#{task.started_at.nil? ? 'paused' : 'running'}", data: { running: (!!task.started_at).to_s }}
 
     .col-md-4
-      = link_to task.title, show_task_modal_path(id: task.id), format: :js, remote: true
-    .col-md-4{class: task.started_at ? 'running_time' : ''}
+      %h4= link_to task.title, show_task_modal_path(id: task.id), format: :js, remote: true
+    .col-md-4{style: 'margin-top: 8px;', class: task.started_at ? 'running_time' : ''}
       = hidden_field_tag :duration_field, task.duration
       = hidden_field_tag :started_field, task.started_at.to_i
       - if task.duration
@@ -12,7 +35,7 @@
       - else
         Not started
 
-    .col-md-4
+    .col-md-4{style: 'margin-top: 3px;'}
       = hidden_field_tag :running_time, task.duration
       .pull-right
         -# If the task has a started_at, show a pause button, because it's running
@@ -31,3 +54,5 @@
           %span.glyphicon.glyphicon-ok
         = link_to destroy_task_path(task), class: 'btn btn-danger', format: :js, remote: true, data: { confirm: 'Are you sure you want to delete this task?' } do
           %span.glyphicon.glyphicon-trash
+
+

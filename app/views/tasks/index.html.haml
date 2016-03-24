@@ -7,3 +7,9 @@
   #duration-modal= render 'tasks/modals/duration_modal'
   #new-tag-modal= render 'tags/new_tag_modal'
   #manage-tag-modal= render 'tags/manage_tag_modal'
+
+-# Hidden Fields
+
+= hidden_field_tag :store_filter_tag_id
+= hidden_field_tag :store_sort_sql
+= hidden_field_tag :store_sort_label

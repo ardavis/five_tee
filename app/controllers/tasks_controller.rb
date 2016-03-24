@@ -1,12 +1,17 @@
 class TasksController < ApplicationController
 
-  before_action :get_task, only: [:show, :update, :update_duration, :destroy, :complete,
+  before_action :get_task, only: [:index, :show, :update, :update_duration, :destroy, :complete,
                                   :start, :restart, :pause]
 
+  before_action :get_sorted_tasks, only: [:index, :update_duration, :create, :update, :destroy,
+                                          :complete, :start, :pause, :restart]
+
+
+
   def index
-    get_task
+    current_user.session = Session.new()
+    @filter_sort = Hash.new()
     @tag = current_user.tags.new
-    get_sorted_tasks
   end
 
   def update_duration
@@ -15,7 +20,6 @@ class TasksController < ApplicationController
       @task.start!(current_user)
     end
     if @task.update_attributes(task_params)
-      get_sorted_tasks
       call_coffeescript('tasks/reload_scripts/reload_updated_duration.coffee.erb')
     end
   end
@@ -23,10 +27,8 @@ class TasksController < ApplicationController
   def create
     @task = current_user.tasks.new(task_params)
     @task.update_attributes(due_date: fix_date(task_params['due_date']))
-      get_sorted_tasks
     if @task.save
       @task = Task.new()
-      get_sorted_tasks
       flash[:success] = 'Task successfully created!'
       call_coffeescript('tasks/reload_scripts/reload_on_create.coffee.erb')
     else
@@ -37,7 +39,6 @@ class TasksController < ApplicationController
   def update
     if @task.update_attributes(task_params)
       @task.update_attributes(due_date: fix_date(task_params['due_date']))
-      get_sorted_tasks
       call_coffeescript('tasks/reload_scripts/reload_on_update.coffee.erb')
     else
       call_coffeescript('tasks/reload_scripts/reload_on_fail_update.coffee.erb')
@@ -46,62 +47,61 @@ class TasksController < ApplicationController
 
   def destroy
     @task.destroy
-    get_sorted_tasks
     call_coffeescript('tasks/reload_scripts/restart_reload.coffee.erb')
   end
 
   def complete
     @task.complete!
-    get_sorted_tasks
     call_coffeescript('tasks/reload_scripts/restart_reload.coffee.erb')
   end
 
   def start
     @task.start!(current_user)
-    get_sorted_tasks
     call_coffeescript('tasks/button_scripts/playbutton.coffee.erb')
   end
 
   def pause
     @task.pause!
-    get_sorted_tasks
     call_coffeescript('tasks/button_scripts/pausebutton.coffee.erb')
   end
 
   def download_all
     #grab all the tasks, and pass them to the ruby code in the axlsx file, gem handles everything
-    @tasks = Task.all
+    @tasks = current_user.tasks.all
     render xlsx: 'download.xlsx.axlsx',filename: "allTasks.xlsx"
   end
 
   def download_incompleted
     #grab all the tasks, and pass them to the ruby code in the axlsx file, gem handles everything
-    @tasks = Task.incomplete
+    @tasks = current_user.tasks.incomplete
     render xlsx: 'download.xlsx.axlsx',filename: "incompletedTasks.xlsx"
   end
 
   def download_completed
     #grab all the tasks, and pass them to the ruby code in the axlsx file, gem handles everything
-    @tasks = Task.completed
-    render xlsx: 'download.xlsx.axlsx',filename: "completedTasks.xlsx"
+    @tasks = current_user.tasks.completed
+    render xlsx: 'download.xlsx.axlsx',filename: 'completedTasks.xlsx'
   end
 
   def restart
     @task.restart!
-    get_sorted_tasks
     call_coffeescript('tasks/reload_scripts/restart_reload.coffee.erb')
   end
+
+
+
+
+
+  private
 
   def get_sorted_tasks
     @incomplete_tasks = current_user.incomplete_tasks
     @completed_tasks = current_user.completed_tasks
   end
 
-  private
-
   def get_task
     if params[:id]
-      @task = Task.find(params[:id])
+      @task = current_user.tasks.find(params[:id])
     else
       @task = current_user.tasks.new
     end

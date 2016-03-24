@@ -13,6 +13,7 @@
 
 # Ignore application.yml
 /config/application.yml
+gemfile.lock
 
 # Ignore all logfiles and tempfiles.
 /log/*
