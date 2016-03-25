@@ -2,25 +2,7 @@
   .col-md-6
     %h1 Tasks
   .col-xs-5.filter.dropdown
-    %span Filter by:
-      %button.btn.btn-secondary.dropdown-toggle{'data-toggle': 'dropdown', type: 'button'}
-        %span= filter_tag_label
-        %span.caret
-      %ul.dropdown-menu#tag_dropdown{style: 'margin-left: 50px;'}
-        %li= link_to 'All Tags', update_filter_sort_path(filter_tag_id: 0), remote: true
-        %li
-          .divider
-        - current_user.tags.order('name ASC').each do |tag|
-          %li
-            = link_to tag.name, update_filter_sort_path(filter_tag_id: tag.id), remote: true
-    %span Sort by:
-    %span.tag_sort
-      %button.btn.btn-secondary.dropdown-toggle{'data-toggle': 'dropdown', type: 'button'}
-        %span= sort_label
-        %span.caret
-      %ul.dropdown-menu#tag_dropdown{style: 'margin-left: 200px;'}
-        - sort_options.each do |option|
-          %li= link_to option[:label], update_filter_sort_path(sort_sql: option[:sql]), remote: true
+    = render 'tasks/filter_sort_dropdowns'
 - filtered_sorted_tasks(@incomplete_tasks).each do |task|
   .row.well.task{id: "task-#{task.started_at.nil? ? 'paused' : 'running'}", data: { running: (!!task.started_at).to_s }}
 
