@@ -63,7 +63,11 @@ module TasksHelper
     list << {label: 'Alphabetical', sql: 'lower(title) ASC'}
     list << {label: 'Newest to Oldest', sql: 'created_at DESC'}
     list << {label: 'Oldest to Newest', sql: 'created_at ASC'}
-    list << {label: 'Duration', sql: 'duration ASC'}
+    list << {label: 'Duration Shortest First', sql: 'duration ASC'}
+    list << {label: 'Duration Longest First', sql: 'duration DESC'}
     list << {label: 'Due soonest', sql: 'due_date ASC'}
+    list << {label: 'Due latest', sql: 'due_date DESC'}
   end
+
+
 end

@@ -10,7 +10,6 @@ class TasksController < ApplicationController
 
   def index
     current_user.session = Session.new()
-    @filter_sort = Hash.new()
     @tag = current_user.tags.new
   end
 
@@ -88,24 +87,10 @@ class TasksController < ApplicationController
     call_coffeescript('tasks/reload_scripts/restart_reload.coffee.erb')
   end
 
-
-
-
-
   private
 
-  def get_sorted_tasks
-    @incomplete_tasks = current_user.incomplete_tasks
-    @completed_tasks = current_user.completed_tasks
-  end
 
-  def get_task
-    if params[:id]
-      @task = current_user.tasks.find(params[:id])
-    else
-      @task = current_user.tasks.new
-    end
-  end
+
 
   def task_params
     params.require(:task).permit(:title, :desc, :due_date, :tag_id, :duration)

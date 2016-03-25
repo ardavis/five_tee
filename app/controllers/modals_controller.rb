@@ -34,4 +34,5 @@ class ModalsController < TasksController
     call_coffeescript('tags/modal_scripts/manage_tag_modal.coffee.erb')
   end
 
+
 end

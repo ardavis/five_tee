@@ -1,0 +1,27 @@
+%h1 Archives:
+
+= will_paginate @archives
+- @archives.each do |archive|
+  %h2
+    = "Tasks from #{archive.created_at.strftime('%m/%d/%Y')}"
+    = link_to destroy_archive_path(archive), class: 'btn btn-danger', data: { confirm: 'Are you sure you want to delete this archive?' } do
+      %span.glyphicon.glyphicon-trash
+  - current_user.tasks.where(archive_id: archive.id). each do |task|
+    .row.well
+      .col-md-4
+        %h4= link_to task.title, show_task_modal_path(id: task.id), format: :js, remote: true, task: task
+
+      .col-md-4{style: 'margin-top: 10px;'}
+        Time took:
+        = duration_display(task.duration)
+
+
+      .col-md-4{style: 'margin-top: 10px;'}
+        Finished
+        = finished_display(task.completed_at)
+
+
+
+
+#show-modal= render 'tasks/modals/show_modal'
+
