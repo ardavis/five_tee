@@ -15,4 +15,9 @@ class ApplicationController < ActionController::Base
     flash[:success] = nil
   end
 
+  def get_sorted_tasks
+    @incomplete_tasks = current_user.incomplete_tasks.where(archive_id: nil)
+    @completed_tasks = current_user.completed_tasks.where(archive_id: nil)
+  end
+
 end

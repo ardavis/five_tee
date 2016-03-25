@@ -7,6 +7,9 @@ Rails.application.routes.draw do
 
   resources :tags
 
+  get '/archive/create' => 'archives#create', as: 'new_archive'
+  get '/archive/show' => 'archives#show', as: 'archive_show'
+
   get '/new_tag_modal' => 'modals#new_tag_modal', as: 'new_tag_modal'
   get '/tag/:id/destroy' => 'tags#destroy', as: 'destroy_tag'
   get '/manage_tag_modal' => 'modals#manage_tag_modal', as: 'manage_tag_modal'

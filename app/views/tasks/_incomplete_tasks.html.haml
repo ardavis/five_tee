@@ -1,7 +1,7 @@
 .row
   .col-md-6
     %h1 Tasks
-  .col-xs-5.filter.dropdown{style: 'margin-top: 25px;'}
+  .col-xs-5.filter.dropdown{style: 'margin-top: 20px;'}
     = render 'tasks/filter_sort_dropdowns'
 - filtered_sorted_tasks(@incomplete_tasks).each do |task|
   .row.well.task{id: "task-#{task.started_at.nil? ? 'paused' : 'running'}", data: { running: (!!task.started_at).to_s }}

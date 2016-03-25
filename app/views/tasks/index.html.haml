@@ -1,15 +1,12 @@
 .container
   #new-modal
-  #incomplete-tasks= render 'incomplete_tasks'
-  #complete-tasks= render 'complete_tasks'
+  #incomplete-tasks= render 'tasks/incomplete_tasks'
+  #complete-tasks= render 'tasks/complete_tasks'
   #show-modal= render 'tasks/modals/show_modal'
   #edit-modal
   #duration-modal= render 'tasks/modals/duration_modal'
   #new-tag-modal= render 'tags/new_tag_modal'
   #manage-tag-modal= render 'tags/manage_tag_modal'
 
--# Hidden Fields
-
-= hidden_field_tag :store_filter_tag_id
-= hidden_field_tag :store_sort_sql
-= hidden_field_tag :store_sort_label
+= link_to 'Archive!', new_archive_path
+= link_to 'Show Archive!', archive_show_path

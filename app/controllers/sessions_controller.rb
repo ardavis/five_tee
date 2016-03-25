@@ -4,6 +4,8 @@ class SessionsController < Devise::SessionsController
 
   before_action :update_filter_sort, only: [:update]
 
+  before_action :get_sorted_tasks, only: [:session_params]
+
   def session_init
     if current_user
       current_user.session.destroy if current_user.session
@@ -22,8 +24,6 @@ class SessionsController < Devise::SessionsController
   private
 
   def session_params
-    @incomplete_tasks = current_user.incomplete_tasks
-    @completed_tasks = current_user.completed_tasks
     params.permit(:filter_tag_id, :sort_sql)
   end
 end

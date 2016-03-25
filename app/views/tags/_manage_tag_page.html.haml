@@ -5,8 +5,7 @@
         = tag.name
       .col-sm-4
         Tasks:
-        - current_user.tasks.where(tag_id: tag.id).all.each do |task|
-          = task.title
+        = current_user.tasks.where(tag_id: tag.id).count
       .col-sm-4
         .pull-right
           = link_to destroy_tag_path(tag), class: 'btn btn-danger', format: :js, remote: true, data: { confirm: 'Are you sure you want to delete this tag?' } do
