@@ -11,13 +11,23 @@ Task.create!(title: "#{Faker::Hacker.verb} the #{Faker::Hacker.adjective} #{Fake
              tag_id: @tag.id,
              user_id: @user.id)
 
-5.times do
+4.times do
   @tag = @user.tags.create!(name: Faker::Hipster.word, user_id: @user.id)
-  5.times do
+  2.times do
     Task.create!(title: "#{Faker::Hacker.verb} the #{Faker::Hacker.adjective} #{Faker::Hacker.noun}",
                  tag_id: @tag.id,
                  user_id: @user.id,
+                 desc: Faker::Hipster.paragraph(2),
                  duration: rand(20000))
+  end
+  2.times do
+    Task.create!(title: "#{Faker::Hacker.verb} the #{Faker::Hacker.adjective} #{Faker::Hacker.noun}",
+                 tag_id: @tag.id,
+                 user_id: @user.id,
+                 desc: Faker::Hipster.paragraph(2),
+                 duration: rand(20000),
+                 completed_at: Time.now)
+
   end
 end
 
