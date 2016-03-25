@@ -45,6 +45,8 @@ gem 'dotiw' # Better distance of time ago in words
 
 gem 'faker'
 
+gem 'will_paginate'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

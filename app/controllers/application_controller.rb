@@ -5,6 +5,14 @@ class ApplicationController < ActionController::Base
 
   before_action :authenticate_user!
 
+  def get_task
+    if params[:id]
+      @task = current_user.tasks.find(params[:id])
+    else
+      @task = current_user.tasks.new
+    end
+  end
+
   def call_coffeescript(path)
     respond_to do |format|
       format.js {render path}

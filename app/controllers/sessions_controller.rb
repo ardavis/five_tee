@@ -4,7 +4,7 @@ class SessionsController < Devise::SessionsController
 
   before_action :update_filter_sort, only: [:update]
 
-  before_action :get_sorted_tasks, only: [:session_params]
+  before_action :get_sorted_tasks, only: [:session_params, :update_filter_sort]
 
   def session_init
     if current_user

@@ -12,8 +12,12 @@
       .container-fluid
         %ul.nav.navbar-nav
           %li= link_to 'Five Tee', root_path
-          %li= link_to 'New Task', new_task_modal_path, remote: true
-          %li= link_to 'Manage Tags', manage_tag_modal_path, remote: true
+          - if params[:controller] == 'tasks'
+            %li= link_to 'New Task', new_task_modal_path, remote: true
+            %li= link_to 'Manage Tags', manage_tag_modal_path, remote: true
+            %li= link_to 'View Archives', show_archives_path
+          - if params[:controller] == 'archives'
+            %li= link_to 'Back To Tasks', root_path
           %li.dropdown
             %a.dropdown-toggle{'aria-expanded': 'false', 'aria-has-popup': 'true', 'data-toggle': 'dropdown', href: '#', role: 'button'}
               Download

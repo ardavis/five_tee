@@ -90,13 +90,7 @@ class TasksController < ApplicationController
   private
 
 
-  def get_task
-    if params[:id]
-      @task = current_user.tasks.find(params[:id])
-    else
-      @task = current_user.tasks.new
-    end
-  end
+
 
   def task_params
     params.require(:task).permit(:title, :desc, :due_date, :tag_id, :duration)

@@ -1,4 +1,9 @@
-%h1 Completed Tasks
+.row
+  .col-md-4
+    %h1 Completed Tasks
+  .col-md-4
+    %h5{style: 'margin-top: 35px; margin-left: -100px;'}
+      = link_to 'Archive Tasks', new_archive_path, data: { confirm: 'Are you sure you want to archive these completed tasks?' }
 - filtered_sorted_tasks(@completed_tasks).each do |task|
   .row.well
     .col-md-4
