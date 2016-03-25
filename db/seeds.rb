@@ -18,7 +18,8 @@ Task.create!(title: "#{Faker::Hacker.verb} the #{Faker::Hacker.adjective} #{Fake
                  tag_id: @tag.id,
                  user_id: @user.id,
                  desc: Faker::Hipster.paragraph(2),
-                 duration: rand(20000))
+                 duration: rand(20000),
+                 due_date: "#{(rand(11)+1).to_s.rjust(2, '0')}-#{(rand(29)+1).to_s.rjust(2, '0')}-#{Time.now.year}")
   end
   2.times do
     Task.create!(title: "#{Faker::Hacker.verb} the #{Faker::Hacker.adjective} #{Faker::Hacker.noun}",
@@ -26,7 +27,8 @@ Task.create!(title: "#{Faker::Hacker.verb} the #{Faker::Hacker.adjective} #{Fake
                  user_id: @user.id,
                  desc: Faker::Hipster.paragraph(2),
                  duration: rand(20000),
-                 completed_at: Time.now)
+                 completed_at: Time.now,
+                 due_date: "#{(rand(11)+1).to_s.rjust(2, '0')}-#{(rand(29)+1).to_s.rjust(2, '0')}-#{Time.now.year}")
 
   end
 end

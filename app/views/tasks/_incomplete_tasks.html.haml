@@ -1,7 +1,7 @@
 .row
   .col-md-6
     %h1 Tasks
-  .col-xs-5.filter.dropdown
+  .col-xs-5.filter.dropdown{style: 'margin-top: 25px;'}
     = render 'tasks/filter_sort_dropdowns'
 - filtered_sorted_tasks(@incomplete_tasks).each do |task|
   .row.well.task{id: "task-#{task.started_at.nil? ? 'paused' : 'running'}", data: { running: (!!task.started_at).to_s }}
@@ -15,7 +15,6 @@
         = duration_display(task.duration)
       - else
         Not started
-
     .col-md-4{style: 'margin-top: 3px;'}
       = hidden_field_tag :running_time, task.duration
       .pull-right
