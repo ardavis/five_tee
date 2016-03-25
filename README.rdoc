@@ -1,9 +1,4 @@
 To do:
 
-- Make tag list better
-
-- Sort tasks dropdown
-
-- Make dropdown below Tag title
 
 - Duration lowered and removed extraneous duration

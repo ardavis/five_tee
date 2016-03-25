@@ -12,7 +12,8 @@
         .row
           .col-md-8
             = label :desc, 'Description:'
-            %p= @task.desc
+            %p{style: 'word-wrap:break-word;'}
+              = @task.desc
           .col-xs-4
             = label :tag, 'Tag:'
             %p= @task.tag.name if @task.tag
