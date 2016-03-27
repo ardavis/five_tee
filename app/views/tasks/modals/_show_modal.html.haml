@@ -6,7 +6,7 @@
           .alert.alert-success #{flash[:success]}
         %button.close{'data-dismiss': 'modal', type: 'button'} &times;
         %h4.modal-title= @task.title
-      .modal-body#show-modal-body
+      .modal-body#show-task-modal-body
         = hidden_field_tag :task_running, @task.running?
 
         .row

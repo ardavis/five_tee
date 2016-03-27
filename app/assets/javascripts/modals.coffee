@@ -6,8 +6,8 @@ ready = ->
 
   # Show task modal
   $('#show_task_btn').click ->
-    $("#show-modal").html("<%=j render 'show_modal' %>");
-    $('#show-modal').modal('toggle')
+    $("#show-task-modal").html("<%=j render 'show_modal' %>");
+    $('#show-task-modal').modal('toggle')
 
 
 

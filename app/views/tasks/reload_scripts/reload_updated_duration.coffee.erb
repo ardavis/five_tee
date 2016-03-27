@@ -1,8 +1,8 @@
 state = store_form_state() 
-$("#edit-modal-body").html("<%=j render 'tasks/forms/form' %>")
+$("#edit-task-modal-body").html("<%=j render 'tasks/forms/form' %>")
 $("#incomplete-tasks").html("<%=j render 'incomplete_tasks' %>")
 $("#complete-tasks").html("<%=j render 'complete_tasks' %>")
-$("#show-modal").html("<%=j render 'tasks/modals/show_modal' %>")
+$("#show-task-modal").html("<%=j render 'tasks/modals/show_modal' %>")
 $("#durationModal").modal('toggle')
 
 set_focus($('#task_title'))
