@@ -10,7 +10,7 @@
       = label :tag_id, 'Tag:'
       = f.input :tag_id, as: :hidden, input_html: {id: 'hidden_tag_input', value: @task.tag ? @task.tag.id : nil}
       .dropdown
-        %button.btn.btn-secondary.dropdown-toggle{'data-toggle': 'dropdown', type: 'button'}
+        %button.btn.btn-secondary.dropdown-toggle#tag-dropdown{'data-toggle': 'dropdown', type: 'button'}
           %span#select_tag= @task.tag ? @task.tag.name : '------'
           %span.caret
         %ul.dropdown-menu#tag_dropdown

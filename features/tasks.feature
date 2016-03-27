@@ -9,9 +9,14 @@ Feature:
     When I click on the "New Task" link
     Then the "New Task" modal should pop up
     When I give the task a title
+    And I create a tag
+    And choose a date
+    And add a description
     And click Save
     When I click "Close"
     Then I should see the "new" task
+    When I click on the "Task" link
+    Then I should see all the data I put in
 
   Scenario: Edit task
     Given I am logged in
