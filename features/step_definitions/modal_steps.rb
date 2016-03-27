@@ -5,5 +5,6 @@ Then(/^the "([^"]*)" modal should pop up$/) do |name|
 end
 
 When(/^I click "([^"]*)"$/) do |name|
+  sleep 1
   click_button name
 end
