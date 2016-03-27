@@ -42,5 +42,9 @@
               Not started
           %span= link_to 'edit duration', update_duration_modal_path(id: @task.id), format: :js, remote: true
 
-  = f.submit 'Save', class: 'btn btn-primary', id: 'save_task_btn'
+  .modal-footer
+    = f.submit 'Save', class: 'btn btn-primary', id: 'save_task_btn'
+    %button.btn.btn-default{'data-dismiss': 'modal', type: 'button'} Close
+
+
 
