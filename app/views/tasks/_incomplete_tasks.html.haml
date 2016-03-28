@@ -1,8 +1,11 @@
 .row
-  .col-md-6
+  .col-md-5
     %h1 Tasks
-  .col-xs-5.filter.dropdown{style: 'margin-top: 20px;'}
+  .col-md-4.filter.dropdown{style: 'margin-top: 20px;'}
     = render 'tasks/filter_sort_dropdowns'
+  .col-md-3.pull-right{style: 'margin-top: 20px;'}
+    %span= link_to 'Archive Tasks', new_archive_path, class: 'btn btn-default', data: { confirm: 'Are you sure you want to archive these completed tasks?' }, format: :js, remote: true
+    %span= link_to 'Reset All Tasks', reset_tasks_modal_path, class: 'delete_btn btn btn-danger', format: :js, remote: true
 .incompleted_tasks
   - filtered_sorted_tasks(@incomplete_tasks).each do |task|
     .row.well.task{id: "task-#{task.started_at.nil? ? 'paused' : 'running'}", data: { running: (!!task.started_at).to_s }}

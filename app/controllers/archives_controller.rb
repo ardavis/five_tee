@@ -8,19 +8,22 @@ class ArchivesController < ApplicationController
   include TasksHelper
 
   def create
-    @current_tasks = filtered_sorted_tasks(@completed_tasks)
+    @current_tasks = filtered_sorted_tasks(current_user.tasks.where(archive_id: nil))
     if @current_tasks.count > 0
       @archive = current_user.archives.create!
       @current_tasks.each do |task|
-        task.update(archive_id: @archive.id, archive_tag: task.tag_id ?  Tag.find(task.tag_id).name : nil)
-        task.update(completed_at: Time.now) unless task.completed_at
+        update_duration_if_running!(task)
+        @task = task.dup
+        @task.update(archive_id: @archive.id, archive_tag: task.tag_id ?  Tag.find(task.tag_id).name : nil)
+        @task.update(created_at: task.created_at)
+        @task.save
       end
     end
-    redirect_to root_path
+    call_coffeescript('tasks/reload_scripts/restart_reload.coffee.erb')
   end
 
   def show
-    @archives = current_user.archives.paginate(:page => params[:page], :per_page => 3)
+    @archives = current_user.archives.order('created_at DESC').paginate(:page => params[:page], :per_page => 10)
   end
 
   def destroy

@@ -87,6 +87,8 @@ class TasksController < ApplicationController
     call_coffeescript('tasks/reload_scripts/restart_reload.coffee.erb')
   end
 
+
+
   private
 
 
