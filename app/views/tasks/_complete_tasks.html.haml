@@ -4,19 +4,20 @@
   .col-md-4
     %h5{style: 'margin-top: 35px; margin-left: -100px;'}
       = link_to 'Archive Tasks', new_archive_path, data: { confirm: 'Are you sure you want to archive these completed tasks?' }
-- filtered_sorted_tasks(@completed_tasks).each do |task|
-  .row.well
-    .col-md-4
-      %h4= link_to task.title, show_task_modal_path(id: task.id), format: :js, remote: true, task: task
+.completed_tasks
+  - filtered_sorted_tasks(@completed_tasks).each do |task|
+    .row.well
+      .col-md-4
+        %h4= link_to task.title, show_task_modal_path(id: task.id), format: :js, remote: true, task: task
 
-    .col-md-4{style: 'margin-top: 10px;'}
-      Time took:
-      = duration_display(task.duration)
+      .col-md-4{style: 'margin-top: 10px;'}
+        Time took:
+        = duration_display(task.duration)
 
 
-    .col-md-4{style: 'margin-top: 10px;'}
-      Finished
-      = finished_display(task.completed_at)
-      .pull-right{style: 'margin-top: -8px;'}
-        = link_to restart_task_path(task), class: 'btn btn-default', format: :js, remote: true do
-          %span.glyphicon.glyphicon-arrow-up
+      .col-md-4{style: 'margin-top: 10px;'}
+        Finished
+        = finished_display(task.completed_at)
+        .pull-right{style: 'margin-top: -8px;'}
+          = link_to restart_task_path(task), class: 'restart_btn btn btn-default', format: :js, remote: true do
+            %span.glyphicon.glyphicon-arrow-up

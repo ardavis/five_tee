@@ -127,14 +127,16 @@ store_form_state = () ->
   title = $('#task_title').val()
   due_date = $('.due_date').val()
   desc = $('#task_desc').val()
-  tag = $('#task_tag_id').val()
-  return {'title': title, 'due_date': due_date, 'desc': desc, 'tag': tag}
+  tag_id = $('#hidden_tag_input').val()
+  tag_name = $('#select_tag').html()
+  return {'title': title, 'due_date': due_date, 'desc': desc, 'tag_id': tag_id, 'tag_name': tag_name}
 
 set_form_state = (state) ->
   $('#task_title').val(state['title'])
   $('.due_date').val(state['due_date'])
   $('#task_desc').val(state['desc'])
-  $('#task_tag_id').val(state['tag'])
+  $('#hidden_tag_input').val(state['tag_id'])
+  $('#select_tag').html(state['tag_name'])
 
 set_focus = (target) ->
   setTimeout (->
@@ -148,16 +150,13 @@ set_tag_select_listener = ->
     select_id = +$(this).attr('value')
     $('#select_tag').html(select_name)
     $('#hidden_tag_input').val(select_id)
-    console.log(select_id)
 
 
 set_tag_select_to_last = ->
   select_id =  $('#last_tag_id').val()
-  console.log select_id
   select_name = $('#last_tag_name').val()
   $('#select_tag').html(select_name)
   $('#hidden_tag_input').val(select_id)
-  console.log(select_id)
 
 
 
