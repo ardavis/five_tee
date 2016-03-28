@@ -65,3 +65,67 @@ end
 Then(/^I shouldn't see the task$/) do
   expect(page).to_not have_content(@title)
 end
+
+Given(/^I create a task with a tag$/) do
+  click_link 'New Task'
+  @title = "#{Faker::Hacker.verb} the #{Faker::Hacker.adjective} #{Faker::Hacker.noun}"
+  fill_in 'Title:', with: @title
+  find('#tag-dropdown').click
+  click_link 'Create New Tag'
+  @tag = Faker::Hipster.word
+  fill_in ('tag_name'), with: @tag
+  find('#new-tag-modal').find('input[value="Save"]').click
+  find('input[value="Save"]').click
+  click_button 'Close'
+end
+
+When(/^I create another task with a tag$/) do
+  click_link 'New Task'
+  @other_title = "#{Faker::Hacker.verb} the #{Faker::Hacker.adjective} #{Faker::Hacker.noun}"
+  fill_in 'Title:', with: @other_title
+  find('#tag-dropdown').click
+  click_link 'Create New Tag'
+  @other_tag = Faker::Hipster.word
+  fill_in ('tag_name'), with: @other_tag
+  find('#new-tag-modal').find('input[value="Save"]').click
+  find('input[value="Save"]').click
+  click_button 'Close'
+end
+
+Then(/^I should only see the "([^"]*)" task$/) do |task|
+  tasks = find('.incompleted_tasks')
+  if task == 'first'
+    expect(tasks).to have_content(@task)
+    expect(tasks).to_not have_content(@other_title)
+  elsif task == 'second'
+    expect(tasks).to have_content(@other_title)
+    expect(tasks).to_not have_content(@title)
+  end
+end
+
+When(/^I filter by the "([^"]*)" tag$/) do |tag|
+  find('#filter_dropdown').click
+  if tag == 'first'
+    click_link @tag
+  elsif tag == 'second'
+    click_link @other_tag
+  end
+end
+
+When(/^I filter by All Tags$/) do
+  find('#filter_dropdown').click
+  click_link 'All Tags'
+end
+
+When(/^I sort by "([^"]*)"$/) do |sort|
+  find('#sort_dropdown').click
+  click_link sort
+end
+
+Then(/^I should see the "([^"]*)" task first$/) do |task|
+  if task == 'first'
+    expect(first('h4')).to have_content(@title)
+  elsif task == 'second'
+    expect(first('h4')).to have_content(@other_title)
+  end
+end

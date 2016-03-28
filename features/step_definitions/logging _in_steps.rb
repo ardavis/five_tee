@@ -24,6 +24,7 @@ Then(/^I should be on the root page$/) do
 end
 
 Given(/^I am logged in$/) do
+  page.driver.browser.manage.window.maximize
   @email = Faker::Internet.email
   @password = Faker::Internet.password(8)
   User.create! email: @email, password: @password, password_confirmation: @password

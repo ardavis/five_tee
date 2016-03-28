@@ -8,7 +8,7 @@
     .row.well.task{id: "task-#{task.started_at.nil? ? 'paused' : 'running'}", data: { running: (!!task.started_at).to_s }}
 
       .col-md-4
-        %h4= link_to task.title, show_task_modal_path(id: task.id), format: :js, remote: true
+        %h4= link_to task.title, show_task_modal_path(id: task.id), id: task.title, format: :js, remote: true
       .col-md-4{style: 'margin-top: 8px;', class: task.started_at ? 'running_time' : ''}
         = hidden_field_tag :duration_field, task.duration
         = hidden_field_tag :started_field, task.started_at.to_i

@@ -60,3 +60,16 @@ Feature:
     And I click OK
     Then I shouldn't see the task
 
+  Scenario: Filters and sort tasks
+    Given I am logged in
+    When I create a task with a tag
+    And I create another task with a tag
+    When I filter by the "first" tag
+    Then I should only see the "first" task
+    When I filter by the "second" tag
+    Then I should only see the "second" task
+    When I filter by All Tags
+    And I sort by "Oldest to Newest"
+    Then I should see the "first" task first
+    When I sort by "Newest to Oldest"
+    Then I should see the "second" task first

@@ -5,3 +5,6 @@ When(/^I create a tag$/) do
   fill_in ('tag_name'), with: @tag
   find('#new-tag-modal').find('input[value="Save"]').click
 end
+
+
+
