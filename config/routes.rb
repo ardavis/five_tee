@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   get '/tasks/:id/start' => 'tasks#start', as: 'start_task'
   get '/tasks/:id/pause' => 'tasks#pause', as: 'pause_task'
   get '/tasks/:id/restart' => 'tasks#restart', as: 'restart_task'
+  get '/reset_all_tasks' => 'tasks#reset_all', as: 'reset_all_tasks'
 
   get '/show_task_modal' => 'modals#show_task_modal', as: 'show_task_modal'
   get '/edit_task_modal' => 'modals#edit_task_modal', as: 'edit_task_modal'

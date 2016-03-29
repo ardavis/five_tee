@@ -4,9 +4,9 @@ class TasksController < ApplicationController
                                   :start, :restart, :pause]
 
   before_action :get_sorted_tasks, only: [:index, :update_duration, :create, :update, :destroy,
-                                          :complete, :start, :pause, :restart]
+                                          :complete, :start, :pause, :restart, :reset_all]
 
-
+  include TasksHelper
 
   def index
     current_user.session = Session.new()
@@ -88,6 +88,23 @@ class TasksController < ApplicationController
   end
 
 
+  def reset_all
+    @current_tasks = filtered_sorted_tasks(current_user.tasks.where(archive_id: nil))
+    if params[:archive] and @current_tasks.count > 0
+      @archive = current_user.archives.create!
+      @current_tasks.each do |task|
+        update_duration_if_running!(task)
+        @task = task.dup
+        @task.update(archive_id: @archive.id, archive_tag: task.tag_id ?  Tag.find(task.tag_id).name : nil)
+        @task.update(created_at: task.created_at)
+        @task.save
+      end
+    end
+    @current_tasks.each do |task|
+      task.update(duration: 0, completed_at: nil)
+    end
+    call_coffeescript('tasks/reload_scripts/restart_reload.coffee.erb')
+  end
 
   private
 
