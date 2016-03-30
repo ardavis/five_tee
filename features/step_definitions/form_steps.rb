@@ -11,3 +11,7 @@ When(/^I append to the title$/) do
   @title += '!'
   fill_in 'Title:', with: @title
 end
+
+When(/^I click OK$/) do
+  page.driver.browser.switch_to.alert.accept
+end

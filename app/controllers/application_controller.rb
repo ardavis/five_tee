@@ -28,4 +28,11 @@ class ApplicationController < ActionController::Base
     @completed_tasks = current_user.completed_tasks.where(archive_id: nil)
   end
 
+  def update_duration_if_running!(task)
+    if task.running?
+      task.pause!
+      task.start!(current_user)
+    end
+  end
+
 end

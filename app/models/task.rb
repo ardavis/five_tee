@@ -2,7 +2,8 @@ class Task < ActiveRecord::Base
   belongs_to :tag
   belongs_to :user
 
-  validates :title, presence: true
+  validates :title, presence: true, length: {minimum: 1, maximum: 40}
+  validates :desc, length: {maximum: 200}
 
   scope :incomplete, -> { where(completed_at: nil) }
   scope :completed, -> { where.not(completed_at: nil) }
@@ -44,5 +45,7 @@ class Task < ActiveRecord::Base
     # that set.
     update_attributes(duration: duration.to_i + difference, started_at: nil)
   end
+
+
 
 end

@@ -1,8 +1,8 @@
 %span Filter by:
-%button.btn.btn-secondary.dropdown-toggle{'data-toggle': 'dropdown', type: 'button'}
+%button.btn.btn-secondary.dropdown-toggle{'data-toggle': 'dropdown', type: 'button', id: 'filter_dropdown'}
   %span= filter_tag_label
   %span.caret
-%ul.dropdown-menu#tag_dropdown{style: 'margin-left: 50px;'}
+%ul.dropdown-menu{style: 'margin-left: 50px;'}
   %li= link_to 'All Tags', update_filter_sort_path(filter_tag_id: 0), remote: true
   %li
     .divider
@@ -11,7 +11,7 @@
       = link_to tag.name, update_filter_sort_path(filter_tag_id: tag.id), remote: true
 %span Sort by:
 %span.tag_sort
-  %button.btn.btn-secondary.dropdown-toggle{'data-toggle': 'dropdown', type: 'button'}
+  %button.btn.btn-secondary.dropdown-toggle{'data-toggle': 'dropdown', type: 'button', id: 'sort_dropdown'}
     %span= sort_label
     %span.caret
   %ul.dropdown-menu#tag_dropdown{style: 'margin-left: 200px;'}

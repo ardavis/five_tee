@@ -69,5 +69,17 @@ module TasksHelper
     list << {label: 'Due latest', sql: 'due_date DESC'}
   end
 
+  def tasks_in(archive)
+    current_user.tasks.where(archive_id: archive.id)
+  end
+
+  def only(type, tasks)
+    if type == 'complete'
+      tasks.to_a.delete_if{|t| t.completed_at.blank?}
+    elsif type == 'incomplete'
+      tasks.to_a.delete_if{|t| t.completed_at}
+    end
+  end
+
 
 end

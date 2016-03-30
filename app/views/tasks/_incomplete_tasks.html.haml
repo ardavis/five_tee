@@ -1,36 +1,40 @@
 .row
-  .col-md-6
+  .col-md-5
     %h1 Tasks
-  .col-xs-5.filter.dropdown{style: 'margin-top: 20px;'}
+  .col-md-4.filter.dropdown{style: 'margin-top: 20px; width: 405px; padding-right: 0; margin-left: 10px;'}
     = render 'tasks/filter_sort_dropdowns'
-- filtered_sorted_tasks(@incomplete_tasks).each do |task|
-  .row.well.task{id: "task-#{task.started_at.nil? ? 'paused' : 'running'}", data: { running: (!!task.started_at).to_s }}
+  .col-md-3.pull-right{style: 'margin-top: 20px; margin-left: 30px; width: 236px; padding-left: 0; padding-right: 0;'}
+    %span= link_to 'Archive Tasks', new_archive_path, class: 'btn btn-default', data: { confirm: 'Are you sure you want to archive these completed tasks?' }, format: :js, remote: true
+    %span= link_to 'Reset All Tasks', reset_tasks_modal_path, class: 'delete_btn btn btn-danger', format: :js, remote: true
+.incompleted_tasks
+  - filtered_sorted_tasks(@incomplete_tasks).each do |task|
+    .row.well.task{id: "task-#{task.started_at.nil? ? 'paused' : 'running'}", data: { running: (!!task.started_at).to_s }}
 
-    .col-md-4
-      %h4= link_to task.title, show_task_modal_path(id: task.id), format: :js, remote: true
-    .col-md-4{style: 'margin-top: 8px;', class: task.started_at ? 'running_time' : ''}
-      = hidden_field_tag :duration_field, task.duration
-      = hidden_field_tag :started_field, task.started_at.to_i
-      - if task.duration
-        = duration_display(task.duration)
-      - else
-        Not started
-    .col-md-4{style: 'margin-top: 3px;'}
-      = hidden_field_tag :running_time, task.duration
-      .pull-right
-        -# If the task has a started_at, show a pause button, because it's running
+      .col-md-4
+        %h4= link_to task.title, show_task_modal_path(id: task.id), id: task.title, format: :js, remote: true
+      .col-md-4{style: 'margin-top: 8px;', class: task.started_at ? 'running_time' : ''}
+        = hidden_field_tag :duration_field, task.duration
+        = hidden_field_tag :started_field, task.started_at.to_i
+        - if task.duration
+          %p#duration_display= duration_display(task.duration)
+        - else
+          Not started
+      .col-md-4{style: 'margin-top: 3px;'}
+        = hidden_field_tag :running_time, task.duration
+        .pull-right
+          -# If the task has a started_at, show a pause button, because it's running
 
-        - if task.started_at.nil?
-          = link_to start_task_path(task), class: 'play_btn btn btn-default', format: :js, remote: true do
-            %span.glyphicon.glyphicon-play
+          - if task.started_at.nil?
+            = link_to start_task_path(task), class: 'play_btn btn btn-default', format: :js, remote: true do
+              %span.glyphicon.glyphicon-play
 
-        -else
-          = link_to pause_task_path(task), class: 'pause_btn btn btn-default', format: :js, remote: true do
-            %span.glyphicon.glyphicon-pause
+          -else
+            = link_to pause_task_path(task), class: 'pause_btn btn btn-default', format: :js, remote: true do
+              %span.glyphicon.glyphicon-pause
 
 
 
-        = link_to complete_task_path(task), class: 'btn btn-success', format: :js, remote: true do
-          %span.glyphicon.glyphicon-ok
-        = link_to destroy_task_path(task), class: 'btn btn-danger', format: :js, remote: true, data: { confirm: 'Are you sure you want to delete this task?' } do
-          %span.glyphicon.glyphicon-trash
+          = link_to complete_task_path(task), class: 'complete_btn btn btn-success', format: :js, remote: true do
+            %span.glyphicon.glyphicon-ok
+          = link_to destroy_task_path(task), class: 'delete_btn btn btn-danger', format: :js, remote: true, data: { confirm: 'Are you sure you want to delete this task?' } do
+            %span.glyphicon.glyphicon-trash
