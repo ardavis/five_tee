@@ -103,13 +103,10 @@ class TasksController < ApplicationController
     @current_tasks.each do |task|
       task.update(duration: 0, completed_at: nil)
     end
-    call_coffeescript('tasks/reload_scripts/restart_reload.coffee.erb')
+    call_coffeescript('tasks/reload_scripts/reset_tasks_reload.coffee.erb')
   end
 
   private
-
-
-
 
   def task_params
     params.require(:task).permit(:title, :desc, :due_date, :tag_id, :duration)
