@@ -13,7 +13,7 @@ set :use_sudo, false
 set :timestamp, "#{Time.now.strftime('%Y%m%d-%H%M')}"
 
 set :bundle_binstubs, nil
-set :linked_files, fetch(:linked_files, []).push('config/database.yml')
+set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/application.yml')
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
 
 
