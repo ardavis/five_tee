@@ -7,4 +7,5 @@ end
 When(/^I click "([^"]*)"$/) do |name|
   sleep 1
   click_button name
+  sleep 1
 end

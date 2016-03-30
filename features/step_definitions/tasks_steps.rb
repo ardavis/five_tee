@@ -18,7 +18,7 @@ When(/^choose a date$/) do
 end
 
 When(/^add a description$/) do
-  @desc = Faker::Hipster.paragraph(2)
+  @desc = Faker::Hipster.paragraph(2)[0..199]
   fill_in 'Description:', with: @desc
 end
 
@@ -48,6 +48,10 @@ end
 When(/^I click on the "([^"]*)" button$/) do |name|
   button_class = '.' + name.downcase + '_btn'
   find(button_class).click
+end
+
+When(/^I click on the delete button$/) do
+  find('.incompleted_tasks').find('.delete_btn').click
 end
 
 Then(/^I should see the "([^"]*)" button$/) do |name|

@@ -56,7 +56,7 @@ Feature:
   Scenario: Deleting a task
     Given I am logged in
     And I have created a task
-    When I click on the "Delete" button
+    When I click on the delete button
     And I click OK
     Then I shouldn't see the task
 
