@@ -1,0 +1,16 @@
+/ Modal
+#helpModal.modal.fade{:role => "dialog"}
+  .modal-dialog
+    / Modal content
+    .modal-content
+      .modal-header
+        %button.close{"data-dismiss" => "modal", :type => "button"} &times;
+        %h4.modal-title Help
+      .modal-body
+        %p For any questions or comments, Please contact Andrew Davis at:
+        .row.well
+          %p 1-800-NASA
+      .modal-footer
+        %button.btn.btn-default{"data-dismiss" => "modal", :type => "button"} Close
+        .pull-left
+          %p Created solely by Logan Smith

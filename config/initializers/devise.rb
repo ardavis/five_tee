@@ -263,3 +263,6 @@ Devise.setup do |config|
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
 end
+
+# Add the Kerberos module to devise
+Devise.add_module(:kerberos, route: :session, strategy: true, controller: :sessions, model: 'kerberos/model')
