@@ -9,7 +9,7 @@ class TasksController < ApplicationController
   include TasksHelper
 
   def index
-    current_user.session = Session.new()
+    current_user.session = Session.new(sort_sql: 'lower(title) ASC')
     @tag = current_user.tags.new
   end
 

@@ -8,7 +8,13 @@ module TasksHelper
   def filtered_sorted_tasks(tasks)
     id = current_user.session.filter_tag_id
     filtered_tasks = id ? tasks.where(tag_id: id) : tasks
-    filtered_tasks.order(current_user.session.sort_sql)
+    if current_user.session.sort_sql.include? 'due_date'
+      missing_due_dates = filtered_tasks.where(due_date: nil)
+      have_due_dates = filtered_tasks.where.not(due_date: nil)
+      filtered_tasks = have_due_dates.order(current_user.session.sort_sql) + missing_due_dates.order('lower(title) ASC')
+    else
+      filtered_tasks.order(current_user.session.sort_sql)
+    end
   end
 
   def sort_label
