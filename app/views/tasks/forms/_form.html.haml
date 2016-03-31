@@ -18,6 +18,9 @@
             = link_to 'Create New Tag', new_tag_modal_path(task: @task), class: 'dropdown-item', remote: true
           %li
             .divider
+          %li
+            = link_to '#', value: nil, class: 'tag_option dropdown-item' do
+              %span &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           - current_user.tags.order('name ASC').each do |tag|
             %li
               = link_to tag.name, '#', value: tag.id, class: 'tag_option dropdown-item'
