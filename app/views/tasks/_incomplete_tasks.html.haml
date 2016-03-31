@@ -26,18 +26,18 @@
             -# If the task has a started_at, show a pause button, because it's running
 
             - if task.started_at.nil?
-              = link_to start_task_path(task), class: 'play_btn btn btn-default', format: :js, remote: true do
+              = link_to start_task_path(task), class: 'play_btn btn btn-default', style: 'margin: 2px;', format: :js, remote: true do
                 %span.glyphicon.glyphicon-play
 
             -else
-              = link_to pause_task_path(task), class: 'pause_btn btn btn-default', format: :js, remote: true do
+              = link_to pause_task_path(task), class: 'pause_btn btn btn-default', style: 'margin: 2px;', format: :js, remote: true do
                 %span.glyphicon.glyphicon-pause
 
 
 
-            = link_to complete_task_path(task), class: 'complete_btn btn btn-success', format: :js, remote: true do
+            = link_to complete_task_path(task), class: 'complete_btn btn btn-success', style: 'margin: 2px;', format: :js, remote: true do
               %span.glyphicon.glyphicon-ok
-            = link_to destroy_task_path(task), class: 'delete_btn btn btn-danger', format: :js, remote: true, data: { confirm: 'Are you sure you want to delete this task?' } do
+            = link_to destroy_task_path(task), class: 'delete_btn btn btn-danger', style: 'margin: 2px;', format: :js, remote: true, data: { confirm: 'Are you sure you want to delete this task?' } do
               %span.glyphicon.glyphicon-trash
   - else
     .container
