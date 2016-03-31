@@ -6,5 +6,6 @@ When(/^I create a tag$/) do
   find('#new-tag-modal').find('input[value="Save"]').click
 end
 
-
-
+When(/^ I set the current tag to "([^"]*)"$/) do |index|
+  @tag = current_user.tags.all.to_a[index]
+end

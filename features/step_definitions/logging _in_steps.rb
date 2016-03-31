@@ -4,6 +4,13 @@ Given(/^I have an account$/) do
   User.create! email: @email, password: @password, password_confirmation: @password
 end
 
+Given(/^I log in$/) do
+  visit '/'
+  fill_in 'Email', with: @email
+  fill_in 'Password', with: @password
+  find('input[value="Log in"]').click
+end
+
 When(/^I try to visit the root page$/) do
   visit '/'
 end

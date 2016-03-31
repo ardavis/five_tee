@@ -24,7 +24,7 @@ module TasksHelper
   end
 
   def duration_display(duration)
-    return "Not started" unless duration
+    return 'Not started' unless duration
     duration_string = "#{duration % 60} sec"
     duration_string.prepend '0' unless duration < 60 or duration % 60 > 9
     duration_string.prepend "#{duration / 60 % 60} min "
@@ -35,9 +35,9 @@ module TasksHelper
   def finished_display(completed)
     duration = (Time.now - completed).to_i
     if duration < 2
-      return "just now"
+      return 'just now'
     elsif duration < 60
-      return "Less than 1 min ago"
+      return 'Less than 1 min ago'
     elsif duration < 3600
       return "#{(duration / 60).to_i} min ago"
     else

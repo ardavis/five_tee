@@ -2,8 +2,8 @@ class Task < ActiveRecord::Base
   belongs_to :tag
   belongs_to :user
 
-  validates :title, presence: true, length: {minimum: 1, maximum: 40}
-  validates :desc, length: {maximum: 200}
+  validates :title, presence: true, length: {minimum: 1, maximum: 500}
+  validates :desc, length: {maximum: 1000}
 
   scope :incomplete, -> { where(completed_at: nil) }
   scope :completed, -> { where.not(completed_at: nil) }
