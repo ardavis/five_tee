@@ -1,13 +1,14 @@
 @javascript
 
 Feature:
-  As a user with at least one task
-  I would like to edit my tasks
+  Users should be able to edit tasks
 
   Background:
     Given I have an account
     And I have a task
     And I log in
+    And my browser is full screen
+
 
   Scenario: Edit task
     When I click on the "task" link

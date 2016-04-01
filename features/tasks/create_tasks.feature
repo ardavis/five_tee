@@ -1,11 +1,12 @@
 @javascript
 
 Feature:
-  As a user
-  I want to create tasks
+  Users should be able to create tasks
 
   Background:
     Given I am logged in
+    And my browser is full screen
+
 
   Scenario: Create new task
     When I click on the "New Task" link

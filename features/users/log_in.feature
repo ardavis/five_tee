@@ -1,7 +1,10 @@
 @javascript
 Feature:
-  As a user
-  I want the ability to log in
+  Users should be able to log in
+
+  Background:
+    Given my browser is full screen
+
 
 Scenario: Log in
   Given I have an account

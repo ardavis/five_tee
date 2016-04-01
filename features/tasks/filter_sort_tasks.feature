@@ -1,13 +1,14 @@
 @javascript
 
 Feature:
-  As a user with at least one task
-  I would like to edit my tasks
+  Users should be able to filter and sort tasks
 
   Background:
     Given I have an account
     And I have a task
     And I log in
+    And my browser is full screen
+
 
   Scenario: Filters and sort tasks
     When I create another task
