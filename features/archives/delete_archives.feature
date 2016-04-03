@@ -13,5 +13,9 @@ Feature:
 
   Scenario: Archive tasks
     When I click on the "View Archives" link
+    Then I should see the archive
+    And I click on the "delete" button
+    And I click OK
+    Then I should not see the archive
     
 

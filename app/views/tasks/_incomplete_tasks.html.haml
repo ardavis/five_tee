@@ -4,7 +4,7 @@
   .col-md-4.filter.dropdown{style: 'margin-top: 20px; width: 390px; padding-right: 0; margin-left: 10px;'}
     = render 'tasks/filter_sort_dropdowns'
   .col-md-3.pull-right{style: 'margin-top: 20px; margin-left: 30px; width: 250px; padding-left: 0; padding-right: 0;'}
-    %span= link_to 'Archive Tasks', new_archive_path, class: 'btn btn-default', data: { confirm: 'Are you sure you want to archive these completed tasks?' }, format: :js, remote: true
+    %span= link_to 'Archive Tasks', new_archive_path, class: 'btn btn-default', data: { confirm: 'Are you sure you want to archive these tasks?' }, format: :js, remote: true
     %span= link_to 'Reset All Tasks', reset_tasks_modal_path, class: 'delete_btn btn btn-danger', format: :js, remote: true
 .incompleted_tasks
   - if @incomplete_tasks.count > 0

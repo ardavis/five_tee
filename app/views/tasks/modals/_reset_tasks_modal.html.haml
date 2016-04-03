@@ -2,6 +2,6 @@
   .modal-dialog
     .modal-content
       .modal-body#reset-tasks-modal-body
-        = link_to 'Archive & Reset Tasks', reset_all_tasks_path(archive: true), class: 'btn btn-lg btn-default', style: 'width: 100%;', data: { confirm: 'Are you sure you want to archive and reset these completed tasks?' }, format: :js, remote: true
-        = link_to 'Reset Tasks Only', reset_all_tasks_path, class: 'btn btn-lg btn-danger', style: 'width: 100%;', data: { confirm: 'Are you sure you want to reset these completed tasks?' }, format: :js, remote: true
+        = link_to 'Archive & Reset Tasks', reset_all_tasks_path(archive: true), class: 'btn btn-lg btn-default', style: 'width: 100%;', data: { confirm: 'Are you sure you want to archive and reset these tasks?' }, format: :js, remote: true
+        = link_to 'Reset Tasks Only', reset_all_tasks_path, class: 'btn btn-lg btn-danger', style: 'width: 100%;', data: { confirm: 'Are you sure you want to reset these tasks?' }, format: :js, remote: true
         = link_to 'Close', '#', class: 'btn btn-lg btn-default', style: 'width: 100%;', 'data-dismiss': 'modal', type: 'button'

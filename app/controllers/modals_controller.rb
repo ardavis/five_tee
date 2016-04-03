@@ -38,4 +38,5 @@ class ModalsController < TasksController
     call_coffeescript('tasks/modal_scripts/reset_tasks_modal.coffee.erb')
   end
 
+
 end
