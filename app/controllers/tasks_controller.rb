@@ -1,5 +1,7 @@
 class TasksController < ApplicationController
 
+  include ApplicationHelper
+
   before_action :get_task, only: [:index, :show, :update, :update_duration, :destroy, :complete,
                                   :start, :restart, :pause]
 
@@ -12,7 +14,7 @@ class TasksController < ApplicationController
     current_user.session = Session.new(sort_sql: 'lower(title) ASC')
     @tag = current_user.tags.new
     render component: 'Tasks', props: {
-        tasks: current_user.tasks.all.to_a
+        tasks: current_user.tasks.all.to_a.map{|t| react_task(t)}
     }, tag: 'div'
   end
 

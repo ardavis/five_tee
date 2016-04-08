@@ -18,7 +18,7 @@ class Tasks extends React.Component {
     });
 
 
-    return(<div>start{task_rows}end</div>);
+    return(<div>{task_rows}</div>);
   }
 }
 
