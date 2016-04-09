@@ -13,9 +13,7 @@ class TasksController < ApplicationController
   def index
     current_user.session = Session.new(sort_sql: 'lower(title) ASC')
     @tag = current_user.tags.new
-    render component: 'Tasks', props: {
-        tasks: current_user.tasks.all.to_a.map{|t| react_task(t)}
-    }, tag: 'div'
+
   end
 
   def update_duration

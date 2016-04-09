@@ -1,4 +1,4 @@
-class Task extends React.Component {
+class IncompleteTask extends React.Component {
 
   constructor(props){
     super(props);
@@ -6,8 +6,11 @@ class Task extends React.Component {
 
 
   duration_display(task){
-    if (task.duration)
+    console.log(task);
+    if (task.duration) {
+      console.log("made it!");
       return (<p id="duration_display">{task.duration_display}</p>);
+    }
     else
       return (<p>Not Started</p>);
   }

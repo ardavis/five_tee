@@ -88,6 +88,12 @@ module TasksHelper
   end
 
 
+  def incomplete_tasks
+    current_user.tasks.where(completed_at: nil)
+  end
 
+  def complete_tasks
+    current_user.tasks.where.not(completed_at: nil)
+  end
 
 end
