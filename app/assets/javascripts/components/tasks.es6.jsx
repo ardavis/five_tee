@@ -4,6 +4,29 @@ class Tasks extends React.Component {
     super(props);
   }
 
+  componentWillMount(){
+    $('.pause_btn').click(function(e){
+      e.preventDefault();
+      task_id = $(this).data('val');
+      $.ajax({
+        type: "GET",
+        url: `/tasks/${task_id}/pause`
+      });
+      alert("fins!");
+    });
+
+
+    $('.play_btn').click(function(e){
+      e.preventDefault();
+      task_id = $(this).data('val');
+      $.ajax({
+        type: "GET",
+        url: `/tasks/${task_id}/start`
+      });
+      alert("fins!");
+    });
+  }
+
   render() {
 
     tasks = this.props.tasks;

@@ -4,11 +4,13 @@ class IncompleteTask extends React.Component {
     super(props);
   }
 
+  clicked(){
+    alert('clicked!');
+  }
+
 
   duration_display(task){
-    console.log(task);
     if (task.duration) {
-      console.log("made it!");
       return (<p id="duration_display">{task.duration_display}</p>);
     }
     else
@@ -18,14 +20,14 @@ class IncompleteTask extends React.Component {
   play_pause_btn(task){
     if (task.started_at) {
       return (
-        <a href={'tasks/' + task.id + '/pause'} className="pause_btn btn btn-default" data-remote="true" format="js">
+        <a href="#" className="pause_btn btn btn-default" data-val={task.id}>
           <span className="glyphicon glyphicon-pause"></span>
         </a>
       );
     }
     else {
       return (
-        <a href={'tasks/' + task.id + '/start'} className="play_btn btn btn-default">
+        <a href="#" className="play_btn btn btn-default" data-val={task.id}>
           <span className="glyphicon glyphicon-play"></span>
         </a>
       );
