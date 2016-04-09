@@ -10,6 +10,10 @@ class Tasks extends React.Component {
     alert("fin!");
   }
 
+  handle_click(){
+
+  }
+
 
   componentWillMount(){
 
@@ -22,11 +26,22 @@ class Tasks extends React.Component {
       this.super.toggle_task(task_id, 'pause');
     });
 
-    $('.play_btn').click(function(e){
-      e.preventDefault();
-      task_id = $(this).data('val');
-      e.toggle_task(task_id, 'start');
-    });
+    $('.play_btn').click({self: this}, this.handle_click);
+
+    // $('.play_btn').click(self: this, function(e){
+    //   e.preventDefault();
+    //   task_id = $(this).data('val');
+    //   e.toggle_task(task_id, 'start');
+    // });
+
+
+//     $("some selector").click({param1: "Hello", param2: "World"}, cool_function);
+//
+// // in your function, just grab the event object and go crazy...
+//     function cool_function(event){
+//       alert(event.data.param1);
+//       alert(event.data.param2);
+    }
   }
 
 
