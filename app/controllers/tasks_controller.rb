@@ -59,12 +59,16 @@ class TasksController < ApplicationController
 
   def start
     @task.start!(current_user)
-    call_coffeescript('tasks/button_scripts/playbutton.coffee.erb')
+    respond_to do |format|
+      format.json { render json: incomplete_tasks}
+    end
   end
 
   def pause
     @task.pause!
-    call_coffeescript('tasks/button_scripts/pausebutton.coffee.erb')
+    respond_to do |format|
+      format.json { render json: incomplete_tasks}
+    end
   end
 
   def download_all

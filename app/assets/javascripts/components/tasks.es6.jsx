@@ -2,35 +2,43 @@ class Tasks extends React.Component {
 
   constructor(props){
     super(props);
+    this.state = {tasks, type} = this.props;
   }
 
+  toggle_task(id, state){
+    get(`/tasks/${id}/${state}`);
+    alert("fin!");
+  }
+
+
   componentWillMount(){
+
+
+
+
     $('.pause_btn').click(function(e){
       e.preventDefault();
       task_id = $(this).data('val');
-      $.ajax({
-        type: "GET",
-        url: `/tasks/${task_id}/pause`
-      });
-      alert("fins!");
+      this.super.toggle_task(task_id, 'pause');
     });
-
 
     $('.play_btn').click(function(e){
       e.preventDefault();
       task_id = $(this).data('val');
-      $.ajax({
-        type: "GET",
-        url: `/tasks/${task_id}/start`
-      });
-      alert("fins!");
+      e.toggle_task(task_id, 'start');
     });
   }
 
+
+
+
+
+
+
   render() {
 
-    tasks = this.props.tasks;
-    type = this.props.type;
+    tasks = this.state.tasks;
+    type = this.state.type;
 
     task_rows = [];
 
