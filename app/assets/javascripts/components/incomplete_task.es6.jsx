@@ -52,10 +52,12 @@ class IncompleteTask extends React.Component {
             </a>
           </h4>
         </div>
-        <div className={"col-md-4"+ running ? "running_time" : ""}>
+        <div className="col-md-4">
+          <div className={running ? "running_time" : ""}>
           <input id="duration_field" type="hidden" value={duration} name="duration_field"></input>
           <input id="started_field" type="hidden" value={task.started_at} name="started_field"></input>
           {this.duration_display(task)}
+        </div>
         </div>
         <div className="col-md-4">
           <input id="running_time" type="hidden" value={task.duration} name="running_time"></input>

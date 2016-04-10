@@ -13,7 +13,6 @@ class TasksController < ApplicationController
   def index
     current_user.session = Session.new(sort_sql: 'lower(title) ASC')
     @tag = current_user.tags.new
-
   end
 
   def update_duration
@@ -60,14 +59,14 @@ class TasksController < ApplicationController
   def start
     @task.start!(current_user)
     respond_to do |format|
-      format.json { render json: incomplete_tasks}
+      format.json { render json: react_tasks_hash}
     end
   end
 
   def pause
     @task.pause!
     respond_to do |format|
-      format.json { render json: incomplete_tasks}
+      format.json { render json: react_tasks_hash}
     end
   end
 
