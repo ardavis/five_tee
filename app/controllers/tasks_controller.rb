@@ -53,7 +53,9 @@ class TasksController < ApplicationController
 
   def complete
     @task.complete!
-    call_coffeescript('tasks/reload_scripts/restart_reload.coffee.erb')
+    respond_to do |format|
+      format.json { render json: react_tasks_hash}
+    end
   end
 
   def start

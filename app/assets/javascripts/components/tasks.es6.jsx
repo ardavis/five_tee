@@ -2,19 +2,19 @@ class Tasks extends React.Component {
 
   constructor(props){
     super(props);
-    this.state = {tasks, type} = this.props;
+    this.state = {tasks} = this.props;
 
     this.componentDidMount = this.componentDidMount.bind(this);
     this.componentDidUpdate = this.componentDidUpdate.bind(this);
-    this.toggle_task = this.toggle_task.bind(this);
+    this.button_action = this.button_action.bind(this);
     this.set_buttons = this.set_buttons.bind(this);
     this.remove_buttons = this.remove_buttons.bind(this);
   }
 
-  toggle_task(id, state){
+  button_action(id, state, type){
     self = this;
     $.ajax({
-      type: "GET",
+      type: type,
       url: `/tasks/${id}/${state}`,
       dataType: 'json',
       success: function(data){
@@ -22,29 +22,45 @@ class Tasks extends React.Component {
       }
     });
   }
+
+  fetch_ids(elem){
+    id = elem.parent().parent().parent().data('val');
+    return id;
+  }
   
   
   set_buttons(){
+
     $('.pause_btn').click({self: this}, function(e){
       e.preventDefault();
-      task_id = $(this).data('val');
-      e.data.self.toggle_task(task_id, 'pause');
+      task_id = e.data.self.fetch_ids($(this));
+      e.data.self.button_action(task_id, 'pause', 'GET');
     });
 
 
     $('.play_btn').click({self: this}, function(e){
       e.preventDefault();
-      task_id = $(this).data('val');
-      e.data.self.toggle_task(task_id, "start");
+      task_id = e.data.self.fetch_ids($(this));
+      console.log(task_id);
+
+      e.data.self.button_action(task_id, "start", 'GET');
     });
+    
+    $(".complete_btn").click({self: this}, function(e){
+      e.preventDefault();
+      task_id = e.data.self.fetch_ids($(this));
+      console.log(task_id);
+      e.data.self.button_action(task_id, "complete", 'GET')
+    })
   }
 
 
   remove_buttons(){
     $('.pause_btn').unbind();
     $('.play_btn').unbind();
+    $('.complete_btn').unbind();
+    console.log($('.complete_btn'));
   }
-
 
 
 
@@ -70,11 +86,8 @@ class Tasks extends React.Component {
 
   render() {
     tasks = this.state.tasks;
-
     task_rows = {incomplete: [], complete: []};
-
-
-
+    
     tasks.incomplete.forEach(function (task){
       task_row = <IncompleteTask task={task}></IncompleteTask>;
       task_rows.incomplete.push(task_row);
@@ -86,7 +99,6 @@ class Tasks extends React.Component {
     });
 
     this.tasks_or_placeholder(task_rows);
-
 
     return(
       <div className="incomplete_tasks">

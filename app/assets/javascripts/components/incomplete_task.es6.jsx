@@ -6,9 +6,6 @@ class IncompleteTask extends React.Component {
     this.componentDidUpdate = this.componentDidUpdate.bind(this);
   }
 
-
-
-
   duration_display(task){
     if (task.duration) {
       return (<p id="duration_display">{task.duration_display}</p>);
@@ -19,7 +16,6 @@ class IncompleteTask extends React.Component {
 
   timer_or_duration(task){
     if (task.running){
-      // console.log(task.title);
       return(<div className="task-running"></div>);
     }
     else{
@@ -44,6 +40,14 @@ class IncompleteTask extends React.Component {
     }
   }
 
+  complete_btn(task){
+    return(
+      <a href="#" className="complete_btn btn btn-success" data-val={task.id}>
+        <span className="glyphicon glyphicon-ok"></span>
+      </a>
+    )
+  }
+
   set_timer() {
     this.state = {task} = this.props;
     task = this.state.task;
@@ -53,11 +57,10 @@ class IncompleteTask extends React.Component {
     }
   }
 
+
   componentDidMount(){
     this.set_timer();
   }
-
-
 
   componentDidUpdate(){
     this.set_timer();
@@ -73,7 +76,7 @@ class IncompleteTask extends React.Component {
 
 
     return(
-      <div className="row well task" id={row_id}>
+      <div className="row well task" id={row_id} data-val={task.id}>
         <div className="col-md-4">
           <h4>
             <a id={task.title} href={show_link} data-remote="true" format="js">
@@ -83,18 +86,13 @@ class IncompleteTask extends React.Component {
         </div>
         <div className="col-md-4">
           <div className={running ? "running_time" : ""}>
-          <input id="duration_field" type="hidden" value={duration} name="duration_field"></input>
-          <input id="started_field" type="hidden" value={task.started_at} name="started_field"></input>
           {this.timer_or_duration(task)}
         </div>
         </div>
         <div className="col-md-4">
-          <input id="running_time" type="hidden" value={task.duration} name="running_time"></input>
           <div className="pull-right">
             {this.play_pause_btn(task)}
-            <a href={'tasks/' + task.id + '/complete'} className="complete_btn btn btn-success">
-              <span className="glyphicon glyphicon-ok"></span>
-            </a>
+            {this.complete_btn(task)}
             <a href={'tasks/' + task.id + '/destroy'} className="delete_btn btn btn-danger">
               <span className="glyphicon glyphicon-trash"></span>
             </a>
