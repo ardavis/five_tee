@@ -3,12 +3,6 @@ class Tasks extends React.Component {
   constructor(props){
     super(props);
     this.state = {tasks} = this.props;
-
-    this.componentDidMount = this.componentDidMount.bind(this);
-    this.componentDidUpdate = this.componentDidUpdate.bind(this);
-    this.button_action = this.button_action.bind(this);
-    this.set_buttons = this.set_buttons.bind(this);
-    this.remove_buttons = this.remove_buttons.bind(this);
   }
 
   button_action(id, state, type){
@@ -24,11 +18,10 @@ class Tasks extends React.Component {
   }
 
   fetch_ids(elem){
-    id = elem.parent().parent().parent().data('val');
+    id = elem.parent().parent().parent().attr('value');
     return id;
   }
-  
-  
+
   set_buttons(){
 
     $('.pause_btn').click({self: this}, function(e){
@@ -41,7 +34,6 @@ class Tasks extends React.Component {
     $('.play_btn').click({self: this}, function(e){
       e.preventDefault();
       task_id = e.data.self.fetch_ids($(this));
-      console.log(task_id);
 
       e.data.self.button_action(task_id, "start", 'GET');
     });
@@ -49,19 +41,35 @@ class Tasks extends React.Component {
     $(".complete_btn").click({self: this}, function(e){
       e.preventDefault();
       task_id = e.data.self.fetch_ids($(this));
-      console.log(task_id);
       e.data.self.button_action(task_id, "complete", 'GET')
-    })
+    });
+
+    $(".restart_btn").click({self: this}, function(e){
+      e.preventDefault();
+      task_id = e.data.self.fetch_ids($(this));
+      e.data.self.button_action(task_id, "restart", 'GET')
+    });
+
+    $(".delete_btn").click({self: this}, function(e){
+      e.preventDefault();
+      sure = confirm("Are you sure you want to delete this task?");
+      if (sure){
+        task_id = e.data.self.fetch_ids($(this));
+        e.data.self.button_action(task_id, "destroy", 'GET')
+      }
+    });
+
+
   }
 
 
   remove_buttons(){
-    $('.pause_btn').unbind();
-    $('.play_btn').unbind();
-    $('.complete_btn').unbind();
-    console.log($('.complete_btn'));
+    $('.pause_btn').off('click');
+    $('.play_btn').off('click');
+    $('.complete_btn').off('click');
+    $('.delete_btn').off('click');
+    $('.restart_btn').off('click');
   }
-
 
 
   componentDidMount(){
@@ -89,12 +97,12 @@ class Tasks extends React.Component {
     task_rows = {incomplete: [], complete: []};
     
     tasks.incomplete.forEach(function (task){
-      task_row = <IncompleteTask task={task}></IncompleteTask>;
+      task_row = <IncompleteTask task={task} key={task.id}></IncompleteTask>;
       task_rows.incomplete.push(task_row);
     });
 
     tasks.complete.forEach(function (task){
-      task_row = <CompleteTask task={task}></CompleteTask>;
+      task_row = <CompleteTask task={task} key={task.id}></CompleteTask>;
       task_rows.complete.push(task_row);
     });
 

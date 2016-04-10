@@ -26,27 +26,20 @@ class IncompleteTask extends React.Component {
   play_pause_btn(task){
     if (task.started_at) {
       return (
-        <a href="#" className="pause_btn btn btn-default" data-val={task.id}>
+        <a href="#" className="pause_btn btn btn-default">
           <span className="glyphicon glyphicon-pause"></span>
         </a>
       );
     }
     else {
       return (
-        <a href="#" className="play_btn btn btn-default" data-val={task.id}>
+        <a href="#" className="play_btn btn btn-default">
           <span className="glyphicon glyphicon-play"></span>
         </a>
       );
     }
   }
 
-  complete_btn(task){
-    return(
-      <a href="#" className="complete_btn btn btn-success" data-val={task.id}>
-        <span className="glyphicon glyphicon-ok"></span>
-      </a>
-    )
-  }
 
   set_timer() {
     this.state = {task} = this.props;
@@ -76,7 +69,7 @@ class IncompleteTask extends React.Component {
 
 
     return(
-      <div className="row well task" id={row_id} data-val={task.id}>
+      <div className="row well task" id={row_id} value={task.id}>
         <div className="col-md-4">
           <h4>
             <a id={task.title} href={show_link} data-remote="true" format="js">
@@ -92,8 +85,10 @@ class IncompleteTask extends React.Component {
         <div className="col-md-4">
           <div className="pull-right">
             {this.play_pause_btn(task)}
-            {this.complete_btn(task)}
-            <a href={'tasks/' + task.id + '/destroy'} className="delete_btn btn btn-danger">
+            <a href="#" className="complete_btn btn btn-success">
+              <span className="glyphicon glyphicon-ok"></span>
+            </a>
+            <a href='#' className="delete_btn btn btn-danger">
               <span className="glyphicon glyphicon-trash"></span>
             </a>
           </div>

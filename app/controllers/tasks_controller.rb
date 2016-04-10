@@ -7,7 +7,6 @@ class TasksController < ApplicationController
 
   before_action :get_sorted_tasks, only: [:index, :update_duration, :create, :update, :destroy,
                                           :complete, :start, :pause, :restart, :reset_all]
-
   include TasksHelper
 
   def index
@@ -48,28 +47,28 @@ class TasksController < ApplicationController
 
   def destroy
     @task.destroy
-    call_coffeescript('tasks/reload_scripts/restart_reload.coffee.erb')
+    react_json
   end
 
   def complete
     @task.complete!
-    respond_to do |format|
-      format.json { render json: react_tasks_hash}
-    end
+    react_json
   end
+
+  def restart
+    @task.restart!
+    react_json
+  end
+
 
   def start
     @task.start!(current_user)
-    respond_to do |format|
-      format.json { render json: react_tasks_hash}
-    end
+    react_json
   end
 
   def pause
     @task.pause!
-    respond_to do |format|
-      format.json { render json: react_tasks_hash}
-    end
+    react_json
   end
 
   def download_all
@@ -90,10 +89,6 @@ class TasksController < ApplicationController
     render xlsx: 'download.xlsx.axlsx',filename: 'completedTasks.xlsx'
   end
 
-  def restart
-    @task.restart!
-    call_coffeescript('tasks/reload_scripts/restart_reload.coffee.erb')
-  end
 
 
   def reset_all
@@ -125,6 +120,12 @@ class TasksController < ApplicationController
     fixed_date = date[3..5]
     fixed_date << date[0..2]
     fixed_date << date[6..9]
+  end
+
+  def react_json
+    respond_to do |format|
+      format.json { render json: react_tasks_hash}
+    end
   end
 
 end

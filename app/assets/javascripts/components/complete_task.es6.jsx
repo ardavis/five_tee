@@ -39,7 +39,7 @@ class CompleteTask extends React.Component {
 
 
     return(
-      <div className="row well">
+      <div className="row well" value={task.id}>
         <div className="col-md-4">
           <h4>
             <a id={task.title} href={show_link} data-remote="true" format="js">
@@ -55,7 +55,7 @@ class CompleteTask extends React.Component {
           {"Finished "}
           {task.finished_display}
           <div className="pull-right">
-            <a href={'tasks/' + task.id + '/restart'} className="restart_btn btn btn-default">
+            <a href="#" className="restart_btn btn btn-default">
               <span className="glyphicon glyphicon-arrow-up"></span>
             </a>
           </div>
