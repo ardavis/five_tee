@@ -158,9 +158,49 @@ set_tag_select_to_last = ->
   $('#select_tag').html(select_name)
   $('#hidden_tag_input').val(select_id)
 
+set_timer = (duration_source, target) ->
+  task_running = $('input#task_running').val() == 'true'
+  if duration_source == 'task'
+    task_element = $("#task-running")
+    running_time_element = task_element.find('.running_time')
+    duration_field = task_element.find('input#duration_field')
+    started_field = task_element.find('input#started_field')
+    now = Date.now() / 1000 | 0
+    start_time = +duration_field.val() + now - started_field.val()
+    target = running_time_element
+    task_running = true
+  else
+    duration_array = duration_source.html().split(' ').real_strings()[-6..-1]
+    start_time = +duration_array[0] * 3600
+    start_time += +duration_array[2] * 60
+    start_time += +duration_array[4]
+  if task_running
+    target.timer({
+      seconds: start_time,
+      format: '%h hr %m min %s sec'
+    })
+
+set_all_timers = () ->
+  set_timer('task', 'string')
+  if $('.running_time').html()
+    set_timer($('.running_time'), $('.displays_timer'))
+    set_timer($('.displays_timer'), $('.edit_timer'))
 
 
+task_timer = (task, duration, started_at) ->
+  now = Date.now() / 1000 | 0
+  start_time = duration + now - started_at
+#  console.log(now);
+#  console.log(started_at);
+#  console.log(start_time);
+  task.timer({
+    seconds: start_time,
+    format: '%h hr %m min %s sec'
+  })
 
+  
+  
+window.task_timer = task_timer
 window.set_tag_select_to_last = set_tag_select_to_last
 window.set_tag_select_listener = set_tag_select_listener
 window.set_focus = set_focus

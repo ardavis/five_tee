@@ -2,11 +2,11 @@ class IncompleteTask extends React.Component {
 
   constructor(props){
     super(props);
+    this.state = {task} = this.props;
+    this.componentDidUpdate = this.componentDidUpdate.bind(this);
   }
 
-  clicked(){
-    alert('clicked!');
-  }
+
 
 
   duration_display(task){
@@ -15,6 +15,16 @@ class IncompleteTask extends React.Component {
     }
     else
       return (<p>Not Started</p>);
+  }
+
+  timer_or_duration(task){
+    if (task.running){
+      // console.log(task.title);
+      return(<div className="task-running"></div>);
+    }
+    else{
+      return this.duration_display(task);
+    }
   }
 
   play_pause_btn(task){
@@ -34,9 +44,28 @@ class IncompleteTask extends React.Component {
     }
   }
 
+  set_timer() {
+    this.state = {task} = this.props;
+    task = this.state.task;
+    if (task.running) {
+      elem = $(".task-running");
+      task_timer(elem, task.duration, task.started_at);
+    }
+  }
+
+  componentDidMount(){
+    this.set_timer();
+  }
+
+
+
+  componentDidUpdate(){
+    this.set_timer();
+  }
+
   render () {
     task = this.props.task;
-    duration = task.duration ? task.duration : 0
+    duration = task.duration ? task.duration : 0;
     running = task.started_at ? true : false;
     row_id = (`task-${running ? 'running' : 'paused'}`);
     show_link = `/show_task_modal?id=${task.id}`;
@@ -56,7 +85,7 @@ class IncompleteTask extends React.Component {
           <div className={running ? "running_time" : ""}>
           <input id="duration_field" type="hidden" value={duration} name="duration_field"></input>
           <input id="started_field" type="hidden" value={task.started_at} name="started_field"></input>
-          {this.duration_display(task)}
+          {this.timer_or_duration(task)}
         </div>
         </div>
         <div className="col-md-4">

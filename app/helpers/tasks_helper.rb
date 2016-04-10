@@ -96,6 +96,7 @@ module TasksHelper
         due_date: task.due_date,
         completed_at: task.completed_at.to_i,
         started_at: task.started_at.to_i,
+        running: !!task.started_at,
         created_at: task.created_at.to_i,
         duration: task.duration,
         duration_display: duration_display(task.duration),

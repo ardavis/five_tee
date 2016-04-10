@@ -50,14 +50,11 @@ class Tasks extends React.Component {
 
   componentDidMount(){
     this.set_buttons();
-    set_all_timers();
-
   }
   
   componentDidUpdate(){
     this.remove_buttons();
     this.set_buttons();
-    set_all_timers();
   }
 
 
@@ -78,7 +75,6 @@ class Tasks extends React.Component {
 
 
 
-    console.log(tasks.incomplete);
     tasks.incomplete.forEach(function (task){
       task_row = <IncompleteTask task={task}></IncompleteTask>;
       task_rows.incomplete.push(task_row);
