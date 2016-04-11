@@ -1,5 +1,7 @@
 class SessionsController < Devise::SessionsController
 
+  include ApplicationHelper
+
   before_action :session_init, only: [:create]
 
   before_action :update_filter_sort, only: [:update]
@@ -22,9 +24,10 @@ class SessionsController < Devise::SessionsController
 
 
   def update_filter_sort
-    byebug
     current_user.session.update_attributes(session_params)
-    current_user.session.update_attributes(filter_tag_id: nil) if session_params[:filter_tag_id] == '0'
+    if ['0', 'undefined'].include? session_params[:filter_tag_id]
+      current_user.session.update_attributes(filter_tag_id: nil)
+    end
     react_json
   end
 
