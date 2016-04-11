@@ -2,7 +2,7 @@ class Tasks extends React.Component {
 
   constructor(props){
     super(props);
-    this.state = {tasks, tags, filter_sort, sort_options} = this.props.payload;
+    this.state = this.props.payload;
     this.render = this.render.bind(this);
   }
 
@@ -13,7 +13,7 @@ class Tasks extends React.Component {
       url: `/tasks/${id}/${state}`,
       dataType: 'json',
       success: function(data){
-        self.setState({tasks: data.tasks, tags: data.tags, filter_sort: data.filter_sort});
+        self.setState(data);
       }
     });
   }
@@ -25,8 +25,7 @@ class Tasks extends React.Component {
       url: `/session/${id_sql}/update_${filter_sort}`,
       dataType: 'json',
       success: function(data){
-        console.log("fin");
-        self.setState({tasks: data.tasks, tags: data.tags, filter_sort: data.filter_sort});
+        self.setState(data);
       }
     });
   }
@@ -132,60 +131,30 @@ class Tasks extends React.Component {
     filter = this.state.filter_sort.filter;
     sort = this.state.filter_sort.sort;
     sort_options = this.state.sort_options;
-
     task_rows = {incomplete: [], complete: []};
 
 
-    filter_list_items = [];
-    tags.forEach(function (tag){
-      list_item = <li key={tag.id}><a href="#" className="filter_link" value={tag.id}>{tag.name}</a></li>;
-      filter_list_items.push(list_item);
-    });
+
+    //sort_list_items = [];
+    //sort_options.forEach(function (option){
+    //  list_item = <li key={option.sql}><a href="#" className="sort_link" value={option.sql}>{option.label}</a></li>;
+    //  sort_list_items.push(list_item);
+    //});
+    //
+    //sort_dropdown = (
+    //  <div className="dropdown">
+    //    <span>Sort by:</span>
+    //    <button className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" type="button" id="filter_dropdown">
+    //      <span>{sort.label}</span>
+    //      <span className="caret"></span>
+    //    </button>
+    //    <ul className="dropdown-menu">
+    //      {sort_list_items}
+    //    </ul>
+    //  </div>
+    //);
 
 
-    filter_dropdown = (
-      <div className="dropdown">
-        <span>Filter by:</span>
-        <button className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" type="button" id="filter_dropdown">
-          <span>{filter.label}</span>
-          <span className="caret"></span>
-        </button>
-        <ul className="dropdown-menu">
-          <li>
-            <a href="#" className="filter_link">All Tags</a>
-          </li>
-          <li>
-            <div className="divider"></div>
-          </li>
-          {filter_list_items}
-        </ul>
-      </div>
-    );
-
-    sort_list_items = [];
-    sort_options.forEach(function (option){
-      list_item = <li key={option.sql}><a href="#" className="sort_link" value={option.sql}>{option.label}</a></li>;
-      sort_list_items.push(list_item);
-    });
-
-    sort_dropdown = (
-      <div className="dropdown">
-        <span>Sort by:</span>
-        <button className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" type="button" id="filter_dropdown">
-          <span>{sort.label}</span>
-          <span className="caret"></span>
-        </button>
-        <ul className="dropdown-menu">
-          <li>
-            <div className="divider"></div>
-          </li>
-          {sort_list_items}
-        </ul>
-      </div>
-    );
-
-
-    
     tasks.incomplete.forEach(function (task){
       task_row = <IncompleteTask task={task} key={task.id}></IncompleteTask>;
       task_rows.incomplete.push(task_row);
@@ -198,10 +167,13 @@ class Tasks extends React.Component {
 
     this.tasks_or_placeholder(task_rows);
 
+
+
+
     return(
       <div className="incomplete_tasks">
-        {filter_dropdown}
-        {sort_dropdown}
+        <FilterDropdown tags={tags} filter={filter}></FilterDropdown>
+        <SortDropdown sort_options={sort_options} sort={sort}></SortDropdown>
         <h1>Tasks</h1>
         {task_rows.incomplete}
         <h1>Completed Tasks</h1>

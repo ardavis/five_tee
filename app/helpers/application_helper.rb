@@ -7,8 +7,9 @@ module ApplicationHelper
 
   def sort_label
     sql = current_user.session.sort_sql
-    sort_options.each { |option| return option[:label] if option[:sql] == sql }
-    return 'Alphabetical'
+    label = 'Alphabetical'
+    sort_options.to_a.each { |option| label = option[:label] if option[:sql] == sql }
+    label
   end
 
   def sort_options

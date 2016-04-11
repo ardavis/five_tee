@@ -17,7 +17,7 @@ Rails.application.routes.draw do
 
   devise_scope :user do
     get '/session/:filter_tag_id/update_filter' => 'sessions#update_filter_sort'
-    get '/session/:sort_sql/update_sort' => 'sessions#update_sort_sort'
+    get '/session/:sort_sql/update_sort' => 'sessions#update_filter_sort'
   end
 
   get '/tasks/:id/destroy' => 'tasks#destroy', as: 'destroy_task'
