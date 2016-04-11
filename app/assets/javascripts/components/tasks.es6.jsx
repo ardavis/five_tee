@@ -2,7 +2,7 @@ class Tasks extends React.Component {
 
   constructor(props){
     super(props);
-    this.state = {tasks, tags, filter_sort} = this.props.payload;
+    this.state = {tasks, tags, filter_sort, sort_options} = this.props.payload;
     this.render = this.render.bind(this);
   }
 
@@ -86,6 +86,12 @@ class Tasks extends React.Component {
       filter_id = e.data.self.fetch_link_ids($(this));
       e.data.self.link_action(filter_id, "filter", "");
     });
+
+    $(".sort_link").click({self: this}, function(e){
+      e.preventDefault();
+      sort_sql = e.data.self.fetch_link_ids($(this));
+      e.data.self.link_action(sort_sql, "sort", "");
+    });
   }
 
 
@@ -125,14 +131,15 @@ class Tasks extends React.Component {
     tags = this.state.tags;
     filter = this.state.filter_sort.filter;
     sort = this.state.filter_sort.sort;
+    sort_options = this.state.sort_options;
 
     task_rows = {incomplete: [], complete: []};
 
 
-    filter_options = [];
+    filter_list_items = [];
     tags.forEach(function (tag){
-      option = <li key={tag.id}><a href="#" className="filter_link" value={tag.id}>{tag.name}</a></li>;
-      filter_options.push(option);
+      list_item = <li key={tag.id}><a href="#" className="filter_link" value={tag.id}>{tag.name}</a></li>;
+      filter_list_items.push(list_item);
     });
 
 
@@ -150,7 +157,29 @@ class Tasks extends React.Component {
           <li>
             <div className="divider"></div>
           </li>
-          {filter_options}
+          {filter_list_items}
+        </ul>
+      </div>
+    );
+
+    sort_list_items = [];
+    sort_options.forEach(function (option){
+      list_item = <li key={option.sql}><a href="#" className="sort_link" value={option.sql}>{option.label}</a></li>;
+      sort_list_items.push(list_item);
+    });
+
+    sort_dropdown = (
+      <div className="dropdown">
+        <span>Sort by:</span>
+        <button className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" type="button" id="filter_dropdown">
+          <span>{sort.label}</span>
+          <span className="caret"></span>
+        </button>
+        <ul className="dropdown-menu">
+          <li>
+            <div className="divider"></div>
+          </li>
+          {sort_list_items}
         </ul>
       </div>
     );
@@ -172,6 +201,7 @@ class Tasks extends React.Component {
     return(
       <div className="incomplete_tasks">
         {filter_dropdown}
+        {sort_dropdown}
         <h1>Tasks</h1>
         {task_rows.incomplete}
         <h1>Completed Tasks</h1>
