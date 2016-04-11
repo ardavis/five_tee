@@ -31,7 +31,7 @@ class CompleteTask extends React.Component {
 
   render () {
     task = this.props.task;
-    duration = task.duration ? task.duration : 0
+    duration = task.duration ? task.duration : 0;
     running = task.started_at ? true : false;
     row_id = (`task-${running ? 'running' : 'paused'}`);
     show_link = `/show_task_modal?id=${task.id}`;

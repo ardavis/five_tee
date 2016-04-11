@@ -102,15 +102,22 @@ class Tasks extends React.Component {
     $('.restart_btn').off('click');
   }
 
+  remove_links(){
+    $('.filter_link').off('click');
+    $('.sort_link').off('click');
+  }
 
+  
   componentDidMount(){
     this.set_buttons();
     this.set_links();
   }
   
   componentDidUpdate(){
+    this.remove_links();
     this.remove_buttons();
     this.set_buttons();
+    this.set_links();
   }
 
 
@@ -128,31 +135,11 @@ class Tasks extends React.Component {
   render() {
     tasks = this.state.tasks;
     tags = this.state.tags;
-    filter = this.state.filter_sort.filter;
-    sort = this.state.filter_sort.sort;
+    filter_sort = this.state.filter_sort;
+    filter = filter_sort.filter;
+    sort = filter_sort.sort;
     sort_options = this.state.sort_options;
     task_rows = {incomplete: [], complete: []};
-
-
-
-    //sort_list_items = [];
-    //sort_options.forEach(function (option){
-    //  list_item = <li key={option.sql}><a href="#" className="sort_link" value={option.sql}>{option.label}</a></li>;
-    //  sort_list_items.push(list_item);
-    //});
-    //
-    //sort_dropdown = (
-    //  <div className="dropdown">
-    //    <span>Sort by:</span>
-    //    <button className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" type="button" id="filter_dropdown">
-    //      <span>{sort.label}</span>
-    //      <span className="caret"></span>
-    //    </button>
-    //    <ul className="dropdown-menu">
-    //      {sort_list_items}
-    //    </ul>
-    //  </div>
-    //);
 
 
     tasks.incomplete.forEach(function (task){
@@ -169,11 +156,10 @@ class Tasks extends React.Component {
 
 
 
-
     return(
       <div className="incomplete_tasks">
         <FilterDropdown tags={tags} filter={filter}></FilterDropdown>
-        <SortDropdown sort_options={sort_options} sort={sort}></SortDropdown>
+        <SortDropdown sort_options={sort_options} filter_sort={filter_sort}></SortDropdown>
         <h1>Tasks</h1>
         {task_rows.incomplete}
         <h1>Completed Tasks</h1>

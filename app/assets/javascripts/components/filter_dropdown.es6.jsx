@@ -4,10 +4,9 @@ class FilterDropdown extends React.Component {
     super(props);
     this.state = {tags, filter} = this.props;
   }
+  
 
   render(){
-    console.log("filter render");
-    console.log(this.state);
     tags = this.state.tags;
     filter_label = this.state.filter.label;
 
