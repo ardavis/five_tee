@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   resources :tags
 
+
   get '/archive/create' => 'archives#create', as: 'new_archive'
   get '/archives/show' => 'archives#show', as: 'show_archives'
   get '/archives/:id/destroy' => 'archives#destroy', as: 'destroy_archive'
@@ -20,6 +21,7 @@ Rails.application.routes.draw do
     get '/session/:sort_sql/update_sort' => 'sessions#update_filter_sort'
   end
 
+  get '/tasks/:id/show' => 'tasks#show_task', as: 'show_task'
   get '/tasks/:id/destroy' => 'tasks#destroy', as: 'destroy_task'
   get '/tasks/:id/complete' => 'tasks#complete', as: 'complete_task'
   get '/tasks/:id/start' => 'tasks#start', as: 'start_task'

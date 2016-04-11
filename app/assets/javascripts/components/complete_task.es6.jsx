@@ -42,7 +42,7 @@ class CompleteTask extends React.Component {
       <div className="row well" value={task.id}>
         <div className="col-md-4">
           <h4>
-            <a id={task.title} href={show_link} data-remote="true" format="js">
+            <a id={task.title} href='#' data-remote="true" format="js">
               {task.title}
             </a>
           </h4>

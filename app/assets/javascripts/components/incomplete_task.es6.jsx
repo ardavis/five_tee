@@ -72,7 +72,7 @@ class IncompleteTask extends React.Component {
       <div className="row well task" id={row_id} value={task.id}>
         <div className="col-md-4">
           <h4>
-            <a id={task.title} href={show_link} data-remote="true" format="js">
+            <a className="show_link" id={task.title} href='#' value={task.id}>
               {task.title}
             </a>
           </h4>

@@ -9,6 +9,13 @@ class TasksController < ApplicationController
                                           :complete, :start, :pause, :restart, :reset_all]
   include TasksHelper
 
+  def show_task
+    @task = current_user.tasks.find(params[:id].to_i)
+    respond_to do |format|
+      format.json { render json: react_task(@task)}
+    end
+  end
+
   def index
     current_user.session = Session.new(sort_sql: 'lower(title) ASC')
     @tag = current_user.tags.new
