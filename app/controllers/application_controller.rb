@@ -35,4 +35,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def react_json
+    respond_to do |format|
+      format.json { render json: react_payload}
+    end
+  end
+
 end

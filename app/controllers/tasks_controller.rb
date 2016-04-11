@@ -122,10 +122,6 @@ class TasksController < ApplicationController
     fixed_date << date[6..9]
   end
 
-  def react_json
-    respond_to do |format|
-      format.json { render json: react_tasks_hash}
-    end
-  end
+
 
 end

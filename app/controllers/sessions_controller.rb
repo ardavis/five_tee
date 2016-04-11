@@ -14,14 +14,24 @@ class SessionsController < Devise::SessionsController
     end
   end
 
+  def react_json
+    respond_to do |format|
+      format.json { render json: react_payload}
+    end
+  end
+
+
   def update_filter_sort
+    byebug
     current_user.session.update_attributes(session_params)
     current_user.session.update_attributes(filter_tag_id: nil) if session_params[:filter_tag_id] == '0'
-    call_coffeescript('tasks/reload_scripts/restart_reload.coffee.erb')
+    react_json
   end
 
 
   private
+
+
 
   def session_params
     params.permit(:filter_tag_id, :sort_sql)

@@ -1,28 +1,5 @@
 module TasksHelper
 
-  def filter_tag_label
-    tag_id = current_user.session.filter_tag_id
-    tag_id ? Tag.find(tag_id).name : 'All Tags'
-  end
-
-  def filtered_sorted_tasks(tasks)
-    id = current_user.session.filter_tag_id
-    filtered_tasks = id ? tasks.where(tag_id: id) : tasks
-    if current_user.session.sort_sql.include? 'due_date'
-      missing_due_dates = filtered_tasks.where(due_date: nil)
-      have_due_dates = filtered_tasks.where.not(due_date: nil)
-      filtered_tasks = have_due_dates.order(current_user.session.sort_sql) + missing_due_dates.order('lower(title) ASC')
-    else
-      filtered_tasks.order(current_user.session.sort_sql)
-    end
-  end
-
-  def sort_label
-    sql = current_user.session.sort_sql
-    sort_options.each { |option| return option[:label] if option[:sql] == sql }
-    return 'Alphabetical'
-  end
-
   def duration_display(duration)
     return 'Not started' unless duration
     duration_string = "#{duration % 60} sec"
@@ -88,37 +65,6 @@ module TasksHelper
   end
 
 
-  def react_task(task)
-    react_task_hash = {
-        id: task.id,
-        title: task.title,
-        desc: task.desc,
-        due_date: task.due_date,
-        completed_at: task.completed_at.to_i,
-        started_at: task.started_at.to_i,
-        running: !!task.started_at,
-        created_at: task.created_at.to_i,
-        duration: task.duration,
-        duration_display: duration_display(task.duration),
-        finished_display: task.completed_at ? finished_display(task.completed_at) : nil
-    }
-  end
 
-  def react_tasks(tasks)
-    tasks.map{|task| react_task(task)}
-  end
-
-
-  def incomplete_tasks
-    current_user.tasks.where(completed_at: nil)
-  end
-
-  def complete_tasks
-    current_user.tasks.where.not(completed_at: nil)
-  end
-
-  def react_tasks_hash
-    {incomplete: react_tasks(incomplete_tasks), complete: react_tasks(complete_tasks)}
-  end
 
 end
