@@ -32,7 +32,7 @@
   margin-left: 0;
 }
 
-//.archive_btn{
-//  color: white;
-//  background-color: #4a98ff;
-//}
+.faded {
+  opacity: 0;
+  transition: opacity 1s;
+}

@@ -2,7 +2,7 @@
   #new-task-modal
   = react_component 'Tasks', {payload: react_payload}
   = react_component 'ShowModal', {task: 'task'}
-
+  = react_component 'NewTaskModal', {tags: react_tags_hash}
   #show-task-modal= render 'tasks/modals/show_modal'
   #edit-task-modal
   #duration-modal= render 'tasks/modals/duration_modal'

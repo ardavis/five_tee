@@ -13,7 +13,10 @@ Rails.application.routes.draw do
   get '/archives/:id/destroy' => 'archives#destroy', as: 'destroy_archive'
 
   get '/new_tag_modal' => 'modals#new_tag_modal', as: 'new_tag_modal'
+
   get '/tag/:id/destroy' => 'tags#destroy', as: 'destroy_tag'
+  get '/tags/:name/create' => 'tags#create'
+  get '/tags/:id/select' => 'tags#select'
   get '/manage_tag_modal' => 'modals#manage_tag_modal', as: 'manage_tag_modal'
 
   devise_scope :user do

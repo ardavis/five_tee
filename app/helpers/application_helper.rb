@@ -27,6 +27,10 @@ module ApplicationHelper
     react_tags = current_user.tags.all.map{|tag| {name: tag.name, id: tag.id}}
   end
 
+  def react_tag(tag)
+    {name: tag.name, id: tag.id}
+  end
+
   def react_filter_sort_hash
     tag_id = current_user.session.filter_tag_id
     sort_sql = current_user.session.sort_sql
@@ -41,11 +45,14 @@ module ApplicationHelper
         id: task.id,
         title: task.title,
         desc: task.desc,
-        due_date: task.due_date,
+        due_date: task.due_date ? task.due_date.strftime('%m-%d-%Y') : nil,
+        created_at: task.created_at.to_i,
+        created_at_show: task.created_at.strftime('%m-%d-%Y'),
+        tag: task.tag ? task.tag.name : nil,
         completed_at: task.completed_at.to_i,
+        completed_at_show: task.completed_at ? task.completed_at.strftime('%m-%d-%Y') : nil,
         started_at: task.started_at.to_i,
         running: !!task.started_at,
-        created_at: task.created_at.to_i,
         duration: task.duration,
         duration_display: duration_display(task.duration),
         finished_display: task.completed_at ? finished_display(task.completed_at) : nil

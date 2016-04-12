@@ -46,7 +46,38 @@ class ShowModal extends React.Component{
               <h4 className="modal-title">{task.title}</h4>
             </div>
             <div className="modal-body">
-              <p>Some text in the modal.</p>
+              <div className="row">
+                <div className="col-md-8">
+                  <label>Description:</label>
+                  <p>
+                    {task.desc}
+                  </p>
+                </div>
+                <div className="col-xs-4">
+                  <label>Tag:</label>
+                  <p>{task.tag}</p>
+                </div>
+              </div>
+              <div className="row table-bordered">
+                <div className="col-xs-4">
+                  <label>Due Date:</label>
+                  <p>{task.due_date}</p>
+                </div>
+                <div className="col-xs-4">
+                  <label>Created At:</label>
+                  <p>{task.created_at_show}</p>
+                </div>
+                <div className="col-xs-4">
+                  <label>Completed At:</label>
+                  <p>{task.completed_at_show}</p>
+                </div>
+              </div>
+              < div className="row">
+                <div className="displays_timer col-xs-4">
+                  <label className="Duration">Duration:</label>
+                  <p>{task.duration == 0 ? "Not Started" : task.duration}</p>
+                </div>
+              </div>
             </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
