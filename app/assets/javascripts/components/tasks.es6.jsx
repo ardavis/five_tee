@@ -80,6 +80,7 @@ class Tasks extends React.Component {
 
 
   task_modal_init(){
+    this.setState({flash: null});
     $('.new_task_title').val('');
     $('.new_task_tag').val('');
     $('.new_task_tag').html('---------');
@@ -181,9 +182,10 @@ class Tasks extends React.Component {
       dataType: 'json',
       success: function(data){
         self.setState(data);
+        self.setState({flash: {success: "Task successfuly created."}});
       },
       error: function(){
-        self.setState({flash: `"${params.title}" task already exists.`})
+        self.setState({flash: {danger: `"${params.title}" task already exists.`}})
       }
     });
   }
@@ -198,6 +200,7 @@ class Tasks extends React.Component {
     sort = filter_sort.sort;
     sort_options = this.state.sort_options;
     task_rows = {incomplete: [], complete: []};
+    flash = this.state.flash;
 
 
     tasks.incomplete.forEach(function (task){
@@ -216,7 +219,7 @@ class Tasks extends React.Component {
 
     return(
       <div className="incomplete_tasks">
-        <NewTaskModal tags={tags}></NewTaskModal>
+        <NewTaskModal tags={tags} tag_dropdown={true} flash={flash}></NewTaskModal>
         <ShowModal task="task"></ShowModal>
         <FilterDropdown tags={tags} filter={filter}></FilterDropdown>
         <SortDropdown sort_options={sort_options} filter_sort={filter_sort}></SortDropdown>

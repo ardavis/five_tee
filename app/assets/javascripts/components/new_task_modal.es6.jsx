@@ -1,11 +1,11 @@
 class NewTaskModal extends React.Component{
   constructor(props){
     super(props);
-    this.state = {tag_dropdown: true,
+    this.state = {tag_dropdown: this.props.tag_dropdown,
                   focus_elem: null,
                   selected_tag: {name: "---------", id: null},
                   tags: this.props.tags,
-                  flash: null};
+                  flash: this.props.flash};
   }
   
   
@@ -15,33 +15,33 @@ class NewTaskModal extends React.Component{
 
   set_listeners(){
 
-    
+    self = this;
 
     $('.create_new_tag').click({self: this}, function(e){
-      e.data.self.toggle_input(false);
+      self.toggle_input(false);
     });
 
     $('.cancel_new_tag').click({self: this}, function(e){
-      e.data.self.toggle_input(true);
+      self.toggle_input(true);
     });
 
     $('.save_new_tag').click({self: this}, function(e){
       tag_name = $('.new_tag_input').val().trim();
       if (tag_name != ""){
-        e.data.self.save_new_tag(tag_name);
+        self.save_new_tag(tag_name);
       }
       else{
-        e.data.self.setState({flash: {danger: "Blank tag not allowed"}});
+        self.setState({flash: {danger: "Blank tag not allowed"}});
       }
     });
 
     $('.select_tag').click({self: this}, function(e){
       url = $(this).attr('value');
-      e.data.self.select_tag(url);
+      self.select_tag(url);
     });
 
     $('.select_no_tag').click({self: this}, function(e){
-      e.data.self.setState({selected_tag: {name: "---------", id: null}});
+      self.setState({selected_tag: {name: "---------", id: null}});
     });
 
 
@@ -57,6 +57,12 @@ class NewTaskModal extends React.Component{
         $('.new_task_desc').focus();
       })
     });
+
+
+    $('.newTaskModal').on('hidden.bs.modal', function(e){
+      self.setState({tag_dropdown: true});
+    });
+
   }
   
   save_new_tag(name){
@@ -131,7 +137,10 @@ class NewTaskModal extends React.Component{
   }
 
   flash(){
-    flash = this.state.flash;
+    flash = this.props.flash;
+    if (this.state.flash){
+      flash = this.state.flash
+    }
     if (flash){
       if (flash.success){
         return <div className="alert alert-success">{flash.success}</div>;
@@ -146,15 +155,13 @@ class NewTaskModal extends React.Component{
   }
 
 
-
-
-
-
   componentDidMount(){
     this.set_listeners();
   }
+  
 
   componentDidUpdate() {
+    this.state.flash = null;
     this.remove_listeners();
     this.set_listeners();
     this.set_focus();
