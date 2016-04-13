@@ -20,7 +20,7 @@ class TagDropdown extends React.Component{
     return(
       <div className="dropdown">
         <button className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" type="button" id="sort_dropdown">
-          <span className="tag_input" value={selected_tag.id}>{selected_tag.name}</span>
+          <span className="new_task_tag" value={selected_tag.id}>{selected_tag.name}</span>
           <span className="caret"></span>
         </button>
         <ul className="dropdown-menu">

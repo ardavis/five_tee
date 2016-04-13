@@ -35,11 +35,9 @@ class TasksController < ApplicationController
     @task = current_user.tasks.new(task_params)
     @task.update_attributes(due_date: fix_date(task_params['due_date']))
     if @task.save
-      @task = Task.new()
-      flash[:success] = 'Task successfully created!'
-      call_coffeescript('tasks/reload_scripts/reload_on_create.coffee.erb')
+      react_json
     else
-      call_coffeescript('tasks/reload_scripts/reload_on_fail_create.coffee.erb')
+      render status: 400
     end
   end
 

@@ -76,10 +76,37 @@ class Tasks extends React.Component {
         e.data.self.button_action(task_id, "destroy", 'GET')
       }
     });
-
   }
 
+
+  task_modal_init(){
+    $('.new_task_title').val('');
+    $('.new_task_tag').val('');
+    $('.new_task_tag').html('---------');
+    $('.new_task_due_date').val('');
+    $('.new_task_desc').val('');
+  }
+
+
+  new_task_modal(){
+    this.task_modal_init();
+    $('.newTaskModal').modal('toggle');
+    setTimeout(function(){$('.new_task_title').focus();}, 500);
+    this.remove_links();
+    this.set_links();
+  }
+
+
   set_links(){
+
+    $(".trigger_modal_new_task").click({self: this}, function(e){
+      e.data.self.new_task_modal();
+    });
+
+    $('.new_task_save').click({self: this}, function(e){
+      e.data.self.new_task_save();
+    });
+
     $(".filter_link").click({self: this}, function(e){
       e.preventDefault();
       filter_id = e.data.self.fetch_link_ids($(this));
@@ -105,6 +132,8 @@ class Tasks extends React.Component {
   remove_links(){
     $('.filter_link').off('click');
     $('.sort_link').off('click');
+    $('.new_task_save').off('click');
+    $('.trigger_modal_new_task').off('click');
   }
 
   
@@ -128,6 +157,35 @@ class Tasks extends React.Component {
     if (task_rows.complete.length == 0){
       task_rows.complete = <div className="container"><h4>You have no complete tasks</h4></div>
     }
+  }
+
+
+
+  new_task_params_hash(){
+    return {
+      title: $('.new_task_title').val(),
+      tag_id: $('.new_task_tag').val(),
+      due_date: $('.new_task_due_date').val(),
+      desc: $('.new_task_desc').val(),
+    }
+  }
+
+
+  new_task_save(){
+    params = this.new_task_params_hash();
+    self = this;
+    $.ajax({
+      type: 'POST',
+      url: `/tasks/create/`,
+      data: {task: params},
+      dataType: 'json',
+      success: function(data){
+        self.setState(data);
+      },
+      error: function(){
+        self.setState({flash: `"${params.title}" task already exists.`})
+      }
+    });
   }
 
 
@@ -158,6 +216,8 @@ class Tasks extends React.Component {
 
     return(
       <div className="incomplete_tasks">
+        <NewTaskModal tags={tags}></NewTaskModal>
+        <ShowModal task="task"></ShowModal>
         <FilterDropdown tags={tags} filter={filter}></FilterDropdown>
         <SortDropdown sort_options={sort_options} filter_sort={filter_sort}></SortDropdown>
         <h1>Tasks</h1>

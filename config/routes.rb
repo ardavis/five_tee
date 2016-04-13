@@ -30,6 +30,7 @@ Rails.application.routes.draw do
   get '/tasks/:id/start' => 'tasks#start', as: 'start_task'
   get '/tasks/:id/pause' => 'tasks#pause', as: 'pause_task'
   get '/tasks/:id/restart' => 'tasks#restart', as: 'restart_task'
+  post '/tasks/create' => 'tasks#create'
   get '/reset_all_tasks' => 'tasks#reset_all', as: 'reset_all_tasks'
 
   get '/show_task_modal' => 'modals#show_task_modal', as: 'show_task_modal'
@@ -39,7 +40,7 @@ Rails.application.routes.draw do
   get '/reset_tasks_modal' => 'modals#reset_tasks_modal', as: 'reset_tasks_modal'
 
   patch '/update_duration' => 'tasks#update_duration', as: 'update_duration'
-  post '/create' => 'tasks#create', as: 'create'
+  # post '/create' => 'tasks#create', as: 'create'
   post '/tasks/test' => 'tasks#test', as: 'test'
 
 

@@ -81,7 +81,8 @@ module ApplicationHelper
         tasks: react_tasks_hash,
         tags: react_tags_hash,
         filter_sort: react_filter_sort_hash,
-        sort_options: sort_options
+        sort_options: sort_options,
+        flash: nil
     }
   end
 

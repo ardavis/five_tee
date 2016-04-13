@@ -29,9 +29,19 @@ class ShowModal extends React.Component{
     });
   }
 
+  remove_link(){
+    $(".show_link").off('click');
+  }
+
   componentDidMount(){
     this.set_link();
   }
+
+  componentDidUpdate(){
+    this.remove_link();
+    this.set_link();
+  }
+
 
   render(){
     task = this.state.task;

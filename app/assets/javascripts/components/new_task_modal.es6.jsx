@@ -7,9 +7,16 @@ class NewTaskModal extends React.Component{
                   tags: this.props.tags,
                   flash: null};
   }
+  
+  
+  
+
 
 
   set_listeners(){
+
+    
+
     $('.create_new_tag').click({self: this}, function(e){
       e.data.self.toggle_input(false);
     });
@@ -38,7 +45,7 @@ class NewTaskModal extends React.Component{
     });
 
 
-    $('.due_date_input').click(function(e){
+    $('.new_task_due_date').click(function(e){
       e.preventDefault();
       $(this).datepicker({
         format: 'mm-dd-yyyy',
@@ -89,7 +96,7 @@ class NewTaskModal extends React.Component{
     $('.save_new_tag').off('click');
     $('.select_tag').off('click');
     $('.select_no_tag').off('click');
-    $('.due_date_input').off('click');
+    $('.new_task_due_date').off('click');
   }
 
   toggle_input(bool){
@@ -145,14 +152,15 @@ class NewTaskModal extends React.Component{
 
   componentDidMount(){
     this.set_listeners();
-    $('.newTaskModal').modal('toggle');
-    setTimeout(function(){$('.new_task_title').focus();}, 500);
   }
 
   componentDidUpdate() {
     this.remove_listeners();
     this.set_listeners();
     this.set_focus();
+    if (this.state.tag_dropdown == false){
+      $('.new_tag_input').focus();
+    }
   }
 
   render(){
@@ -172,12 +180,13 @@ class NewTaskModal extends React.Component{
                 <label>Tag:</label>
                 {this.tag_dropdown_or_input()}
                 <label>Due Date:</label>
-                <input className="form-control due_date_input" placeholder="MM-DD-YYYY"></input>
+                <input className="form-control new_task_due_date" placeholder="MM-DD-YYYY"></input>
                 <label>Description:</label>
                 <textarea className="form-control new_task_desc"></textarea>
               </form>
             </div>
             <div className="modal-footer">
+              <button type="button" className="btn btn-primary new_task_save">Save</button>
               <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
             </div>
           </div>
