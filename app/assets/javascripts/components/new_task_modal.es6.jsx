@@ -64,6 +64,9 @@ class NewTaskModal extends React.Component{
       self.setState({tag_dropdown: true});
     });
 
+
+
+
   }
   
   save_new_tag(name){
@@ -77,6 +80,7 @@ class NewTaskModal extends React.Component{
                        selected_tag: data.selected_tag,
                        tag_dropdown: true,
                        flash: null});
+        $('.new_task_tag').val(self.state.selected_tag.id);
         $('.datepicker').hide();
       },
       error: function(){
@@ -104,6 +108,7 @@ class NewTaskModal extends React.Component{
     $('.select_tag').off('click');
     $('.select_no_tag').off('click');
     $('.new_task_due_date').off('click');
+    $('.newTaskModal').off('hidden.bs.modal');
   }
 
   toggle_input(bool){
@@ -112,8 +117,8 @@ class NewTaskModal extends React.Component{
 
   tag_dropdown_or_input(){
     tag_dropdown = this.state.tag_dropdown;
+    selected_tag = this.state.selected_tag;
     if (tag_dropdown){
-      selected_tag = this.state.selected_tag;
       tags = this.state.tags;
       return <TagDropdown tags={tags} selected_tag={selected_tag}></TagDropdown>;
     }

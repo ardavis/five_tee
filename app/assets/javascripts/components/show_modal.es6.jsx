@@ -27,6 +27,7 @@ class ShowModal extends React.Component{
       task_id = e.data.self.fetch_id($(this));
       e.data.self.update_modal(id);
     });
+
   }
 
   remove_link(){
@@ -90,6 +91,7 @@ class ShowModal extends React.Component{
               </div>
             </div>
             <div className="modal-footer">
+              <button type="button" className="btn btn-primary edit_task_link">Edit</button>
               <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
             </div>
           </div>

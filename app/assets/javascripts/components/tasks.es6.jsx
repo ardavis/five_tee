@@ -86,6 +86,7 @@ class Tasks extends React.Component {
     $('.new_task_tag').html('---------');
     $('.new_task_due_date').val('');
     $('.new_task_desc').val('');
+    $('.day').removeClass('active');
   }
 
 
@@ -119,6 +120,16 @@ class Tasks extends React.Component {
       sort_sql = e.data.self.fetch_link_ids($(this));
       e.data.self.link_action(sort_sql, "sort", "");
     });
+
+
+    $('.showModal').on('shown.bs.modal', function(e){
+      console.log('set');
+      $('.edit_task_link').click(function(e){
+        $('.showModal').modal('toggle');
+        $('.newTaskModal').modal('toggle')
+      });
+    });
+
   }
 
 
@@ -163,19 +174,20 @@ class Tasks extends React.Component {
 
 
   new_task_params_hash(){
-    console.log('paraMS');
-    console.log($('.new_task_tag').html());
-    return {
+    params = {
       title: $('.new_task_title').val(),
-      tag_id: $('.new_task_tag').val(),
+      tag_id: +$('.new_task_tag').val(),
       due_date: $('.new_task_due_date').val(),
-      desc: $('.new_task_desc').val(),
-    }
+      desc: $('.new_task_desc').val()
+    };
+    console.log(params);
+    return params;
   }
 
 
   new_task_save(){
     params = this.new_task_params_hash();
+    console.log(params);
     self = this;
     $.ajax({
       type: 'POST',
@@ -185,6 +197,12 @@ class Tasks extends React.Component {
       success: function(data){
         self.setState(data);
         self.setState({flash: {success: "Task successfuly created."}});
+        $('.new_task_title').val('');
+        $('.new_task_tag').val('');
+        $('.new_task_tag').html('---------');
+        $('.new_task_due_date').val('');
+        $('.new_task_desc').val('');
+        $('.day').removeClass('active');
       },
       error: function(){
         self.setState({flash: {danger: `"${params.title}" task already exists.`}})
