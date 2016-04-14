@@ -33,6 +33,7 @@ class TasksController < ApplicationController
 
   def create
     @task = current_user.tasks.new(task_params)
+    byebug
     @task.update_attributes(due_date: fix_date(task_params['due_date']))
     if @task.save
       react_json

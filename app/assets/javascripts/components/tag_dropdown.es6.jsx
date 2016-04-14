@@ -17,6 +17,7 @@ class TagDropdown extends React.Component{
   
   render(){
     selected_tag = this.props.selected_tag;
+    console.log(selected_tag);
     return(
       <div className="dropdown">
         <button className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" type="button" id="sort_dropdown">

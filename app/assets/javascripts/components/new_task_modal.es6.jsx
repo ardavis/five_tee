@@ -26,6 +26,7 @@ class NewTaskModal extends React.Component{
     });
 
     $('.save_new_tag').click({self: this}, function(e){
+      e.preventDefault();
       tag_name = $('.new_tag_input').val().trim();
       if (tag_name != ""){
         self.save_new_tag(tag_name);
@@ -122,7 +123,7 @@ class NewTaskModal extends React.Component{
           <span>
             <input className="form-control new_tag_input"></input>
             <button className="btn btn-primary btn-sm save_new_tag">Save</button>
-            <button className="btn btn-default-sm cancel_new_tag">Cancel</button>
+            <button className="btn btn-default btn-sm cancel_new_tag">Cancel</button>
           </span>
         </div>
       );
@@ -156,6 +157,7 @@ class NewTaskModal extends React.Component{
 
 
   componentDidMount(){
+    this.remove_listeners();
     this.set_listeners();
   }
   

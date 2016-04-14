@@ -163,6 +163,8 @@ class Tasks extends React.Component {
 
 
   new_task_params_hash(){
+    console.log('paraMS');
+    console.log($('.new_task_tag').html());
     return {
       title: $('.new_task_title').val(),
       tag_id: $('.new_task_tag').val(),
