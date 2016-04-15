@@ -125,8 +125,13 @@ class Tasks extends React.Component {
     $('.showModal').on('shown.bs.modal', function(e){
       $('.edit_task_link').click(function(e){
         $('.showModal').modal('toggle');
-        $('.newTaskModal').modal('toggle')
+        $('.editTaskModal').modal('toggle')
       });
+    });
+
+
+    $('.editTaskModal').on('hidden.bs.modal', function(e){
+      $('.edit_task_link').off('click');
     });
 
   }
@@ -237,6 +242,7 @@ class Tasks extends React.Component {
     return(
       <div className="incomplete_tasks">
         <NewTaskModal tags={tags} tag_dropdown={true} flash={flash}></NewTaskModal>
+        <EditTaskModal tags={tags} tag_dropdown={true} flash={flash}></EditTaskModal>
         <ShowModal task="task"></ShowModal>
         <FilterDropdown tags={tags} filter={filter}></FilterDropdown>
         <SortDropdown sort_options={sort_options} filter_sort={filter_sort}></SortDropdown>

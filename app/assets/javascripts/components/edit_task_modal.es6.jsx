@@ -7,7 +7,7 @@ class EditTaskModal extends React.Component{
 
   render(){
     return(
-      <div className="newTaskModal modal fade" role="dialog">
+      <div className="editTaskModal modal fade" role="dialog">
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
