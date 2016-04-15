@@ -123,7 +123,6 @@ class Tasks extends React.Component {
 
 
     $('.showModal').on('shown.bs.modal', function(e){
-      console.log('set');
       $('.edit_task_link').click(function(e){
         $('.showModal').modal('toggle');
         $('.newTaskModal').modal('toggle')
@@ -180,14 +179,12 @@ class Tasks extends React.Component {
       due_date: $('.new_task_due_date').val(),
       desc: $('.new_task_desc').val()
     };
-    console.log(params);
     return params;
   }
 
 
   new_task_save(){
     params = this.new_task_params_hash();
-    console.log(params);
     self = this;
     $.ajax({
       type: 'POST',

@@ -190,9 +190,6 @@ set_all_timers = () ->
 task_timer = (task, duration, started_at) ->
   now = Date.now() / 1000 | 0
   start_time = duration + now - started_at
-#  console.log(now);
-#  console.log(started_at);
-#  console.log(start_time);
   task.timer({
     seconds: start_time,
     format: '%h hr %m min %s sec'

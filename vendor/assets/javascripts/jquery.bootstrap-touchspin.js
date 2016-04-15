@@ -114,7 +114,6 @@
 
 
         if (!originalinput.is('input')) {
-          console.log('Must be an input.');
           return;
         }
 

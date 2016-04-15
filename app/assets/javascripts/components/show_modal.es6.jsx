@@ -34,19 +34,52 @@ class ShowModal extends React.Component{
     $(".show_link").off('click');
   }
 
+  set_timer() {
+    task = this.state.task;
+    if ($('.task-running').length > 0) {
+      elem = $(".show-task-running");
+      task_timer(elem, task.duration, task.started_at);
+    }
+  }
+
+  duration_display(task){
+    if (task.duration) {
+      return (<p id="duration_display">{task.duration_display}</p>);
+    }
+    else
+      return (<p>Not Started</p>);
+  }
+
+  timer_or_duration(){
+    task = this.state.task;
+    if (task){
+      if ($('.task-running').length > 0){
+        return(<div className="show-task-running"></div>);
+      }
+      else{
+        return this.duration_display(task);
+      }
+    }
+    else{
+      return <p>no task?</p>
+    }
+  }
+
+
   componentDidMount(){
     this.set_link();
+    this.set_timer();
   }
 
   componentDidUpdate(){
     this.remove_link();
     this.set_link();
+    this.set_timer();
   }
 
 
   render(){
     task = this.state.task;
-
 
     return(
       <div className="showModal modal fade" role="dialog">
@@ -86,7 +119,7 @@ class ShowModal extends React.Component{
               < div className="row">
                 <div className="displays_timer col-xs-4">
                   <label className="Duration">Duration:</label>
-                  <p>{task.duration == 0 ? "Not Started" : task.duration}</p>
+                  {this.timer_or_duration()}
                 </div>
               </div>
             </div>

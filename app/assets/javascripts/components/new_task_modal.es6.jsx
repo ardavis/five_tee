@@ -62,6 +62,7 @@ class NewTaskModal extends React.Component{
 
     $('.newTaskModal').on('hidden.bs.modal', function(e){
       self.setState({tag_dropdown: true});
+      $('.day').removeClass('active');
     });
 
 
