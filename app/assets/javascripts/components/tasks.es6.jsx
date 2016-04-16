@@ -6,11 +6,12 @@ class Tasks extends React.Component {
     this.render = this.render.bind(this);
   }
 
-  button_action(id, state, type){
+  button_action(id, state){
     self = this;
     $.ajax({
-      type: type,
-      url: `/tasks/${id}/${state}`,
+      type: "POST",
+      url: `/tasks/${state}`,
+      data: {task: {id: id}},
       dataType: 'json',
       success: function(data){
         self.setState(data);
@@ -45,7 +46,7 @@ class Tasks extends React.Component {
     $('.pause_btn').click({self: this}, function(e){
       e.preventDefault();
       task_id = e.data.self.fetch_btn_ids($(this));
-      e.data.self.button_action(task_id, 'pause', 'GET');
+      e.data.self.button_action(task_id, 'pause');
     });
 
 
@@ -53,19 +54,19 @@ class Tasks extends React.Component {
       e.preventDefault();
       task_id = e.data.self.fetch_btn_ids($(this));
 
-      e.data.self.button_action(task_id, "start", 'GET');
+      e.data.self.button_action(task_id, "start");
     });
     
     $(".complete_btn").click({self: this}, function(e){
       e.preventDefault();
       task_id = e.data.self.fetch_btn_ids($(this));
-      e.data.self.button_action(task_id, "complete", 'GET')
+      e.data.self.button_action(task_id, "complete")
     });
 
     $(".restart_btn").click({self: this}, function(e){
       e.preventDefault();
       task_id = e.data.self.fetch_btn_ids($(this));
-      e.data.self.button_action(task_id, "restart", 'GET')
+      e.data.self.button_action(task_id, "restart")
     });
 
     $(".delete_btn").click({self: this}, function(e){
@@ -73,7 +74,7 @@ class Tasks extends React.Component {
       sure = confirm("Are you sure you want to delete this task?");
       if (sure){
         task_id = e.data.self.fetch_btn_ids($(this));
-        e.data.self.button_action(task_id, "destroy", 'GET')
+        e.data.self.button_action(task_id, "destroy")
       }
     });
   }
@@ -91,7 +92,9 @@ class Tasks extends React.Component {
 
 
   new_task_modal(){
-    this.task_modal_init();
+    if (!!this.state.selected_tag){
+      this.task_modal_init();
+    }
     $('.newTaskModal').modal('toggle');
     setTimeout(function(){$('.new_task_title').focus();}, 500);
     this.remove_links();
@@ -101,39 +104,60 @@ class Tasks extends React.Component {
 
   set_links(){
 
-    $(".trigger_modal_new_task").click({self: this}, function(e){
-      e.data.self.new_task_modal();
+    this_class = this;
+
+    $(".trigger_modal_new_task").click(function(e){
+      this_class.new_task_modal();
     });
 
-    $('.new_task_save').click({self: this}, function(e){
-      e.data.self.new_task_save();
+    $('.task_save').click({self: this}, function(e){
+      this_class.task_save();
     });
 
     $(".filter_link").click({self: this}, function(e){
       e.preventDefault();
       filter_id = e.data.self.fetch_link_ids($(this));
-      e.data.self.link_action(filter_id, "filter", "");
+      this_class.link_action(filter_id, "filter", "");
     });
 
     $(".sort_link").click({self: this}, function(e){
       e.preventDefault();
       sort_sql = e.data.self.fetch_link_ids($(this));
-      e.data.self.link_action(sort_sql, "sort", "");
+      this_class.link_action(sort_sql, "sort", "");
+    });
+
+    $('.edit_task_link').click({self: this},function(e){
+      $('.showModal').modal('toggle');
+      this_class.setState({selected_task: show_task, flash: null});
+      $('.newTaskModal').modal('toggle');
     });
 
 
-    $('.showModal').on('shown.bs.modal', function(e){
-      $('.edit_task_link').click(function(e){
+    $(".show_link").click({self: this}, function(e){
+      task_id = e.data.self.fetch_id($(this));
+      this_class.update_modal(id);
+    });
+
+  }
+
+  update_modal(id){
+    self = this;
+    $.ajax({
+      type: "POST",
+      url: `/tasks/show`,
+      data: {task: {id: id}},
+      dataType: 'json',
+      success: function(data){
+        self.setState({show_task: data});
         $('.showModal').modal('toggle');
-        $('.editTaskModal').modal('toggle')
-      });
+      }
     });
+  }
 
 
-    $('.editTaskModal').on('hidden.bs.modal', function(e){
-      $('.edit_task_link').off('click');
-    });
-
+  fetch_id(elem){
+    id = elem.attr('value');
+    return id;
   }
 
 
@@ -148,8 +172,11 @@ class Tasks extends React.Component {
   remove_links(){
     $('.filter_link').off('click');
     $('.sort_link').off('click');
-    $('.new_task_save').off('click');
+    $('.task_save').off('click');
     $('.trigger_modal_new_task').off('click');
+    $('.editTaskModal').off('click');
+    $('.show_link').off('click');
+    $('.edit_task_link').off('click');
   }
 
   
@@ -182,23 +209,29 @@ class Tasks extends React.Component {
       title: $('.new_task_title').val(),
       tag_id: +$('.new_task_tag').val(),
       due_date: $('.new_task_due_date').val(),
-      desc: $('.new_task_desc').val()
+      desc: $('.new_task_desc').val(),
+      id: +$('.task_id_input').val()
     };
     return params;
   }
 
 
-  new_task_save(){
+  task_save(){
     params = this.new_task_params_hash();
+    console.log(params);
+    url = params.id ? `/tasks/update/` : `/tasks/create/`;
+    console.log(url);
     self = this;
     $.ajax({
       type: 'POST',
-      url: `/tasks/create/`,
+      url: url,
       data: {task: params},
       dataType: 'json',
       success: function(data){
         self.setState(data);
-        self.setState({flash: {success: "Task successfuly created."}});
+        if (url == `/tasks/create/`){
+          self.setState({flash: {success: "Task successfuly created."}});
+        }
         $('.new_task_title').val('');
         $('.new_task_tag').val('');
         $('.new_task_tag').html('---------');
@@ -212,6 +245,16 @@ class Tasks extends React.Component {
     });
   }
 
+  show_modal(){
+    show_task = this.state.show_task;
+    if (show_task){
+      return <ShowModal task={show_task}></ShowModal>
+    }
+    else{
+      return ""
+    }
+  }
+
 
 
   render() {
@@ -223,6 +266,8 @@ class Tasks extends React.Component {
     sort_options = this.state.sort_options;
     task_rows = {incomplete: [], complete: []};
     flash = this.state.flash;
+    selected_task = this.state.selected_task;
+    show_task = this.state.show_task;
 
 
     tasks.incomplete.forEach(function (task){
@@ -237,13 +282,10 @@ class Tasks extends React.Component {
 
     this.tasks_or_placeholder(task_rows);
 
-
-
     return(
       <div className="incomplete_tasks">
-        <NewTaskModal tags={tags} tag_dropdown={true} flash={flash}></NewTaskModal>
-        <EditTaskModal tags={tags} tag_dropdown={true} flash={flash}></EditTaskModal>
-        <ShowModal task="task"></ShowModal>
+        <NewTaskModal selected_task={selected_task} tags={tags} tag_dropdown={true} flash={flash}></NewTaskModal>
+        {this.show_modal()}
         <FilterDropdown tags={tags} filter={filter}></FilterDropdown>
         <SortDropdown sort_options={sort_options} filter_sort={filter_sort}></SortDropdown>
         <h1>Tasks</h1>

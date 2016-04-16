@@ -2,6 +2,7 @@ class NewTaskModal extends React.Component{
   constructor(props){
     super(props);
     this.state = {tag_dropdown: this.props.tag_dropdown,
+                  selected_task: this.props.selected_task,
                   focus_elem: null,
                   selected_tag: {name: "---------", id: null},
                   tags: this.props.tags,
@@ -15,34 +16,33 @@ class NewTaskModal extends React.Component{
 
   set_listeners(){
 
-    self = this;
 
     $('.create_new_tag').click({self: this}, function(e){
-      self.toggle_input(false);
+      e.data.self.toggle_input(false);
     });
 
     $('.cancel_new_tag').click({self: this}, function(e){
-      self.toggle_input(true);
+      e.data.self.toggle_input(true);
     });
 
     $('.save_new_tag').click({self: this}, function(e){
       e.preventDefault();
       tag_name = $('.new_tag_input').val().trim();
       if (tag_name != ""){
-        self.save_new_tag(tag_name);
+        e.data.self.save_new_tag(tag_name);
       }
       else{
-        self.setState({flash: {danger: "Blank tag not allowed"}});
+        e.data.self.setState({flash: {danger: "Blank tag not allowed"}});
       }
     });
 
     $('.select_tag').click({self: this}, function(e){
       url = $(this).attr('value');
-      self.select_tag(url);
+      e.data.self.select_tag(url);
     });
 
     $('.select_no_tag').click({self: this}, function(e){
-      self.setState({selected_tag: {name: "---------", id: null}});
+      e.data.self.setState({selected_tag: {name: "---------", id: null}});
     });
 
 
@@ -60,8 +60,8 @@ class NewTaskModal extends React.Component{
     });
 
 
-    $('.newTaskModal').on('hidden.bs.modal', function(e){
-      self.setState({tag_dropdown: true});
+    $('.newTaskModal').on('hidden.bs.modal',{self: this},  function(e){
+      e.data.self.setState({tag_dropdown: true});
       $('.day').removeClass('active');
     });
 
@@ -161,12 +161,33 @@ class NewTaskModal extends React.Component{
     }
   }
 
+  edit_task_setter(){
+    task = this.props.selected_task;
+    if (task){
+
+      $('.task_form_title').html(task.title);
+
+      $('.new_task_title').val(task.title);
+
+      $('.new_task_tag').val(task.tag_id);
+
+      $('.new_task_tag').html(task.tag);
+
+      $('.new_task_due_date').val(task.due_date);
+
+      $('.new_task_desc').val(task.desc);
+
+      $('.task_id_input').val(task.id);
+    }
+  }
+
 
   componentDidMount(){
+    this.edit_task_setter();
     this.remove_listeners();
     this.set_listeners();
   }
-  
+
 
   componentDidUpdate() {
     this.state.flash = null;
@@ -176,6 +197,7 @@ class NewTaskModal extends React.Component{
     if (this.state.tag_dropdown == false){
       $('.new_tag_input').focus();
     }
+    this.edit_task_setter();
   }
 
   render(){
@@ -185,23 +207,24 @@ class NewTaskModal extends React.Component{
           <div className="modal-content">
             <div className="modal-header">
               <button type="button" className="close" data-dismiss="modal">×</button>
-              <h4 className="modal-title">New Task</h4>
+              <h4 className="modal-title task_form_title">New Task</h4>
             </div>
             <div className="modal-body">
               <form className="simple_form">
                 {this.flash()}
                 <label>Title:</label>
                 <input className="form-control new_task_title"></input>
-                <label>Tag:</label>
+              <label>Tag:</label>
                 {this.tag_dropdown_or_input()}
                 <label>Due Date:</label>
                 <input className="form-control new_task_due_date" placeholder="MM-DD-YYYY"></input>
                 <label>Description:</label>
                 <textarea className="form-control new_task_desc"></textarea>
+                <input className="task_id_input" type="hidden"></input>
               </form>
             </div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-primary new_task_save">Save</button>
+              <button type="button" className="btn btn-primary task_save">Save</button>
               <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
             </div>
           </div>

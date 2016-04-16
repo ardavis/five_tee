@@ -4,35 +4,35 @@ class ShowModal extends React.Component{
     this.state = {task} = this.props;
   }
 
-  update_modal(id){
-    self = this;
-    $.ajax({
-      type: "GET",
-      url: `/tasks/${id}/show`,
-      dataType: 'json',
-      success: function(data){
-        self.setState({task: data});
-        $('.showModal').modal('toggle');
-      }
-    });
-  }
-
-  fetch_id(elem){
-    id = elem.attr('value');
-    return id;
-  }
-
-  set_link(){
-    $(".show_link").click({self: this}, function(e){
-      task_id = e.data.self.fetch_id($(this));
-      e.data.self.update_modal(id);
-    });
-
-  }
-
-  remove_link(){
-    $(".show_link").off('click');
-  }
+  // update_modal(id){
+  //   self = this;
+  //   $.ajax({
+  //     type: "GET",
+  //     url: `/tasks/${id}/show`,
+  //     dataType: 'json',
+  //     success: function(data){
+  //       self.setState({task: data});
+  //       $('.showModal').modal('toggle');
+  //     }
+  //   });
+  // }
+  //
+  // fetch_id(elem){
+  //   id = elem.attr('value');
+  //   return id;
+  // }
+  //
+  // set_link(){
+  //   $(".show_link").click({self: this}, function(e){
+  //     task_id = e.data.self.fetch_id($(this));
+  //     e.data.self.update_modal(id);
+  //   });
+  //
+  // }
+  //
+  // remove_link(){
+  //   $(".show_link").off('click');
+  // }
 
   set_timer() {
     task = this.state.task;
@@ -67,19 +67,19 @@ class ShowModal extends React.Component{
 
 
   componentDidMount(){
-    this.set_link();
+    // this.set_link();
     this.set_timer();
   }
 
   componentDidUpdate(){
-    this.remove_link();
-    this.set_link();
+    // this.remove_link();
+    // this.set_link();
     this.set_timer();
   }
 
 
   render(){
-    task = this.state.task;
+    task = this.props.task;
 
     return(
       <div className="showModal modal fade" role="dialog">

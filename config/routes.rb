@@ -24,13 +24,14 @@ Rails.application.routes.draw do
     get '/session/:sort_sql/update_sort' => 'sessions#update_filter_sort'
   end
 
-  get '/tasks/:id/show' => 'tasks#show_task', as: 'show_task'
-  get '/tasks/:id/destroy' => 'tasks#destroy', as: 'destroy_task'
-  get '/tasks/:id/complete' => 'tasks#complete', as: 'complete_task'
-  get '/tasks/:id/start' => 'tasks#start', as: 'start_task'
-  get '/tasks/:id/pause' => 'tasks#pause', as: 'pause_task'
-  get '/tasks/:id/restart' => 'tasks#restart', as: 'restart_task'
+  post '/tasks/show' => 'tasks#show', as: 'show_task'
+  post '/tasks/destroy' => 'tasks#destroy', as: 'destroy_task'
+  post '/tasks/complete' => 'tasks#complete', as: 'complete_task'
+  post '/tasks/start' => 'tasks#start', as: 'start_task'
+  post '/tasks/pause' => 'tasks#pause', as: 'pause_task'
+  post '/tasks/restart' => 'tasks#restart', as: 'restart_task'
   post '/tasks/create' => 'tasks#create'
+  post '/tasks/update' => 'tasks#update'
   get '/reset_all_tasks' => 'tasks#reset_all', as: 'reset_all_tasks'
 
   get '/show_task_modal' => 'modals#show_task_modal', as: 'show_task_modal'
