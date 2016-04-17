@@ -16,7 +16,7 @@ class IncompleteTask extends React.Component {
 
   timer_or_duration(task){
     if (task.running){
-      return(<div className="task-running"></div>);
+      return(<div value={task.id} className="index-task-running"></div>);
     }
     else{
       return this.duration_display(task);
@@ -45,7 +45,7 @@ class IncompleteTask extends React.Component {
     this.state = {task} = this.props;
     task = this.state.task;
     if (task.running) {
-      elem = $(".task-running");
+      elem = $(".index-task-running");
       task_timer(elem, task.duration, task.started_at);
     }
   }

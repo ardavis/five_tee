@@ -82,21 +82,23 @@ class Tasks extends React.Component {
 
   task_modal_init(){
     this.setState({flash: null});
-    $('.new_task_title').val('');
-    $('.new_task_tag').val('');
-    $('.new_task_tag').html('---------');
-    $('.new_task_due_date').val('');
-    $('.new_task_desc').val('');
+    $('.task_form_modal_title').html('New Task');
+    $('.task_form_title').val('');
+    $('.task_form_tag').val('');
+    $('.task_form_tag').html('---------');
+    $('.task_form_due_date').val('');
+    $('.task_form_desc').val('');
+    $('.task_form_id').val('');
     $('.day').removeClass('active');
   }
 
 
-  new_task_modal(){
+  task_form_modal(){
     if (!!this.state.selected_tag){
       this.task_modal_init();
     }
-    $('.newTaskModal').modal('toggle');
-    setTimeout(function(){$('.new_task_title').focus();}, 500);
+    $('.taskFormModal').modal('toggle');
+    setTimeout(function(){$('.task_form_title').focus();}, 500);
     this.remove_links();
     this.set_links();
   }
@@ -106,12 +108,20 @@ class Tasks extends React.Component {
 
     this_class = this;
 
-    $(".trigger_modal_new_task").click(function(e){
-      this_class.new_task_modal();
+    $(".trigger_modal_task_form").click(function(e){
+      this_class.state.selected_task = null;
+      this_class.task_modal_init();
+      this_class.task_form_modal();
     });
 
     $('.task_save').click({self: this}, function(e){
-      this_class.task_save();
+      params = this_class.task_params_hash();
+      if (params.id == 0){
+        this_class.new_task_save(params);
+      }
+      else{
+        this_class.edit_task_save(params);
+      }
     });
 
     $(".filter_link").click({self: this}, function(e){
@@ -129,7 +139,7 @@ class Tasks extends React.Component {
     $('.edit_task_link').click({self: this},function(e){
       $('.showModal').modal('toggle');
       this_class.setState({selected_task: show_task, flash: null});
-      $('.newTaskModal').modal('toggle');
+      $('.taskFormModal').modal('toggle');
     });
 
 
@@ -173,7 +183,7 @@ class Tasks extends React.Component {
     $('.filter_link').off('click');
     $('.sort_link').off('click');
     $('.task_save').off('click');
-    $('.trigger_modal_new_task').off('click');
+    $('.trigger_modal_task_form').off('click');
     $('.editTaskModal').off('click');
     $('.show_link').off('click');
     $('.edit_task_link').off('click');
@@ -203,24 +213,20 @@ class Tasks extends React.Component {
   }
 
 
-
-  new_task_params_hash(){
+  task_params_hash(){
     params = {
-      title: $('.new_task_title').val(),
-      tag_id: +$('.new_task_tag').val(),
-      due_date: $('.new_task_due_date').val(),
-      desc: $('.new_task_desc').val(),
-      id: +$('.task_id_input').val()
+      title: $('.task_form_title').val(),
+      tag_id: +$('.task_form_tag').val(),
+      due_date: $('.task_form_due_date').val(),
+      desc: $('.task_form_desc').val(),
+      id: +$('.task_form_id').val()
     };
     return params;
   }
 
 
-  task_save(){
-    params = this.new_task_params_hash();
-    console.log(params);
-    url = params.id ? `/tasks/update/` : `/tasks/create/`;
-    console.log(url);
+  new_task_save(params){
+    url = `/tasks/create/`;
     self = this;
     $.ajax({
       type: 'POST',
@@ -229,15 +235,32 @@ class Tasks extends React.Component {
       dataType: 'json',
       success: function(data){
         self.setState(data);
-        if (url == `/tasks/create/`){
-          self.setState({flash: {success: "Task successfuly created."}});
-        }
-        $('.new_task_title').val('');
-        $('.new_task_tag').val('');
-        $('.new_task_tag').html('---------');
-        $('.new_task_due_date').val('');
-        $('.new_task_desc').val('');
+        self.setState({flash: {success: "Task successfuly created."}});
+        $('.task_form_title').val('');
+        $('.task_form_tag').val('');
+        $('.task_form_tag').html('---------');
+        $('.task_form_due_date').val('');
+        $('.task_form_desc').val('');
         $('.day').removeClass('active');
+      },
+      error: function(){
+        self.setState({flash: {danger: `"${params.title}" task already exists.`}})
+      }
+    });
+  }
+
+  edit_task_save(params){
+    url = `/tasks/update/`;
+    self = this;
+    $.ajax({
+      type: 'POST',
+      url: url,
+      data: {task: params},
+      dataType: 'json',
+      success: function(data){
+        self.setState(data);
+        console.log(params);
+        $('.taskFormModal').modal('toggle');
       },
       error: function(){
         self.setState({flash: {danger: `"${params.title}" task already exists.`}})
@@ -255,6 +278,8 @@ class Tasks extends React.Component {
     }
   }
 
+  
+  
 
 
   render() {
@@ -284,7 +309,7 @@ class Tasks extends React.Component {
 
     return(
       <div className="incomplete_tasks">
-        <NewTaskModal selected_task={selected_task} tags={tags} tag_dropdown={true} flash={flash}></NewTaskModal>
+        <TaskFormModal selected_task={show_task} tags={tags} tag_dropdown={true} flash={flash}></TaskFormModal>
         {this.show_modal()}
         <FilterDropdown tags={tags} filter={filter}></FilterDropdown>
         <SortDropdown sort_options={sort_options} filter_sort={filter_sort}></SortDropdown>

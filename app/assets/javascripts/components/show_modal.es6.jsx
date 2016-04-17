@@ -3,40 +3,11 @@ class ShowModal extends React.Component{
     super(props);
     this.state = {task} = this.props;
   }
-
-  // update_modal(id){
-  //   self = this;
-  //   $.ajax({
-  //     type: "GET",
-  //     url: `/tasks/${id}/show`,
-  //     dataType: 'json',
-  //     success: function(data){
-  //       self.setState({task: data});
-  //       $('.showModal').modal('toggle');
-  //     }
-  //   });
-  // }
-  //
-  // fetch_id(elem){
-  //   id = elem.attr('value');
-  //   return id;
-  // }
-  //
-  // set_link(){
-  //   $(".show_link").click({self: this}, function(e){
-  //     task_id = e.data.self.fetch_id($(this));
-  //     e.data.self.update_modal(id);
-  //   });
-  //
-  // }
-  //
-  // remove_link(){
-  //   $(".show_link").off('click');
-  // }
+  
 
   set_timer() {
-    task = this.state.task;
-    if ($('.task-running').length > 0) {
+    task = this.props.task;
+    if ($('.show-task-running').attr('value') == task.id) {
       elem = $(".show-task-running");
       task_timer(elem, task.duration, task.started_at);
     }
@@ -51,10 +22,10 @@ class ShowModal extends React.Component{
   }
 
   timer_or_duration(){
-    task = this.state.task;
+    task = this.props.task;
     if (task){
-      if ($('.task-running').length > 0){
-        return(<div className="show-task-running"></div>);
+      if ($('.index-task-running').attr('value') == task.id){
+        return(<div value={task.id} className="show-task-running"></div>);
       }
       else{
         return this.duration_display(task);
@@ -67,13 +38,14 @@ class ShowModal extends React.Component{
 
 
   componentDidMount(){
-    // this.set_link();
     this.set_timer();
+    $('.showModal').on('shown.bs.modal',{self: this}, function(e){
+      console.log('set timer');
+      e.data.self.set_timer();
+    })
   }
 
   componentDidUpdate(){
-    // this.remove_link();
-    // this.set_link();
     this.set_timer();
   }
 
@@ -116,7 +88,7 @@ class ShowModal extends React.Component{
                   <p>{task.completed_at_show}</p>
                 </div>
               </div>
-              < div className="row">
+              <div className="row">
                 <div className="displays_timer col-xs-4">
                   <label className="Duration">Duration:</label>
                   {this.timer_or_duration()}

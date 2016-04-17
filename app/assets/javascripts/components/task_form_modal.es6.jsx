@@ -1,4 +1,4 @@
-class NewTaskModal extends React.Component{
+class TaskFormModal extends React.Component{
   constructor(props){
     super(props);
     this.state = {tag_dropdown: this.props.tag_dropdown,
@@ -11,11 +11,7 @@ class NewTaskModal extends React.Component{
   
   
   
-
-
-
   set_listeners(){
-
 
     $('.create_new_tag').click({self: this}, function(e){
       e.data.self.toggle_input(false);
@@ -27,7 +23,7 @@ class NewTaskModal extends React.Component{
 
     $('.save_new_tag').click({self: this}, function(e){
       e.preventDefault();
-      tag_name = $('.new_tag_input').val().trim();
+      tag_name = $('.task_form_new_tag').val().trim();
       if (tag_name != ""){
         e.data.self.save_new_tag(tag_name);
       }
@@ -46,7 +42,7 @@ class NewTaskModal extends React.Component{
     });
 
 
-    $('.new_task_due_date').click(function(e){
+    $('.task_form_due_date').click(function(e){
       e.preventDefault();
       $(this).datepicker({
         format: 'mm-dd-yyyy',
@@ -55,12 +51,12 @@ class NewTaskModal extends React.Component{
       $(this).datepicker('show');
       $('.day').click(function(e){
         $('.datepicker').hide();
-        $('.new_task_desc').focus();
+        $('.task_form_desc').focus();
       })
     });
 
 
-    $('.newTaskModal').on('hidden.bs.modal',{self: this},  function(e){
+    $('.taskFormModal').on('hidden.bs.modal',{self: this},  function(e){
       e.data.self.setState({tag_dropdown: true});
       $('.day').removeClass('active');
     });
@@ -81,7 +77,7 @@ class NewTaskModal extends React.Component{
                        selected_tag: data.selected_tag,
                        tag_dropdown: true,
                        flash: null});
-        $('.new_task_tag').val(self.state.selected_tag.id);
+        $('.task_form_tag').val(self.state.selected_tag.id);
         $('.datepicker').hide();
       },
       error: function(){
@@ -108,8 +104,8 @@ class NewTaskModal extends React.Component{
     $('.save_new_tag').off('click');
     $('.select_tag').off('click');
     $('.select_no_tag').off('click');
-    $('.new_task_due_date').off('click');
-    $('.newTaskModal').off('hidden.bs.modal');
+    $('.task_form_due_date').off('click');
+    $('.taskFormModal').off('hidden.bs.modal');
   }
 
   toggle_input(bool){
@@ -127,12 +123,68 @@ class NewTaskModal extends React.Component{
       return(
         <div>
           <span>
-            <input className="form-control new_tag_input"></input>
+            <input className="form-control task_form_new_tag"></input>
             <button className="btn btn-primary btn-sm save_new_tag">Save</button>
             <button className="btn btn-default btn-sm cancel_new_tag">Cancel</button>
           </span>
         </div>
       );
+    }
+  }
+
+  duration_show(){
+    task = this.props.selected_task;
+    if (task){
+      if ($('.index-task-running').attr('value') == task.id){
+        return (
+          <div>
+            <label>Duration:</label>
+            <div className={`form-task-running-${task.id}`}>running</div>
+          </div>
+        );
+      }
+      else{
+        return(
+          <div>
+            <label>Duration:</label>
+              <div>
+                {task.duration_display}
+              </div>
+          </div>
+        );
+      }
+    }
+  }
+
+  duration_display(task){
+    if (task.duration) {
+      return (<span id="duration_display">{task.duration_display}</span>);
+    }
+    else
+      return (<span>Not Started</span>);
+  }
+  //
+  // timer_or_duration(){
+  //   task = this.props.selected_task;
+  //   if (task){
+  //     if ($('.index-task-running').attr('value') == task.id){
+  //       return(<div><span className={`form-task-running-${task.id}`}></span><a href="#"> edit</a></div>);
+  //     }
+  //     else{
+  //       return <div>{this.duration_display(task)}<a href="#"> edit</a></div>;
+  //     }
+  //   }
+  //   else{
+  //     return <p>no task?</p>
+  //   }
+  // }
+
+  set_timer() {
+    task = this.props.selected_task;
+    if (task && $('.index-task-running').attr('value') == task.id) {
+      elem_class = `.form-task-running-${task.id}`;
+      elem = $(elem_class);
+      task_timer(elem, task.duration, task.started_at);
     }
   }
 
@@ -165,19 +217,19 @@ class NewTaskModal extends React.Component{
     task = this.props.selected_task;
     if (task){
 
-      $('.task_form_title').html(task.title);
+      $('.task_form_modal_title').html(task.title);
 
-      $('.new_task_title').val(task.title);
+      $('.task_form_title').val(task.title);
 
-      $('.new_task_tag').val(task.tag_id);
+      $('.task_form_tag').val(task.tag_id);
 
-      $('.new_task_tag').html(task.tag);
+      $('.task_form_tag').html(task.tag);
 
-      $('.new_task_due_date').val(task.due_date);
+      $('.task_form_due_date').val(task.due_date);
 
-      $('.new_task_desc').val(task.desc);
+      $('.task_form_desc').val(task.desc);
 
-      $('.task_id_input').val(task.id);
+      $('.task_form_id').val(task.id);
     }
   }
 
@@ -186,6 +238,7 @@ class NewTaskModal extends React.Component{
     this.edit_task_setter();
     this.remove_listeners();
     this.set_listeners();
+    this.set_timer();
   }
 
 
@@ -195,32 +248,34 @@ class NewTaskModal extends React.Component{
     this.set_listeners();
     this.set_focus();
     if (this.state.tag_dropdown == false){
-      $('.new_tag_input').focus();
+      $('.task_form_new_tag').focus();
     }
     this.edit_task_setter();
+    task = this.props.selected_task;
   }
 
   render(){
     return(
-      <div className="newTaskModal modal fade" role="dialog">
+      <div className="taskFormModal modal fade" role="dialog">
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
               <button type="button" className="close" data-dismiss="modal">×</button>
-              <h4 className="modal-title task_form_title">New Task</h4>
+              <h4 className="modal-title task_form_modal_title">New Task</h4>
             </div>
             <div className="modal-body">
-              <form className="simple_form">
+              <form>
                 {this.flash()}
                 <label>Title:</label>
-                <input className="form-control new_task_title"></input>
-              <label>Tag:</label>
+                <input className="form-control task_form_title"></input>
+                <label>Tag:</label>
                 {this.tag_dropdown_or_input()}
                 <label>Due Date:</label>
-                <input className="form-control new_task_due_date" placeholder="MM-DD-YYYY"></input>
+                <input className="form-control task_form_due_date" placeholder="MM-DD-YYYY"></input>
                 <label>Description:</label>
-                <textarea className="form-control new_task_desc"></textarea>
-                <input className="task_id_input" type="hidden"></input>
+                <textarea className="form-control task_form_desc"></textarea>
+                <input className="task_form_id" type="hidden"></input>
+                {this.duration_show()}
               </form>
             </div>
             <div className="modal-footer">
