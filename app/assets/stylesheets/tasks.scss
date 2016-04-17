@@ -8,6 +8,7 @@
 
 .duration_input{
   text-align: right;
+  width: 50px;
 }
 
 .scroll{
@@ -36,3 +37,8 @@
   opacity: 0;
   transition: opacity 1s;
 }
+
+.row.duration{
+  float: left;
+}
+

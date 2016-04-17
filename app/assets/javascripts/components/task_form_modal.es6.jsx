@@ -1,7 +1,8 @@
 class TaskFormModal extends React.Component{
   constructor(props){
     super(props);
-    this.state = {tag_dropdown: this.props.tag_dropdown,
+    this.state = {tag_dropdown: true,
+                  duration_edit: false,
                   selected_task: this.props.selected_task,
                   focus_elem: null,
                   selected_tag: {name: "---------", id: null},
@@ -61,7 +62,9 @@ class TaskFormModal extends React.Component{
       $('.day').removeClass('active');
     });
 
-
+    $('.edit_duration_link').click({self: this}, function(e){
+      e.data.self.setState({duration_edit: true});
+    })
 
 
   }
@@ -134,50 +137,41 @@ class TaskFormModal extends React.Component{
 
   duration_show(){
     task = this.props.selected_task;
-    if (task){
+    if (this.state.duration_edit){
+      return <DurationForm task={selected_task}></DurationForm>
+    }
+    else if (task){
       if ($('.index-task-running').attr('value') == task.id){
-        return (
-          <div>
-            <label>Duration:</label>
-            <div className={`form-task-running-${task.id}`}>running</div>
-          </div>
+        return(
+           <div>
+             <label>Duration:</label>
+             <div>
+               <div>
+                 <span className={`form-task-running-${task.id}`}></span>
+                 <a className="edit_duration_link" href="#"> edit</a>
+               </div>
+             </div>
+           </div>
         );
       }
       else{
         return(
           <div>
             <label>Duration:</label>
-              <div>
+            <div>
+              <span>
                 {task.duration_display}
-              </div>
+                <a className="edit_duration_link" href="#"> edit</a>
+              </span>
+            </div>
+
           </div>
         );
       }
     }
   }
 
-  duration_display(task){
-    if (task.duration) {
-      return (<span id="duration_display">{task.duration_display}</span>);
-    }
-    else
-      return (<span>Not Started</span>);
-  }
-  //
-  // timer_or_duration(){
-  //   task = this.props.selected_task;
-  //   if (task){
-  //     if ($('.index-task-running').attr('value') == task.id){
-  //       return(<div><span className={`form-task-running-${task.id}`}></span><a href="#"> edit</a></div>);
-  //     }
-  //     else{
-  //       return <div>{this.duration_display(task)}<a href="#"> edit</a></div>;
-  //     }
-  //   }
-  //   else{
-  //     return <p>no task?</p>
-  //   }
-  // }
+
 
   set_timer() {
     task = this.props.selected_task;
@@ -231,6 +225,7 @@ class TaskFormModal extends React.Component{
 
       $('.task_form_id').val(task.id);
     }
+
   }
 
 
@@ -251,7 +246,7 @@ class TaskFormModal extends React.Component{
       $('.task_form_new_tag').focus();
     }
     this.edit_task_setter();
-    task = this.props.selected_task;
+    this.set_timer();
   }
 
   render(){

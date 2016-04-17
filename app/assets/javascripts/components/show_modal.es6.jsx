@@ -40,7 +40,6 @@ class ShowModal extends React.Component{
   componentDidMount(){
     this.set_timer();
     $('.showModal').on('shown.bs.modal',{self: this}, function(e){
-      console.log('set timer');
       e.data.self.set_timer();
     })
   }

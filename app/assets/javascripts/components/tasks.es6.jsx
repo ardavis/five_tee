@@ -259,7 +259,6 @@ class Tasks extends React.Component {
       dataType: 'json',
       success: function(data){
         self.setState(data);
-        console.log(params);
         $('.taskFormModal').modal('toggle');
       },
       error: function(){
@@ -309,7 +308,7 @@ class Tasks extends React.Component {
 
     return(
       <div className="incomplete_tasks">
-        <TaskFormModal selected_task={show_task} tags={tags} tag_dropdown={true} flash={flash}></TaskFormModal>
+        <TaskFormModal selected_task={show_task} tags={tags} flash={flash}></TaskFormModal>
         {this.show_modal()}
         <FilterDropdown tags={tags} filter={filter}></FilterDropdown>
         <SortDropdown sort_options={sort_options} filter_sort={filter_sort}></SortDropdown>
