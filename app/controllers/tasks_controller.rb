@@ -9,8 +9,7 @@ class TasksController < ApplicationController
                                           :complete, :start, :pause, :restart, :reset_all]
   include TasksHelper
 
-  def show_task
-    @task = current_user.tasks.find(params[:id].to_i)
+  def show
     respond_to do |format|
       format.json { render json: react_task(@task)}
     end
@@ -44,9 +43,9 @@ class TasksController < ApplicationController
   def update
     if @task.update_attributes(task_params)
       @task.update_attributes(due_date: fix_date(task_params['due_date']))
-      call_coffeescript('tasks/reload_scripts/reload_on_update.coffee.erb')
+      react_json
     else
-      call_coffeescript('tasks/reload_scripts/reload_on_fail_update.coffee.erb')
+      render status: 400
     end
   end
 

@@ -6,8 +6,8 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
 
   def get_task
-    if params[:id]
-      @task = current_user.tasks.find(params[:id])
+    if params[:task] and params[:task][:id]
+      @task = current_user.tasks.find(params[:task][:id])
     else
       @task = current_user.tasks.new
     end

@@ -49,6 +49,7 @@ module ApplicationHelper
         created_at: task.created_at.to_i,
         created_at_show: task.created_at.strftime('%m-%d-%Y'),
         tag: task.tag ? task.tag.name : nil,
+        tag_id: task.tag ? task.tag.id : nil,
         completed_at: task.completed_at.to_i,
         completed_at_show: task.completed_at ? task.completed_at.strftime('%m-%d-%Y') : nil,
         started_at: task.started_at.to_i,
@@ -80,6 +81,8 @@ module ApplicationHelper
     payload = {
         tasks: react_tasks_hash,
         tags: react_tags_hash,
+        show_task: nil,
+        selected_task: nil,
         filter_sort: react_filter_sort_hash,
         sort_options: sort_options,
         flash: nil
