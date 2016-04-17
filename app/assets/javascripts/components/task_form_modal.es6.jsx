@@ -64,10 +64,16 @@ class TaskFormModal extends React.Component{
 
     $('.edit_duration_link').click({self: this}, function(e){
       e.data.self.setState({duration_edit: true});
-    })
+    });
 
+    
 
+    $('.edit_duration_close').click({self: this}, function(e){
+      e.data.self.setState({duration_edit: false})
+    });
   }
+  
+  
   
   save_new_tag(name){
     self = this;

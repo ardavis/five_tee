@@ -147,6 +147,14 @@ class Tasks extends React.Component {
       task_id = e.data.self.fetch_id($(this));
       this_class.update_modal(id);
     });
+    
+    $('.edit_duration_link').click({self: this}, function(e){
+      $('.edit_duration_save').click({self: e.data.self}, function(e){
+        e.data.self.edit_duration();
+      });
+    });
+
+
 
   }
 
@@ -265,6 +273,23 @@ class Tasks extends React.Component {
         self.setState({flash: {danger: `"${params.title}" task already exists.`}})
       }
     });
+  }
+
+  edit_duration(){
+    id = $('.task_form_id').val();
+    duration = +$('.duration_input.hours').val() * 3600;
+    duration += +$('.duration_input.mins').val()  * 60;
+    duration += +$('.duration_input.secs').val() ;
+
+    $.ajax({
+      type: "POST",
+      url: '/tasks/update/',
+      data: {task: {id: id, duration: duration}},
+      dataType: 'json',
+      success: function(data){
+        self.setState(data);
+      }
+    })
   }
 
   show_modal(){

@@ -25,12 +25,10 @@ class DurationForm extends React.Component{
     }
   }
 
-  componentDidMount(){
-  }
+
 
   componentDidUpdate(){
     this.init();
-
   }
 
 
