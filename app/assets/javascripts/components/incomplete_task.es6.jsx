@@ -3,7 +3,7 @@ class IncompleteTask extends React.Component {
   constructor(props){
     super(props);
     this.state = {task} = this.props;
-    this.componentDidUpdate = this.componentDidUpdate.bind(this);
+    // this.componentDidUpdate = this.componentDidUpdate.bind(this);
   }
 
   duration_display(task){
