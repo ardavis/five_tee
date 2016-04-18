@@ -5,7 +5,7 @@ class TaskFormModal extends React.Component{
                   duration_edit: false,
                   selected_task: this.props.selected_task,
                   focus_elem: null,
-                  selected_tag: {name: "---------", id: null},
+                  selected_tag: this.props.selected_tag,
                   tags: this.props.tags,
                   flash: this.props.flash};
   }
@@ -34,8 +34,9 @@ class TaskFormModal extends React.Component{
     });
 
     $('.select_tag').click({self: this}, function(e){
-      url = $(this).attr('value');
-      e.data.self.select_tag(url);
+      id = $(this).attr('value');
+      name = $(this).html();
+      e.data.self.select_tag(id, name);
     });
 
     $('.select_no_tag').click({self: this}, function(e){
@@ -65,10 +66,14 @@ class TaskFormModal extends React.Component{
     $('.edit_duration_link').click({self: this}, function(e){
       e.data.self.setState({duration_edit: true});
     });
-
     
 
     $('.edit_duration_close').click({self: this}, function(e){
+      e.data.self.setState({duration_edit: false})
+    });
+
+
+    $('.edit_duration_save').click({self: this}, function(e){
       e.data.self.setState({duration_edit: false})
     });
   }
@@ -86,6 +91,7 @@ class TaskFormModal extends React.Component{
                        selected_tag: data.selected_tag,
                        tag_dropdown: true,
                        flash: null});
+        $('.task_form_tag').html(self.state.selected_tag.name);
         $('.task_form_tag').val(self.state.selected_tag.id);
         $('.datepicker').hide();
       },
@@ -95,16 +101,9 @@ class TaskFormModal extends React.Component{
     });
   }
 
-  select_tag(url){
-    self = this;
-    $.ajax({
-      type: 'GET',
-      url: url,
-      dataType: 'json',
-      success: function(data){
-        self.setState({selected_tag: data});
-      }
-    });
+  select_tag(id, name){
+    $('.task_form_tag').html(name);
+    $('.task_form_tag').val(id);
   }
 
   remove_listeners(){
@@ -178,7 +177,6 @@ class TaskFormModal extends React.Component{
   }
 
 
-
   set_timer() {
     task = this.props.selected_task;
     if (task && $('.index-task-running').attr('value') == task.id) {
@@ -196,6 +194,9 @@ class TaskFormModal extends React.Component{
   }
 
   flash(){
+    if (this.props.selected_task){
+      return null;
+    }
     flash = this.props.flash;
     if (this.state.flash){
       flash = this.state.flash
@@ -215,23 +216,16 @@ class TaskFormModal extends React.Component{
 
   edit_task_setter(){
     task = this.props.selected_task;
+    tag = this.props.selected_tag;
     if (task){
-
       $('.task_form_modal_title').html(task.title);
-
       $('.task_form_title').val(task.title);
-
-      $('.task_form_tag').val(task.tag_id);
-
-      $('.task_form_tag').html(task.tag);
-
+      $('.task_form_tag').html(tag.name);
+      $('.task_form_tag').val(tag.id);
       $('.task_form_due_date').val(task.due_date);
-
       $('.task_form_desc').val(task.desc);
-
       $('.task_form_id').val(task.id);
     }
-
   }
 
 
@@ -241,7 +235,7 @@ class TaskFormModal extends React.Component{
     this.set_listeners();
     this.set_timer();
   }
-
+  
 
   componentDidUpdate() {
     this.state.flash = null;

@@ -7,7 +7,7 @@ class TagDropdown extends React.Component{
   tag_list(){
     tag_rows = [];
     tags.forEach(function (tag){
-      tag_row = <li key={tag.id}><a className="select_tag" href="#" value={`/tags/${tag.id}/select`}>{tag.name}</a></li>;
+      tag_row = <li key={tag.id}><a className="select_tag" href="#" value={tag.id}>{tag.name}</a></li>;
       tag_rows.push(tag_row);
     });
     return tag_rows;
@@ -33,6 +33,5 @@ class TagDropdown extends React.Component{
         </ul>
       </div>
     );
-      
   }
 }

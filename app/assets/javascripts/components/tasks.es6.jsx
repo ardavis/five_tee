@@ -80,23 +80,17 @@ class Tasks extends React.Component {
   }
 
 
-  task_modal_init(){
-    this.setState({flash: null});
-    $('.task_form_modal_title').html('New Task');
-    $('.task_form_title').val('');
-    $('.task_form_tag').val('');
-    $('.task_form_tag').html('---------');
-    $('.task_form_due_date').val('');
-    $('.task_form_desc').val('');
-    $('.task_form_id').val('');
-    $('.day').removeClass('active');
-  }
 
 
   task_form_modal(){
-    if (!!this.state.selected_tag){
-      this.task_modal_init();
-    }
+    this.setState({flash: null});
+    $('.task_form_modal_title').html('New Task');
+    $('.task_form_title').val('');
+    $('.task_form_tag').html('---------');
+    $('.task_form_tag').val('');
+    $('.task_form_due_date').val('');
+    $('.task_form_desc').val('');
+    $('.task_form_id').val('');
     $('.taskFormModal').modal('toggle');
     setTimeout(function(){$('.task_form_title').focus();}, 500);
     this.remove_links();
@@ -109,8 +103,7 @@ class Tasks extends React.Component {
     this_class = this;
 
     $(".trigger_modal_task_form").click(function(e){
-      this_class.state.selected_task = null;
-      this_class.task_modal_init();
+      this_class.setState({selected_task: null, selected_tag: {name: '---------', id: null}});
       this_class.task_form_modal();
     });
 
@@ -137,15 +130,15 @@ class Tasks extends React.Component {
     });
 
     $('.edit_task_link').click({self: this},function(e){
+      e.data.self.setState({flash: null});
       $('.showModal').modal('toggle');
-      this_class.setState({selected_task: show_task, flash: null});
       $('.taskFormModal').modal('toggle');
     });
 
 
     $(".show_link").click({self: this}, function(e){
       task_id = e.data.self.fetch_id($(this));
-      this_class.update_modal(id);
+      this_class.set_selected_task(id);
     });
     
     $('.edit_duration_link').click({self: this}, function(e){
@@ -158,7 +151,7 @@ class Tasks extends React.Component {
 
   }
 
-  update_modal(id){
+  set_selected_task(id){
     self = this;
     $.ajax({
       type: "POST",
@@ -166,7 +159,7 @@ class Tasks extends React.Component {
       data: {task: {id: id}},
       dataType: 'json',
       success: function(data){
-        self.setState({show_task: data});
+        self.setState({selected_task: data, selected_tag: {id: data.tag_id, name: data.tag}});
         $('.showModal').modal('toggle');
       }
     });
@@ -196,6 +189,7 @@ class Tasks extends React.Component {
     $('.show_link').off('click');
     $('.edit_task_link').off('click');
   }
+
 
   
   componentDidMount(){
@@ -293,18 +287,22 @@ class Tasks extends React.Component {
   }
 
   show_modal(){
-    show_task = this.state.show_task;
-    if (show_task){
-      return <ShowModal task={show_task}></ShowModal>
+    selected_task = this.state.selected_task;
+    if (selected_task){
+      return <ShowModal task={selected_task}></ShowModal>
     }
     else{
       return ""
     }
   }
 
-  
-  
-
+  task_form(){
+    selected_task = this.state.selected_task;
+    selected_tag = this.state.selected_tag;
+    tags = this.state.tags;
+    flash = this.state.flash;
+    return <TaskFormModal selected_task={selected_task} selected_tag={selected_tag} tags={tags} flash={flash}></TaskFormModal>;
+  }
 
   render() {
     tasks = this.state.tasks;
@@ -316,7 +314,7 @@ class Tasks extends React.Component {
     task_rows = {incomplete: [], complete: []};
     flash = this.state.flash;
     selected_task = this.state.selected_task;
-    show_task = this.state.show_task;
+    selected_tag = this.state.selected_tag;
 
 
     tasks.incomplete.forEach(function (task){
@@ -333,7 +331,7 @@ class Tasks extends React.Component {
 
     return(
       <div className="incomplete_tasks">
-        <TaskFormModal selected_task={show_task} tags={tags} flash={flash}></TaskFormModal>
+        {this.task_form()}
         {this.show_modal()}
         <FilterDropdown tags={tags} filter={filter}></FilterDropdown>
         <SortDropdown sort_options={sort_options} filter_sort={filter_sort}></SortDropdown>

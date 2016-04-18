@@ -81,8 +81,8 @@ module ApplicationHelper
     payload = {
         tasks: react_tasks_hash,
         tags: react_tags_hash,
-        show_task: nil,
         selected_task: nil,
+        selected_tag: {name: '---------', id: nil},
         filter_sort: react_filter_sort_hash,
         sort_options: sort_options,
         flash: nil

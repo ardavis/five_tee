@@ -12,7 +12,7 @@
     .navbar.navbar-inverse
       .container-fluid
         %ul.nav.navbar-nav
-          %li= link_to 'Five Tee', root_path
+          %li= link_to 'Five Tee', '/'
           - if params[:controller] == 'tasks'
             %li= link_to 'New Task', '#', class: 'trigger_modal_task_form'
             %li= link_to 'Manage Tags', manage_tag_modal_path, remote: true

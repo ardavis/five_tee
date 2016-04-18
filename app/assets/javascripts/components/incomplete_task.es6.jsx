@@ -43,19 +43,21 @@ class IncompleteTask extends React.Component {
 
   set_timer() {
     this.state = {task} = this.props;
-    task = this.state.task;
     if (task.running) {
       elem = $(".index-task-running");
+      console.log(elem.html());
       task_timer(elem, task.duration, task.started_at);
     }
   }
 
 
   componentDidMount(){
+    console.log('mount');
     this.set_timer();
   }
 
   componentDidUpdate(){
+    console.log('update');
     this.set_timer();
   }
 

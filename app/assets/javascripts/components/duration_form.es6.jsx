@@ -11,10 +11,8 @@ class DurationForm extends React.Component{
         hours = duration[0];
         mins = duration[2];
         secs = duration[4];
-        console.log(hours);
       }
       else{
-        console.log(task.duration);
         hours = Math.floor(task.duration / 3600);
         mins = Math.floor(task.duration / 60 % 60);
         secs = task.duration % 60;
