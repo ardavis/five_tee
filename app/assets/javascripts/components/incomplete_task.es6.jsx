@@ -1,103 +1,94 @@
-class IncompleteTask extends React.Component {
+var IncompleteTask = React.createClass({
 
-  constructor(props){
-    super(props);
-    this.state = {task} = this.props;
-    // this.componentDidUpdate = this.componentDidUpdate.bind(this);
-  }
 
-  duration_display(task){
-    if (task.duration) {
-      return (<p id="duration_display">{task.duration_display}</p>);
+
+  componentDidUpdate(){
+    this.setTimer();
+  },
+
+  start(){
+    this.props.handleTaskButtons('start', this.props.task.id);
+  },
+
+  pause(){
+    this.props.handleTaskButtons('pause', this.props.task.id);
+  },
+
+  complete(){
+    this.props.handleTaskButtons('complete', this.props.task.id);
+  },
+
+  delete(){
+    confirmation = confirm("Are you sure you want to delete this task?");
+    if (confirmation){
+      this.props.handleTaskButtons('delete', this.props.task.id);
     }
-    else
-      return (<p>Not Started</p>);
-  }
+  },
 
-  timer_or_duration(task){
-    if (task.running){
-      return(<div value={task.id} className="index-task-running"></div>);
+  isStarted: function(){
+    return this.props.task.started_at ? true : false;
+  },
+  
+  setTimer(){
+    if (this.isStarted()){
+      task = this.props.task;
+      now = Date.now() / 1000 | 0;
+      start_time = task.duration + now - task.started_at;
+      console.log(task.duration);
+      console.log(now);
+      console.log(task.started_at);
+      elem = $(`.timer#${task.id}`);
+      timerOn(elem, start_time);
     }
-    else{
-      return this.duration_display(task);
-    }
-  }
+  },
 
-  play_pause_btn(task){
-    if (task.started_at) {
-      return (
-        <a href="#" className="pause_btn btn btn-default">
+
+
+  playOrPauseBtn: function(){
+    if (this.isStarted()){
+      return(
+        <a href="javascript: void(0)" onClick={this.pause}  className='btn btn-default'>
           <span className="glyphicon glyphicon-pause"></span>
         </a>
       );
     }
-    else {
-      return (
-        <a href="#" className="play_btn btn btn-default">
+    else{
+      return(
+        <a href="javascript: void(0)" onClick={this.start} className='btn btn-default'>
           <span className="glyphicon glyphicon-play"></span>
         </a>
       );
     }
-  }
+  },
 
-
-  set_timer() {
-    this.state = {task} = this.props;
-    if (task.running) {
-      elem = $(".index-task-running");
-      console.log(elem.html());
-      task_timer(elem, task.duration, task.started_at);
-    }
-  }
-
-
-  componentDidMount(){
-    console.log('mount');
-    this.set_timer();
-  }
-
-  componentDidUpdate(){
-    console.log('update');
-    this.set_timer();
-  }
-
-  render () {
+  render (){
     task = this.props.task;
-    duration = task.duration ? task.duration : 0;
-    running = task.started_at ? true : false;
-    row_id = (`task-${running ? 'running' : 'paused'}`);
-    show_link = `/show_task_modal?id=${task.id}`;
-    duration_class = `col-md-4 ${running ? 'running_time' : ''}`;
-
-
-    return(
-      <div className="row well task" id={row_id} value={task.id}>
+    return (
+      <div className="row well task">
         <div className="col-md-4">
           <h4>
-            <a className="show_link" id={task.title} href='#' value={task.id}>
+            <a className="show_link" href="#">
               {task.title}
             </a>
           </h4>
         </div>
         <div className="col-md-4">
-          <div className={running ? "running_time" : ""}>
-          {this.timer_or_duration(task)}
-        </div>
+          <div className="timer" id={task.id}>
+            {formattedDuration(task.duration)}
+          </div>
         </div>
         <div className="col-md-4">
           <div className="pull-right">
-            {this.play_pause_btn(task)}
-            <a href="#" className="complete_btn btn btn-success">
+            {this.playOrPauseBtn()}
+            <a href="javascript: void(0)" onClick={this.complete} className="btn btn-success">
               <span className="glyphicon glyphicon-ok"></span>
             </a>
-            <a href='#' className="delete_btn btn btn-danger">
+            <a href="javascript: void(0)" onClick={this.delete} className="btn btn-danger">
               <span className="glyphicon glyphicon-trash"></span>
             </a>
           </div>
         </div>
       </div>
-
-    )
-
+    );
   }
-}
+});

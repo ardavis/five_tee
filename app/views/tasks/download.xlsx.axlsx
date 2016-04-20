@@ -1,7 +1,0 @@
-wb = xlsx_package.workbook
-wb.add_worksheet(name: "taskSheet") do |sheet|
-    sheet.add_row ["Title", "Description", "Completed At", "Duration"]
-    @tasks.each do |task|
-	sheet.add_row [task.title,task.desc,task.completed_at,"#{duration_display(task.duration)}"]
-    end
-end
