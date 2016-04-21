@@ -15,9 +15,14 @@ module TasksHelper
     }
   end
 
+
+
   def react_task(task)
     json = task.as_json
     json['started_at'] = json['started_at'] ? json['started_at'].to_i : nil
+    json['due_date'] = json['due_date'] ? json['due_date'].strftime('%m-%d-%Y') : nil
+    json['created_at'] = json['created_at'] ? json['created_at'].strftime('%m-%d-%Y') : nil
+    json['completed_at_display'] = json['completed_at'] ? json['completed_at'].strftime('%m-%d-%Y') : nil
     json['completed_at'] = json['completed_at'] ? json['completed_at'].to_i : nil
     json['duration_display'] = duration_display(task.duration)
     if task.tag

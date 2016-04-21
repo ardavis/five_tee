@@ -4,6 +4,12 @@ var CompleteTask = React.createClass({
     this.props.handleTaskButtons('restart', this.props.task.id);
 
   },
+
+  showTask(){
+    id = this.props.task.id;
+    this.props.handleTaskShow(id);
+    $('.show.task.modal').modal('toggle');
+  },
   
   render (){
     task = this.props.task;
@@ -11,7 +17,7 @@ var CompleteTask = React.createClass({
       <div className="row well task">
         <div className="col-md-4">
           <h4>
-            <a className="show_link" href="#">
+            <a onClick={this.showTask} className="show_link" href="javascript: void(0)">
               {task.title}
             </a>
           </h4>

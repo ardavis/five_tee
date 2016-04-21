@@ -41,12 +41,16 @@ var IncompleteTask = React.createClass({
   },
   
   setTimer(){
+    task = this.props.task;
+    elem = $(`.timer#${task.id}`);
     if (this.isStarted()){
-      task = this.props.task;
       now = Date.now() / 1000 | 0;
       start_time = task.duration + now - task.started_at;
-      elem = $(`.timer#${task.id}`);
       timerOn(elem, start_time);
+    }
+    else{
+      timerOff(elem);
+      elem.html(task.duration_display);
     }
   },
 

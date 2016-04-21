@@ -1,3 +1,15 @@
+function updateTask(params, index){
+  $.ajax({
+    type: "PATCH",
+    url: `/tasks/update`,
+    data: params,
+    dataType: 'json',
+    success: function(data){
+      index.setState({tasks: data.tasks, selected_task: data.selected_task});
+    }
+  });
+}
+
 function getSelectedTask(id, index){
   $.ajax({
     type: "PATCH",

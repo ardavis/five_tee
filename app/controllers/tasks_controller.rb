@@ -1,12 +1,24 @@
 class TasksController < ApplicationController
 
   include TasksHelper
+  include TagsHelper
 
   def index
     respond_to do |format|
       format.html do
-        render component: 'TasksIndex', props: {tasks: tasks_hash}
+        render component: 'TasksIndex', props: {tasks: tasks_hash, tags: tags_hash}
       end
+    end
+  end
+
+  def update
+    @task = current_user.tasks.find(task_params[:id])
+    if @task.update_attributes(task_params)
+      respond_to do |format|
+        format.json { render json: {tasks: tasks_hash, tags: tags_hash, selected_task: react_task(@task)}}
+      end
+    else
+      puts 'failed update'
     end
   end
 
@@ -58,7 +70,6 @@ class TasksController < ApplicationController
   end
 
 
-
   def fetch_all
     respond_to do |format|
       format.json { render json: {tasks: tasks_hash}}
@@ -69,7 +80,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:id)
+    params.require(:task).permit(:id, :title, :desc)
   end
 
 end

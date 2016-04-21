@@ -15,6 +15,10 @@ Rails.application.routes.draw do
   patch 'tasks/delete' => 'tasks#delete'
   patch 'tasks/restart' => 'tasks#restart'
 
+  # Task Forms
+
+  patch 'tasks/update' => 'tasks#update'
+
   # Task Links
 
   patch 'tasks/select' => 'tasks#select'

@@ -16,6 +16,10 @@ var TasksIndex = React.createClass({
   unselectTask(){
     this.setState({selected_task: null})
   },
+  
+  handleUpdateTask(params){
+    updateTask(params, this);
+  },
 
   incompleteRows(){
     var handleTaskButtons = this.handleTaskButtons;
@@ -60,6 +64,7 @@ var TasksIndex = React.createClass({
         <ShowTaskModal 
           task={task}
           unselectTask={this.unselectTask}
+          handleUpdateTask={this.handleUpdateTask}
         ></ShowTaskModal>);
     }
     else{
