@@ -50,6 +50,13 @@ class TasksController < ApplicationController
     end
   end
 
+  def select
+    @task = current_user.tasks.find(task_params[:id])
+    respond_to do |format|
+      format.json { render json: react_task(@task)}
+    end
+  end
+
 
 
   def fetch_all

@@ -15,5 +15,8 @@ Rails.application.routes.draw do
   patch 'tasks/delete' => 'tasks#delete'
   patch 'tasks/restart' => 'tasks#restart'
 
+  # Task Links
+
+  patch 'tasks/select' => 'tasks#select'
 
 end

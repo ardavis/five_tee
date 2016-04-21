@@ -1,12 +1,10 @@
 var CompleteTask = React.createClass({
   
-  
   restart(){
     this.props.handleTaskButtons('restart', this.props.task.id);
 
   },
-
-
+  
   render (){
     task = this.props.task;
     return (
@@ -20,7 +18,7 @@ var CompleteTask = React.createClass({
         </div>
         <div className="col-md-4">
           <div>
-            Time took: {formattedDuration(task.duration)}
+            Time took: {task.duration_display}
           </div>
         </div>
         <div className="col-md-4">

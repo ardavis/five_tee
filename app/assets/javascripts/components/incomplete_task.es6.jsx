@@ -1,6 +1,9 @@
 var IncompleteTask = React.createClass({
 
 
+  componentDidMount(){
+    this.setTimer();
+  },
 
   componentDidUpdate(){
     this.setTimer();
@@ -11,6 +14,8 @@ var IncompleteTask = React.createClass({
   },
 
   pause(){
+    elem = $(`.timer#${task.id}`);
+    timerOff(elem);
     this.props.handleTaskButtons('pause', this.props.task.id);
   },
 
@@ -24,8 +29,14 @@ var IncompleteTask = React.createClass({
       this.props.handleTaskButtons('delete', this.props.task.id);
     }
   },
+  
+  showTask(){
+    id = this.props.task.id;
+    this.props.handleTaskShow(id);
+    $('.show.task.modal').modal('toggle');
+  },
 
-  isStarted: function(){
+  isStarted(){
     return this.props.task.started_at ? true : false;
   },
   
@@ -34,17 +45,13 @@ var IncompleteTask = React.createClass({
       task = this.props.task;
       now = Date.now() / 1000 | 0;
       start_time = task.duration + now - task.started_at;
-      console.log(task.duration);
-      console.log(now);
-      console.log(task.started_at);
       elem = $(`.timer#${task.id}`);
       timerOn(elem, start_time);
     }
   },
 
 
-
-  playOrPauseBtn: function(){
+  playOrPauseBtn(){
     if (this.isStarted()){
       return(
         <a href="javascript: void(0)" onClick={this.pause}  className='btn btn-default'>
@@ -61,20 +68,20 @@ var IncompleteTask = React.createClass({
     }
   },
 
-  render (){
+  render(){
     task = this.props.task;
     return (
       <div className="row well task">
         <div className="col-md-4">
           <h4>
-            <a className="show_link" href="#">
+            <a onClick={this.showTask} className="show_link" href="javascript: void(0)">
               {task.title}
             </a>
           </h4>
         </div>
         <div className="col-md-4">
           <div className="timer" id={task.id}>
-            {formattedDuration(task.duration)}
+            {task.duration_display}
           </div>
         </div>
         <div className="col-md-4">

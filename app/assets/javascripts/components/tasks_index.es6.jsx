@@ -1,15 +1,25 @@
 var TasksIndex = React.createClass({
 
-  componentWillMount: function(){
-    this.state = {tasks} = this.props;
+  componentWillMount(){
+    this.state = {tasks, selected_task} = this.props;
   },
-  
-  taskButtonPress(action, id){
+
+
+  handleTaskButtons(action, id){
     taskButtonAction(action, id, this);
   },
 
-  incompleteRows: function(){
-    var handleTaskButtons = this.taskButtonPress;
+  handleTaskShow(id){
+    getSelectedTask(id, this);
+  },
+  
+  unselectTask(){
+    this.setState({selected_task: null})
+  },
+
+  incompleteRows(){
+    var handleTaskButtons = this.handleTaskButtons;
+    var handleTaskShow = this.handleTaskShow;
     rows = [];
     this.state.tasks.incomplete.forEach(function(task){
       rows.push(
@@ -17,15 +27,17 @@ var TasksIndex = React.createClass({
           task={task}
           key={task.id}
           id={task.id}
-          handleTaskButtons={handleTaskButtons}>
+          handleTaskButtons={handleTaskButtons}
+          handleTaskShow={handleTaskShow}>
         </IncompleteTask>
       );
     });
     return rows;
   },
   
-  completeRows: function(){
-    var handleTaskButtons = this.taskButtonPress;
+  completeRows(){
+    var handleTaskButtons = this.handleTaskButtons;
+    var handleTaskShow = this.handleTaskShow;
     rows = [];
     this.state.tasks.complete.forEach(function(task){
       rows.push(
@@ -33,24 +45,42 @@ var TasksIndex = React.createClass({
           task={task}
           key={task.id} 
           id={task.id}
-          handleTaskButtons={handleTaskButtons}>
+          handleTaskButtons={handleTaskButtons}
+          handleTaskShow={handleTaskShow}>
         </CompleteTask>
       );
     });
     return rows;
   },
 
+  showTaskModal(){
+    task = this.state.selected_task;
+    if (task){
+      return( 
+        <ShowTaskModal 
+          task={task}
+          unselectTask={this.unselectTask}
+        ></ShowTaskModal>);
+    }
+    else{
+      return "";
+    }
+  },
+
   render(){
     return(
-      <div className="container">
-        <h1>Tasks</h1>
-        <div>
-          {this.incompleteRows()}
+      <div>
+        <div className="container">
+          <h1>Tasks</h1>
+          <div>
+            {this.incompleteRows()}
+          </div>
+          <h1>Completed Tasks</h1>
+          <div>
+            {this.completeRows()}
+          </div>
         </div>
-        <h1>Completed Tasks</h1>
-        <div>
-          {this.completeRows()}
-        </div>
+        {this.showTaskModal()}
       </div>
     );
    }
