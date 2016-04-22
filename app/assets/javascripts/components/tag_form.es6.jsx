@@ -1,26 +1,32 @@
 var TagForm = React.createClass({
-
-  componentDidMount(){
-  },
-
-
-  saveTag(){
-    tag_id = 5;
-    id = this.props.task.id;
-    params = {task: {id: id, tag_id: tag_id}};
-    this.props.handleUpdateTask(params);
-    this.props.toggleTitle();
-  },
-
-  dropdownOrInput(){
-
+  
+  
+  tagOptions(){
+    var toggleTag = this.props.toggleTag;
+    var handleUpdateTask = this.props.handleUpdateTask;
+    tags = this.props.tags;
+    task = this.props.task;
+    tag_options = [];
+    tags.forEach(function(tag){
+      option = (
+        <TagDropdownOption
+          key={tag.id}
+          tag={tag}
+          task={task}
+          toggleTag={toggleTag}
+          handleUpdateTask={handleUpdateTask}
+        ></TagDropdownOption>
+      );
+      tag_options.push(option);
+    });
+    return tag_options;
   },
 
   render(){
     return(
       <div className="dropdown">
         <button className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" type="button">
-          <span className="task form tag"></span>
+          <span value={this.props.task.tag.id} className="task form tag">{this.props.task.tag.name}</span>
           <span className="caret"></span>
         </button>
         <ul className="dropdown-menu">
@@ -28,7 +34,8 @@ var TagForm = React.createClass({
             <a href="javascript: void(0)">Create New Tag</a>
           </li>
           <li><div className="divider"></div></li>
-          <li><a className="select_no_tag" href="#">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+          <li><a className="select_no_tag" href="javascript: void(0)">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+          {this.tagOptions()}
         </ul>
       </div>
     );

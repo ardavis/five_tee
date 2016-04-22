@@ -1,7 +1,7 @@
 var TasksIndex = React.createClass({
 
   componentWillMount(){
-    this.state = {tasks, selected_task} = this.props;
+    this.state = {tasks, selected_task, tags} = this.props;
   },
 
 
@@ -59,10 +59,12 @@ var TasksIndex = React.createClass({
 
   showTaskModal(){
     task = this.state.selected_task;
+    tags = this.state.tags;
     if (task){
       return( 
         <ShowTaskModal 
           task={task}
+          tags={tags}
           unselectTask={this.unselectTask}
           handleUpdateTask={this.handleUpdateTask}
         ></ShowTaskModal>);

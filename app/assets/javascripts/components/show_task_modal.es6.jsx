@@ -87,7 +87,8 @@ var ShowTaskModal = React.createClass({
       return(
         <TagForm
           task={this.props.task}
-          toggleTitle={this.toggleTag}
+          tags={this.props.tags}
+          toggleTag={this.toggleTag}
           handleUpdateTask={this.props.handleUpdateTask}
         ></TagForm>);
     }
