@@ -1,7 +1,7 @@
 var ShowTaskModal = React.createClass({
 
   componentDidMount(){
-    unselectTask = this.props.unselectTask;
+    var unselectTask = this.props.unselectTask;
     $('.show.task.modal').on('hidden.bs.modal', function (e) {
       unselectTask();
     });
@@ -33,12 +33,16 @@ var ShowTaskModal = React.createClass({
     this.setState({tag_edit: !this.state.tag_edit});
   },
 
+  toggleDueDate(){
+    this.setState({due_date_edit: !this.state.due_date_edit});
+  },
+
   setTimer(){
-    task = this.props.task;
-    elem = $('.show.task.modal').find(`.timer#${task.id}`);
+    var task = this.props.task;
+    var elem = $('.show.task.modal').find(`.timer#${task.id}`);
     if (this.isStarted()){
-      now = Date.now() / 1000 | 0;
-      start_time = task.duration + now - task.started_at;
+      var now = Date.now() / 1000 | 0;
+      var start_time = task.duration + now - task.started_at;
       timerOn(elem, start_time);
     }
     else{
@@ -52,7 +56,7 @@ var ShowTaskModal = React.createClass({
   },
 
   descShowOrEdit(){
-    edit = this.state.desc_edit;
+    var edit = this.state.desc_edit;
     if (edit){
       return(
         <DescriptionForm
@@ -67,7 +71,7 @@ var ShowTaskModal = React.createClass({
   },
 
   titleShowOrEdit(){
-    edit = this.state.title_edit;
+    var edit = this.state.title_edit;
     if (edit){
       return(
         <TitleForm
@@ -82,7 +86,7 @@ var ShowTaskModal = React.createClass({
   },
 
   tagShowOrEdit(){
-    edit = this.state.tag_edit;
+    var edit = this.state.tag_edit;
     if (edit){
       return(
         <TagForm
@@ -97,9 +101,24 @@ var ShowTaskModal = React.createClass({
     }
   },
 
+  dueDateShowOrEdit(){
+    var edit = this.state.due_date_edit;
+    if (edit){
+      return(
+        <DueDateForm
+          task={this.props.task}
+          toggleDueDate={this.toggleDueDate}
+          handleUpdateTask={this.props.handleUpdateTask}
+        ></DueDateForm>);
+    }
+    else{
+      return <div onClick={this.toggleDueDate}>{task.due_date ? task.due_date : <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>}</div>;
+    }
+  },
+
   render(){
 
-    task = this.props.task;
+    var task = this.props.task;
 
     return(
       <div className="show task modal fade" role="dialog">
@@ -123,7 +142,7 @@ var ShowTaskModal = React.createClass({
               <div className="row table-bordered">
                 <div className="col-xs-4">
                   <label>Due Date:</label>
-                  <div>{task.due_date}</div>
+                  <div>{this.dueDateShowOrEdit()}</div>
                 </div>
                 <div className="col-xs-4">
                   <label>Created At:</label>

@@ -15,8 +15,6 @@ module TasksHelper
     }
   end
 
-
-
   def react_task(task)
     json = task.as_json
     json['started_at'] = json['started_at'] ? json['started_at'].to_i : nil
@@ -38,6 +36,13 @@ module TasksHelper
     duration_string.prepend "#{duration / 60 % 60} min "
     duration_string.prepend '0' unless duration < 3600 or duration / 60 % 60 > 9
     duration_string.prepend "#{duration / 3600} hr "
+  end
+
+  def fix_date(date)
+    return nil if date.blank?
+    fixed_date = date[3..5]
+    fixed_date << date[0..2]
+    fixed_date << date[6..9]
   end
 
 end

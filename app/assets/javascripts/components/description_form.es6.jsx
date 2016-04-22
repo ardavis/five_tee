@@ -7,9 +7,9 @@ var DescriptionForm = React.createClass({
 
 
   saveDesc(){
-    desc = this.refs.desc_input.value;
-    id = this.props.task.id;
-    params = {task: {id: id, desc: desc}};
+    var desc = this.refs.desc_input.value;
+    var id = this.props.task.id;
+    var params = {task: {id: id, desc: desc}};
     this.props.handleUpdateTask(params);
     this.props.toggleDesc();
   },

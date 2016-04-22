@@ -6,13 +6,13 @@ var CompleteTask = React.createClass({
   },
 
   showTask(){
-    id = this.props.task.id;
+    var id = this.props.task.id;
     this.props.handleTaskShow(id);
     $('.show.task.modal').modal('toggle');
   },
   
   render (){
-    task = this.props.task;
+    var task = this.props.task;
     return (
       <div className="row well task">
         <div className="col-md-4">

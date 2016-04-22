@@ -13,7 +13,9 @@ class TasksController < ApplicationController
 
   def update
     @task = current_user.tasks.find(task_params[:id])
-    if @task.update_attributes(task_params)
+    params = task_params
+    params['due_date'] = fix_date(params['due_date'])
+    if @task.update_attributes(params)
       respond_to do |format|
         format.json { render json: {tasks: tasks_hash, tags: tags_hash, selected_task: react_task(@task)}}
       end
@@ -80,7 +82,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:id, :title, :desc, :tag_id)
+    params.require(:task).permit(:id, :title, :desc, :tag_id, :due_date)
   end
 
 end

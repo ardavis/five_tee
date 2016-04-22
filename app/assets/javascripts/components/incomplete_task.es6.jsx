@@ -14,7 +14,7 @@ var IncompleteTask = React.createClass({
   },
 
   pause(){
-    elem = $(`.timer#${task.id}`);
+    var elem = $(`.timer#${task.id}`);
     timerOff(elem);
     this.props.handleTaskButtons('pause', this.props.task.id);
   },
@@ -24,14 +24,14 @@ var IncompleteTask = React.createClass({
   },
 
   delete(){
-    confirmation = confirm("Are you sure you want to delete this task?");
+    var confirmation = confirm("Are you sure you want to delete this task?");
     if (confirmation){
       this.props.handleTaskButtons('delete', this.props.task.id);
     }
   },
   
   showTask(){
-    id = this.props.task.id;
+    var id = this.props.task.id;
     this.props.handleTaskShow(id);
     $('.show.task.modal').modal('toggle');
   },
@@ -41,11 +41,11 @@ var IncompleteTask = React.createClass({
   },
   
   setTimer(){
-    task = this.props.task;
-    elem = $(`.timer#${task.id}`);
+    var task = this.props.task;
+    var elem = $(`.timer#${task.id}`);
     if (this.isStarted()){
-      now = Date.now() / 1000 | 0;
-      start_time = task.duration + now - task.started_at;
+      var now = Date.now() / 1000 | 0;
+      var start_time = task.duration + now - task.started_at;
       timerOn(elem, start_time);
     }
     else{
@@ -73,7 +73,7 @@ var IncompleteTask = React.createClass({
   },
 
   render(){
-    task = this.props.task;
+    var task = this.props.task;
     return (
       <div className="row well task">
         <div className="col-md-4">
