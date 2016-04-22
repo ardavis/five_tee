@@ -4,9 +4,9 @@ var TagForm = React.createClass({
   tagOptions(){
     var toggleTag = this.props.toggleTag;
     var handleUpdateTask = this.props.handleUpdateTask;
-    tags = this.props.tags;
-    task = this.props.task;
-    tag_options = [];
+    var tags = this.props.tags;
+    var task = this.props.task;
+    var tag_options = [];
     tags.forEach(function(tag){
       option = (
         <TagDropdownOption
@@ -23,10 +23,11 @@ var TagForm = React.createClass({
   },
 
   render(){
+    console.log(this.props.task.tag);
     return(
       <div className="dropdown">
         <button className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" type="button">
-          <span value={this.props.task.tag.id} className="task form tag">{this.props.task.tag.name}</span>
+          <span value={this.props.task.tag ? this.props.task.tag.id : null} className="task form tag">{this.props.task.tag ? this.props.task.tag.name : '--------'}</span>
           <span className="caret"></span>
         </button>
         <ul className="dropdown-menu">

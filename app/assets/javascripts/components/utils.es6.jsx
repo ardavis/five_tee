@@ -47,3 +47,7 @@ function taskButtonAction(action, id, index){
     }
   });
 }
+
+function blankSafe(arg){
+  return arg ? arg : <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+}

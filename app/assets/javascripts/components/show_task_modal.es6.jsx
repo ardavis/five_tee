@@ -30,6 +30,7 @@ var ShowTaskModal = React.createClass({
   },
 
   toggleTag(){
+    console.log(':)');
     this.setState({tag_edit: !this.state.tag_edit});
   },
 
@@ -55,64 +56,69 @@ var ShowTaskModal = React.createClass({
     return this.props.task.started_at ? true : false;
   },
 
-  descShowOrEdit(){
-    var edit = this.state.desc_edit;
-    if (edit){
-      return(
-        <DescriptionForm
-          task={this.props.task} 
-          toggleDesc={this.toggleDesc}
-          handleUpdateTask={this.props.handleUpdateTask}
-        ></DescriptionForm>);
-    }
-    else{
-      return <div onClick={this.toggleDesc}>{task.desc}</div>;
-    }
-  },
-
   titleShowOrEdit(){
+    var task = this.props.task;
     var edit = this.state.title_edit;
     if (edit){
       return(
         <TitleForm
-          task={this.props.task}
+          task={task}
           toggleTitle={this.toggleTitle}
           handleUpdateTask={this.props.handleUpdateTask}
         ></TitleForm>);
     }
     else{
-      return <h4 onClick={this.toggleTitle} className="modal-title">{task.title}</h4>;
+      return <h4 onClick={this.toggleTitle} className="modal-title">{blankSafe(task.title)}</h4>;
     }
   },
 
+  descShowOrEdit(){
+    var task = this.props.task;
+    var edit = this.state.desc_edit;
+    if (edit){
+      return(
+        <DescriptionForm
+          task={task}
+          toggleDesc={this.toggleDesc}
+          handleUpdateTask={this.props.handleUpdateTask}
+        ></DescriptionForm>);
+    }
+    else{
+      return <div onClick={this.toggleDesc}>{blankSafe(task.desc)}</div>;
+    }
+  },
+
+
   tagShowOrEdit(){
+    var task = this.props.task;
     var edit = this.state.tag_edit;
     if (edit){
       return(
         <TagForm
-          task={this.props.task}
+          task={task}
           tags={this.props.tags}
           toggleTag={this.toggleTag}
           handleUpdateTask={this.props.handleUpdateTask}
         ></TagForm>);
     }
     else{
-      return <div onClick={this.toggleTag}>{task.tag ? task.tag.name : ""}</div>;
+      return <div onClick={this.toggleTag}>{task.tag ? task.tag.name : blankSafe('')}</div>;
     }
   },
 
   dueDateShowOrEdit(){
+    var task = this.props.task;
     var edit = this.state.due_date_edit;
     if (edit){
       return(
         <DueDateForm
-          task={this.props.task}
+          task={task}
           toggleDueDate={this.toggleDueDate}
           handleUpdateTask={this.props.handleUpdateTask}
         ></DueDateForm>);
     }
     else{
-      return <div onClick={this.toggleDueDate}>{task.due_date ? task.due_date : <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>}</div>;
+      return <div onClick={this.toggleDueDate}>{blankSafe(task.due_date)}</div>;
     }
   },
 
@@ -140,6 +146,7 @@ var ShowTaskModal = React.createClass({
                 </div>
               </div>
               <div className="row table-bordered">
+                <br/>
                 <div className="col-xs-4">
                   <label>Due Date:</label>
                   <div>{this.dueDateShowOrEdit()}</div>
@@ -153,6 +160,7 @@ var ShowTaskModal = React.createClass({
                   <div>{task.completed_at_display}</div>
                 </div>
               </div>
+              <br/>
               <div className="row">
                 <div className="col-md-8">
                   <label>Duration:</label>

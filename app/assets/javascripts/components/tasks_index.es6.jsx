@@ -24,7 +24,7 @@ var TasksIndex = React.createClass({
   incompleteRows(){
     var handleTaskButtons = this.handleTaskButtons;
     var handleTaskShow = this.handleTaskShow;
-    rows = [];
+    var rows = [];
     this.state.tasks.incomplete.forEach(function(task){
       rows.push(
         <IncompleteTask
@@ -42,7 +42,7 @@ var TasksIndex = React.createClass({
   completeRows(){
     var handleTaskButtons = this.handleTaskButtons;
     var handleTaskShow = this.handleTaskShow;
-    rows = [];
+    var rows = [];
     this.state.tasks.complete.forEach(function(task){
       rows.push(
         <CompleteTask
@@ -58,8 +58,8 @@ var TasksIndex = React.createClass({
   },
 
   showTaskModal(){
-    task = this.state.selected_task;
-    tags = this.state.tags;
+    var task = this.state.selected_task;
+    var tags = this.state.tags;
     if (task){
       return( 
         <ShowTaskModal 

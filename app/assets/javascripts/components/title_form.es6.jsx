@@ -7,9 +7,9 @@ var TitleForm = React.createClass({
 
 
   saveTitle(){
-    title = this.refs.title_input.value;
-    id = this.props.task.id;
-    params = {task: {id: id, title: title}};
+    var title = this.refs.title_input.value;
+    var id = this.props.task.id;
+    var params = {task: {id: id, title: title}};
     this.props.handleUpdateTask(params);
     this.props.toggleTitle();
   },
