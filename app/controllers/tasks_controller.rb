@@ -13,9 +13,16 @@ class TasksController < ApplicationController
 
   def update
     @task = current_user.tasks.find(task_params[:id])
-    params = task_params
-    params['due_date'] = fix_date(params['due_date']) if params.has_key? 'due_date'
-    if @task.update_attributes(params)
+    @params = task_params
+    @params['due_date'] = fix_date(@params['due_date']) if @params.has_key? 'due_date'
+    if params[:tag_name]
+      @tag = current_user.tags.create(name: params[:tag_name])
+      if @tag.save
+        @params['tag_id'] = @tag.id
+      end
+    end
+    if @task.update_attributes(@params)
+      puts tags_hash
       respond_to do |format|
         format.json { render json: {tasks: tasks_hash, tags: tags_hash, selected_task: react_task(@task)}}
       end

@@ -37,17 +37,23 @@ var ShowTaskModal = React.createClass({
     this.setState({due_date_edit: !this.state.due_date_edit});
   },
 
+  toggleDuration(){
+    console.log(':)');
+    this.setState({duration_edit: !this.state.duration_edit})
+  },
+
   setTimer(){
     var task = this.props.task;
     var elem = $('.show.task.modal').find(`.timer#${task.id}`);
-    if (this.isStarted()){
+    if (this.isStarted() && !this.state.duration_edit){
       var now = Date.now() / 1000 | 0;
       var start_time = task.duration + now - task.started_at;
       timerOn(elem, start_time);
     }
     else{
+      
       timerOff(elem);
-      elem.html(task.duration_display);
+      elem.html(this.durationShowOrEdit());
     }
   },
 
@@ -121,6 +127,26 @@ var ShowTaskModal = React.createClass({
     }
   },
 
+  durationShowOrEdit(){
+    var task = this.props.task;
+    var edit = this.state.duration_edit;
+    if (edit){
+      return(
+        <DurationEdit
+          task={task}
+          toggleDurationEdit={this.durationEdit}
+          handleUpdateTask={this.props.handleUpdateTask}
+        ></DurationEdit>
+      );
+    }
+    else{
+      console.log('else');
+      return(
+        <div onClick={this.toggleDuration}>{task.duration_display}</div>
+      );
+    }
+  },
+
   render(){
 
     var task = this.props.task;
@@ -164,7 +190,7 @@ var ShowTaskModal = React.createClass({
                 <div className="col-md-8">
                   <label>Duration:</label>
                   <div className="timer" id={task.id}>
-                    {task.duration_display}
+                    {this.durationShowOrEdit()}
                   </div>
                 </div>
               </div>

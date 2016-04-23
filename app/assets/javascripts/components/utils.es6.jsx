@@ -5,7 +5,13 @@ function updateTask(params, index){
     data: params,
     dataType: 'json',
     success: function(data){
-      index.setState({tasks: data.tasks, selected_task: data.selected_task});
+      index.setState(
+        {
+          tasks: data.tasks,
+          tags: data.tags,
+          selected_task: data.selected_task
+        }
+      );
     }
   });
 }

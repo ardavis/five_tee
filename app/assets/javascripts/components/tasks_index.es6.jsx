@@ -20,6 +20,7 @@ var TasksIndex = React.createClass({
   handleUpdateTask(params){
     updateTask(params, this);
   },
+  
 
   incompleteRows(){
     var handleTaskButtons = this.handleTaskButtons;

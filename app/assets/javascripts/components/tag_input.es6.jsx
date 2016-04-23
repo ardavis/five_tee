@@ -7,9 +7,10 @@ var TagInput= React.createClass({
 
   saveTag(){
     var name = this.refs.tag_input.value;
-    var params = {tag: {id: id, name: name}};
-    this.props.handleNewTag(params);
-    this.props.toggleTagInput();
+    var id = this.props.task.id;
+    var params = {task: {id: id}, tag_name: name };
+    this.props.handleUpdateTask(params);
+    this.props.toggleTag();
   },
 
   render(){

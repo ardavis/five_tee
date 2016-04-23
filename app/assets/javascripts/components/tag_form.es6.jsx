@@ -13,9 +13,12 @@ var TagForm = React.createClass({
   tagDropdownOrInput(){
     if (this.state.tagInput){
       return(
-        <TagInput>
-
-        </TagInput>
+        <TagInput
+          task={this.props.task}
+          toggleTag={this.props.toggleTag}
+          toggleTagInput={this.toggleTagInput}
+          handleUpdateTask={this.props.handleUpdateTask}
+        ></TagInput>
       );
     }
     else{
@@ -24,6 +27,7 @@ var TagForm = React.createClass({
           task={this.props.task}
           tags={this.props.tags}
           toggleTag={this.props.toggleTag}
+          toggleTagInput={this.toggleTagInput}
           handleUpdateTask={this.props.handleUpdateTask}
         ></TagDropdown>
       );

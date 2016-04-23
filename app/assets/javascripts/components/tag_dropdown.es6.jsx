@@ -31,7 +31,7 @@ var TagDropdown = React.createClass({
         </button>
         <ul className="dropdown-menu">
           <li>
-            <a href="javascript: void(0)">Create New Tag</a>
+            <a onClick={this.props.toggleTagInput} href="javascript: void(0)">Create New Tag</a>
           </li>
           <li><div className="divider"></div></li>
           <li><a className="select_no_tag" href="javascript: void(0)">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
