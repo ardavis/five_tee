@@ -14,9 +14,10 @@ var IncompleteTask = React.createClass({
   },
 
   pause(){
+    var task = this.props.task;
     var elem = $(`.timer#${task.id}`);
     timerOff(elem);
-    this.props.handleTaskButtons('pause', this.props.task.id);
+    this.props.handleTaskButtons('pause', task.id);
   },
 
   complete(){

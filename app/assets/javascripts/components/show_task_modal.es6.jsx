@@ -38,8 +38,7 @@ var ShowTaskModal = React.createClass({
   },
 
   toggleDuration(){
-    console.log(':)');
-    this.setState({duration_edit: !this.state.duration_edit})
+    this.setState({current_duration: $('.current.duration').html(), duration_edit: !this.state.duration_edit})
   },
 
   setTimer(){
@@ -49,11 +48,7 @@ var ShowTaskModal = React.createClass({
       var now = Date.now() / 1000 | 0;
       var start_time = task.duration + now - task.started_at;
       timerOn(elem, start_time);
-    }
-    else{
-      
-      timerOff(elem);
-      elem.html(this.durationShowOrEdit());
+      $('.no.timer').html('')
     }
   },
 
@@ -120,6 +115,7 @@ var ShowTaskModal = React.createClass({
           task={task}
           toggleDueDate={this.toggleDueDate}
           handleUpdateTask={this.props.handleUpdateTask}
+          current_duration={this.state.current_duration}
         ></DueDateForm>);
     }
     else{
@@ -132,17 +128,16 @@ var ShowTaskModal = React.createClass({
     var edit = this.state.duration_edit;
     if (edit){
       return(
-        <DurationEdit
+        <DurationForm
           task={task}
           toggleDurationEdit={this.durationEdit}
           handleUpdateTask={this.props.handleUpdateTask}
-        ></DurationEdit>
+        ></DurationForm>
       );
     }
     else{
-      console.log('else');
       return(
-        <div onClick={this.toggleDuration}>{task.duration_display}</div>
+        <div onClick={this.toggleDuration}><div className="current duration timer" id={task.id}>{task.duration_display}</div></div>
       );
     }
   },
@@ -189,13 +184,13 @@ var ShowTaskModal = React.createClass({
               <div className="row">
                 <div className="col-md-8">
                   <label>Duration:</label>
-                  <div className="timer" id={task.id}>
+                  <div>
                     {this.durationShowOrEdit()}
                   </div>
                 </div>
               </div>
             </div>
-            <div className="modal-footer">
+            <div onClick={this.toggleDuration} className="modal-footer">
               <span><a className="btn btn-primary" href="javascript: void(0)">Edit</a></span>
               <span><a className="btn btn-default" href="javascript: void(0)" data-dismiss="modal">Close</a></span>
             </div>

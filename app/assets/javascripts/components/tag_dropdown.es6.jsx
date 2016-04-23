@@ -24,7 +24,7 @@ var TagDropdown = React.createClass({
 
   render(){
     return(
-      <div className="dropdown">
+      <div className="dropdown open">
         <button className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" type="button">
           <span value={this.props.task.tag ? this.props.task.tag.id : null} className="task form tag">{this.props.task.tag ? this.props.task.tag.name : '--------'}</span>
           <span className="caret"></span>
