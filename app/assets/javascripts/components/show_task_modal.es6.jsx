@@ -30,7 +30,6 @@ var ShowTaskModal = React.createClass({
   },
 
   toggleTag(){
-    console.log(':)');
     this.setState({tag_edit: !this.state.tag_edit});
   },
 
