@@ -12,7 +12,6 @@ var TaskModal = React.createClass({
     this.setTimer();
   },
   
-
   getInitialState(){
     return({
       title_edit: false,
@@ -35,6 +34,9 @@ var TaskModal = React.createClass({
 
   toggleTitle(){
     this.setState({title_edit: !this.state.title_edit});
+    if (this.state.title_edit){
+      this.props.setFlash(null);
+    }
   },
 
   toggleDesc(){
@@ -43,6 +45,7 @@ var TaskModal = React.createClass({
 
   toggleTag(){
     this.setState({tag_edit: !this.state.tag_edit});
+    this.props.setFlash(null);
   },
 
   toggleDueDate(){
@@ -88,9 +91,7 @@ var TaskModal = React.createClass({
       </div>
     );
   },
-
-
-
+  
   setTimer(){
     var task = this.props.task;
     var elem = $('.show.task.modal').find(`.timer#${task.id}`);
@@ -116,6 +117,7 @@ var TaskModal = React.createClass({
           task={task}
           toggleTitle={this.toggleTitle}
           handleUpdateTask={this.props.handleUpdateTask}
+          setFlash={this.props.setFlash}
         ></TitleForm>);
     }
     else{
@@ -155,6 +157,7 @@ var TaskModal = React.createClass({
           tags={this.props.tags}
           toggleTag={this.toggleTag}
           handleUpdateTask={this.props.handleUpdateTask}
+          setFlash={this.props.setFlash}
         ></TagForm>);
     }
     else{

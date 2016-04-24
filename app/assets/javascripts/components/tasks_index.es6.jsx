@@ -23,6 +23,10 @@ var TasksIndex = React.createClass({
     updateTask(params, this);
   },
   
+  setFlash(msg){
+    this.setState({flash: msg});
+  },
+  
 
   incompleteRows(){
     var handleTaskButtons = this.handleTaskButtons;
@@ -70,6 +74,7 @@ var TasksIndex = React.createClass({
           tags={tags}
           unselectTask={this.unselectTask}
           handleUpdateTask={this.handleUpdateTask}
+          setFlash={this.setFlash}
           flash={this.state.flash}
         ></TaskModal>);
     }

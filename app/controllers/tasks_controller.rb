@@ -20,6 +20,8 @@ class TasksController < ApplicationController
       @tag = current_user.tags.create(name: params[:tag_name])
       if @tag.save
         @params['tag_id'] = @tag.id
+      else
+        render status: 400
       end
     end
     if @task.update_attributes(@params)

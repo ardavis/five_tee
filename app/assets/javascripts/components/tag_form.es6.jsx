@@ -18,6 +18,7 @@ var TagForm = React.createClass({
           toggleTag={this.props.toggleTag}
           toggleTagInput={this.toggleTagInput}
           handleUpdateTask={this.props.handleUpdateTask}
+          setFlash={this.props.setFlash}
         ></TagInput>
       );
     }

@@ -8,10 +8,15 @@ var TitleForm = React.createClass({
 
   saveTitle(){
     var title = this.refs.title_input.value;
-    var id = this.props.task.id;
-    var params = {task: {id: id, title: title}};
-    this.props.handleUpdateTask(params);
-    this.props.toggleTitle();
+    if (title.trim().length > 0){
+      var id = this.props.task.id;
+      var params = {task: {id: id, title: title}};
+      this.props.handleUpdateTask(params);
+      this.props.toggleTitle();
+    }
+    else{
+      this.props.setFlash("Title cannot be blank");
+    }
   },
 
   render(){

@@ -6,12 +6,8 @@ h4{
   margin: 2.5px 2.5px 2.5px 2.5px;
 }
 
-.field_with_errors {
-  color: red;
-}
-
-.left{
-  float: left;
+.center{
+  margin: 0 auto;
 }
 
 .duration.form{
@@ -19,8 +15,16 @@ h4{
   width: 50px;
 }
 
-.scroll{
-  overflow-y: auto;
+.field_with_errors {
+  color: red;
+}
+
+.glyphicon-pencil{
+  margin-bottom: 10px;
+}
+
+.left{
+  float: left;
 }
 
 .medium-well{
@@ -28,24 +32,23 @@ h4{
   margin-left: 25px;
 }
 
+.row.duration{
+  float: left;
+}
+
+.scroll{
+  overflow-y: auto;
+}
+
 .small_modal{
   max-height: 550px;
 }
 
-.center{
-  margin: 0 auto;
-}
 
 .small-well{
   width: 80%;
   margin-left: 0;
 }
 
-.faded {
-  opacity: 0;
-  transition: opacity 1s;
-}
 
-.row.duration{
-  float: left;
-}
+

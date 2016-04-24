@@ -21,6 +21,12 @@ var TagDropdown = React.createClass({
     });
     return tag_options;
   },
+  
+  setNoTag(){
+    params = {task: {id: this.props.task.id, tag_id: 0}}
+    this.props.handleUpdateTask(params);
+    this.props.toggleTag();
+  },
 
   render(){
     return(
@@ -34,7 +40,7 @@ var TagDropdown = React.createClass({
             <a onClick={this.props.toggleTagInput} href="javascript: void(0)">Create New Tag</a>
           </li>
           <li><div className="divider"></div></li>
-          <li><a className="select_no_tag" href="javascript: void(0)">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
+          <li><a onClick={this.setNoTag} href="javascript: void(0)">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></li>
           {this.tagOptions()}
         </ul>
       </div>

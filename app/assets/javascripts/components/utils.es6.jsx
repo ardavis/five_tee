@@ -15,9 +15,13 @@ function updateTask(params, index){
       );
     },
     error: function(){
-      index.setState({
-        flash: "Task title cannot be blank."
-      });
+      if (params['task']['title']){
+        msg = `'${params['task']['title']}' task already exists`
+      }
+      else if (params['tag_name']){
+        msg = `'${params['tag_name']}' tag already exists`
+      }
+      index.setFlash(msg);
     }
   });
 }
