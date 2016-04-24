@@ -15,6 +15,7 @@ class TasksController < ApplicationController
     @task = current_user.tasks.find(task_params[:id])
     @params = task_params
     @params['due_date'] = fix_date(@params['due_date']) if @params.has_key? 'due_date'
+    @params['started_at'] = Time.now if @params.has_key? 'duration' and @task.started_at
     if params[:tag_name]
       @tag = current_user.tags.create(name: params[:tag_name])
       if @tag.save
@@ -89,7 +90,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:id, :title, :desc, :tag_id, :due_date)
+    params.require(:task).permit(:id, :title, :desc, :tag_id, :due_date, :duration)
   end
 
 end

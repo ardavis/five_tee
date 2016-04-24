@@ -1,10 +1,14 @@
-var ShowTaskModal = React.createClass({
+var TaskModal = React.createClass({
 
   componentDidMount(){
     var unselectTask = this.props.unselectTask;
     $('.show.task.modal').on('hidden.bs.modal', function (e) {
       unselectTask();
     });
+    this.setTimer();
+  },
+
+  componentDidUpdate(){
     this.setTimer();
   },
   
@@ -38,13 +42,52 @@ var ShowTaskModal = React.createClass({
   },
 
   toggleDuration(){
-    this.setState({current_duration: $('.current.duration').html(), duration_edit: !this.state.duration_edit})
+    this.setState({duration_edit: !this.state.duration_edit});
   },
+
+  descLabel(){
+    return(
+      <div>
+        <label>Description:</label>
+        {this.state.desc_edit ? '' : <span onClick={this.toggleDesc} className="btn btn-sm glyphicon glyphicon-pencil"></span>}
+      </div>
+    );
+  },
+
+  tagLabel(){
+    return(
+      <div>
+        <label>Tag:</label>
+        {this.state.tag_edit ? '' : <span onClick={this.toggleTag} className="btn btn-sm glyphicon glyphicon-pencil"></span>}
+      </div>
+    );
+  },
+
+  dueDateLabel(){
+    return(
+      <div>
+        <label>Due Date:</label>
+        {this.state.due_date_edit ? '' : <span onClick={this.toggleDueDate} className="btn btn-sm glyphicon glyphicon-pencil"></span>}
+      </div>
+    );
+  },
+
+  durationLabel(){
+    return(
+      <div>
+        <label>Duration:</label>
+        {this.state.duration_edit ? '' : <span onClick={this.toggleDuration} className="btn btn-sm glyphicon glyphicon-pencil"></span>}
+      </div>
+    );
+  },
+
+
 
   setTimer(){
     var task = this.props.task;
     var elem = $('.show.task.modal').find(`.timer#${task.id}`);
     if (this.isStarted() && !this.state.duration_edit){
+      timerOff(elem);
       var now = Date.now() / 1000 | 0;
       var start_time = task.duration + now - task.started_at;
       timerOn(elem, start_time);
@@ -68,7 +111,12 @@ var ShowTaskModal = React.createClass({
         ></TitleForm>);
     }
     else{
-      return <h4 onClick={this.toggleTitle} className="modal-title">{blankSafe(task.title)}</h4>;
+      return(
+        <div>
+          <h4 className="modal-title">{blankSafe(task.title)}</h4>
+          <span onClick={this.toggleTitle} className="btn btn-sm glyphicon glyphicon-pencil"></span>
+        </div>
+      );
     }
   },
 
@@ -84,7 +132,7 @@ var ShowTaskModal = React.createClass({
         ></DescriptionForm>);
     }
     else{
-      return <div onClick={this.toggleDesc}>{blankSafe(task.desc)}</div>;
+      return <div>{blankSafe(task.desc)}</div>;
     }
   },
 
@@ -102,7 +150,7 @@ var ShowTaskModal = React.createClass({
         ></TagForm>);
     }
     else{
-      return <div onClick={this.toggleTag}>{task.tag ? task.tag.name : blankSafe('')}</div>;
+      return <div>{task.tag ? task.tag.name : blankSafe('')}</div>;
     }
   },
 
@@ -115,11 +163,10 @@ var ShowTaskModal = React.createClass({
           task={task}
           toggleDueDate={this.toggleDueDate}
           handleUpdateTask={this.props.handleUpdateTask}
-          current_duration={this.state.current_duration}
         ></DueDateForm>);
     }
     else{
-      return <div onClick={this.toggleDueDate}>{blankSafe(task.due_date)}</div>;
+      return <div>{blankSafe(task.due_date)}</div>;
     }
   },
 
@@ -130,14 +177,14 @@ var ShowTaskModal = React.createClass({
       return(
         <DurationForm
           task={task}
-          toggleDurationEdit={this.durationEdit}
+          toggleDuration={this.toggleDuration}
           handleUpdateTask={this.props.handleUpdateTask}
         ></DurationForm>
       );
     }
     else{
       return(
-        <div onClick={this.toggleDuration}><div className="current duration timer" id={task.id}>{task.duration_display}</div></div>
+        <div><div className="current duration timer" id={task.id}>{task.duration_display}</div></div>
       );
     }
   },
@@ -157,18 +204,18 @@ var ShowTaskModal = React.createClass({
             <div className="modal-body">
               <div className="row">
                 <div className="col-md-8">
-                  <label>Description:</label>
+                  {this.descLabel()}
                   {this.descShowOrEdit()}
                 </div>
                 <div className="col-xs-4">
-                  <label>Tag:</label>
+                  {this.tagLabel()}
                   {this.tagShowOrEdit()}
                 </div>
               </div>
               <div className="row table-bordered">
                 <br/>
                 <div className="col-xs-4">
-                  <label>Due Date:</label>
+                  {this.dueDateLabel()}
                   <div>{this.dueDateShowOrEdit()}</div>
                 </div>
                 <div className="col-xs-4">
@@ -183,15 +230,14 @@ var ShowTaskModal = React.createClass({
               <br/>
               <div className="row">
                 <div className="col-md-8">
-                  <label>Duration:</label>
+                  {this.durationLabel()}
                   <div>
                     {this.durationShowOrEdit()}
                   </div>
                 </div>
               </div>
             </div>
-            <div onClick={this.toggleDuration} className="modal-footer">
-              <span><a className="btn btn-primary" href="javascript: void(0)">Edit</a></span>
+            <div className="modal-footer">
               <span><a className="btn btn-default" href="javascript: void(0)" data-dismiss="modal">Close</a></span>
             </div>
           </div>

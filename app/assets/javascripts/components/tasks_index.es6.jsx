@@ -63,12 +63,12 @@ var TasksIndex = React.createClass({
     var tags = this.state.tags;
     if (task){
       return( 
-        <ShowTaskModal 
+        <TaskModal
           task={task}
           tags={tags}
           unselectTask={this.unselectTask}
           handleUpdateTask={this.handleUpdateTask}
-        ></ShowTaskModal>);
+        ></TaskModal>);
     }
     else{
       return "";

@@ -1,19 +1,34 @@
 var DurationForm = React.createClass({
 
   componentDidMount(){
-    duration = durationParse(this.props.current_duration);
+    duration = currentDuration(this.props.task);
+    $('.form.duration.hr').val(duration.hr);
+    $('.form.duration.min').val(duration.min);
+    $('.form.duration.sec').val(duration.sec);
+  },
+
+  saveDuration(){
+    var hours = +this.refs.hours.value * 3600;
+    var minutes = +this.refs.minutes.value * 60;
+    var seconds = +this.refs.seconds.value;
+    var duration = hours + minutes + seconds;
+    var params = {task: {id: this.props.task.id, duration: duration}};
+    this.props.handleUpdateTask(params);
+    this.props.toggleDuration();
   },
 
   render(){
 
     return(
       <span>
-        <input className="form duration"></input>
+        <input ref="hours" className="form duration hr"></input>
         <span> hr </span>
-        <input className="form duration"></input>
+        <input ref="minutes" className="form duration min"></input>
         <span> min </span>
-        <input className="form duration"></input>
+        <input ref="seconds" className="form duration sec"></input>
         <span> sec </span>
+        <button onClick={this.saveDuration} className="btn btn-primary btn-sm">Save</button>
+        <button onClick={this.props.toggleDuration} className="btn btn-default btn-sm">Cancel</button>
       </span>
     );
 
