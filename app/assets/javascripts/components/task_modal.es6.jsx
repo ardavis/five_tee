@@ -25,6 +25,14 @@ var TaskModal = React.createClass({
     });
   },
 
+  flashDisplay(){
+    if (this.props.flash){
+      return(
+        <div className="alert alert-danger">{this.props.flash}</div>
+      );
+    }
+  },
+
   toggleTitle(){
     this.setState({title_edit: !this.state.title_edit});
   },
@@ -198,7 +206,7 @@ var TaskModal = React.createClass({
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <button type="button" className="close" >&times;</button>
+              {this.flashDisplay()}
               {this.titleShowOrEdit()}
             </div>
             <div className="modal-body">

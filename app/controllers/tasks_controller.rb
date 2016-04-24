@@ -28,7 +28,7 @@ class TasksController < ApplicationController
         format.json { render json: {tasks: tasks_hash, tags: tags_hash, selected_task: react_task(@task)}}
       end
     else
-      puts 'failed update'
+      render status: 400
     end
   end
 

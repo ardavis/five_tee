@@ -1,7 +1,9 @@
 var TasksIndex = React.createClass({
+  
 
   componentWillMount(){
     this.state = {tasks, selected_task, tags} = this.props;
+    this.state.flash = null;
   },
 
 
@@ -14,7 +16,7 @@ var TasksIndex = React.createClass({
   },
   
   unselectTask(){
-    this.setState({selected_task: null})
+    this.setState({selected_task: null, flash: null})
   },
   
   handleUpdateTask(params){
@@ -68,6 +70,7 @@ var TasksIndex = React.createClass({
           tags={tags}
           unselectTask={this.unselectTask}
           handleUpdateTask={this.handleUpdateTask}
+          flash={this.state.flash}
         ></TaskModal>);
     }
     else{

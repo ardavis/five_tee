@@ -9,9 +9,15 @@ function updateTask(params, index){
         {
           tasks: data.tasks,
           tags: data.tags,
-          selected_task: data.selected_task
+          selected_task: data.selected_task,
+          flash: null
         }
       );
+    },
+    error: function(){
+      index.setState({
+        flash: "Task title cannot be blank."
+      });
     }
   });
 }
