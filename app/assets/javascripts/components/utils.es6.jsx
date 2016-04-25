@@ -1,11 +1,30 @@
-function updateTask(params, index){
+function newTask(params, klass, new_task_form){
+  $.ajax({
+    type: 'PATCH',
+    url: '/tasks/new',
+    data: params,
+    dataType: 'json',
+    success: function(data){
+      klass.setState({
+        tasks: data.tasks,
+        tags: data.tags,
+        flash: null
+      })
+    },
+    error: function(){
+      new_task_form.setState({flash: `'${params['task']['title']}' task already exists.`});
+    }
+  });
+}
+
+function updateTask(params, klass){
   $.ajax({
     type: "PATCH",
     url: `/tasks/update`,
     data: params,
     dataType: 'json',
     success: function(data){
-      index.setState(
+      klass.setState(
         {
           tasks: data.tasks,
           tags: data.tags,
@@ -21,7 +40,22 @@ function updateTask(params, index){
       else if (params['tag_name']){
         msg = `'${params['tag_name']}' tag already exists`
       }
-      index.setFlash(msg);
+      klass.setFlash(msg);
+    }
+  });
+}
+
+function newTag(params, klass, tag_form){
+  $.ajax({
+    type: "PATCH",
+    url: `/tags/new`,
+    data: params,
+    dataType: 'json',
+    success: function(data){
+      klass.setState({tags: data.tags});
+      tag_form.setState({tag: data.tag});
+    },
+    error: function(){
     }
   });
 }

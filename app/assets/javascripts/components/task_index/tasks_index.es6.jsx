@@ -6,6 +6,24 @@ var TasksIndex = React.createClass({
     this.state.flash = null;
   },
 
+  componentDidMount(){
+    this.setListeners();
+  },
+
+  setListeners(){
+    var klass = this;
+    $('.new.task').click(function(e){
+      klass.setState({new_task_modal: true})
+    });
+  },
+  
+  handleNewTask(params, new_task_form){
+    newTask(params, this, new_task_form);
+  },
+
+  hideNewModal(){
+    this.setState({new_task_modal: false})
+  },
 
   handleTaskButtons(action, id){
     taskButtonAction(action, id, this);
@@ -21,6 +39,10 @@ var TasksIndex = React.createClass({
   
   handleUpdateTask(params){
     updateTask(params, this);
+  },
+  
+  handleNewTag(params, tag_form){
+    newTag(params, this, tag_form);
   },
   
   setFlash(msg){
@@ -82,6 +104,22 @@ var TasksIndex = React.createClass({
       return "";
     }
   },
+  
+  newTaskModal(){
+    if (this.state.new_task_modal){
+      return(
+        <NewTaskModal
+          tags={this.state.tags}
+          handleNewTask={this.handleNewTask}
+          hideNewModal={this.hideNewModal}
+          handleNewTag={this.handleNewTag}
+        ></NewTaskModal>
+      );
+    }
+    else{
+      return null;
+    }
+  },
 
   render(){
     return(
@@ -97,6 +135,7 @@ var TasksIndex = React.createClass({
           </div>
         </div>
         {this.taskModal()}
+        {this.newTaskModal()}
       </div>
     );
    }

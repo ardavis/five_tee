@@ -14,7 +14,7 @@
         %ul.nav.navbar-nav
           %li= link_to 'Five Tee', root_path
           - if params[:controller] == 'tasks'
-            %li= link_to 'New Task', 'javascript: void(0)'
+            %li.new.task= link_to 'New Task', 'javascript: void(0)'
             %li= link_to 'Manage Tags', 'javascript: void(0)'
             %li= link_to 'View Archives', 'javascript: void(0)'
           - if params[:controller] == 'archives'

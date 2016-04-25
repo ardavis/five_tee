@@ -11,6 +11,18 @@ class TasksController < ApplicationController
     end
   end
 
+  def new
+    @task = current_user.tasks.new(task_params)
+    @task.due_date = fix_date(task_params[:due_date])
+    if @task.save
+      respond_to do |format|
+        format.json { render json: {tasks: tasks_hash, tags: tags_hash}}
+      end
+    else
+      render status: 400
+    end
+  end
+
   def update
     @task = current_user.tasks.find(task_params[:id])
     @params = task_params

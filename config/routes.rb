@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   # Task Buttons
 
+  patch 'tasks/new' => 'tasks#new'
   patch 'tasks/start' => 'tasks#start'
   patch 'tasks/pause' => 'tasks#pause'
   patch 'tasks/complete' => 'tasks#complete'
@@ -22,5 +23,9 @@ Rails.application.routes.draw do
   # Task Links
 
   patch 'tasks/select' => 'tasks#select'
+
+  # Tags
+
+  patch 'tags/new' => 'tags#new'
 
 end
