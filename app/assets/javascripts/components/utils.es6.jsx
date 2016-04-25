@@ -39,6 +39,11 @@ function getSelectedTask(id, index){
   });
 }
 
+function thereAreNoErrors(){
+  var errors = $('.alert.alert-danger');
+  return errors.length == 0;
+}
+
 
 function timerOn(target, start_time){
   target.timer({

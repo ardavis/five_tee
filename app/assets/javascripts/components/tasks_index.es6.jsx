@@ -64,7 +64,7 @@ var TasksIndex = React.createClass({
     return rows;
   },
 
-  showTaskModal(){
+  taskModal(){
     var task = this.state.selected_task;
     var tags = this.state.tags;
     if (task){
@@ -96,7 +96,7 @@ var TasksIndex = React.createClass({
             {this.completeRows()}
           </div>
         </div>
-        {this.showTaskModal()}
+        {this.taskModal()}
       </div>
     );
    }

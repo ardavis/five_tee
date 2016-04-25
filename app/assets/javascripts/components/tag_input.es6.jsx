@@ -4,6 +4,16 @@ var TagInput= React.createClass({
     $('.tag.input').focus();
   },
 
+  componentDidUpdate(){
+    if (thereAreNoErrors() && this.state.requestSent){
+      this.props.toggleTag();
+    }
+  },
+
+  getInitialState(){
+    return({requestSent: false})
+  },
+
 
   saveTag(){
     var name = this.refs.tag_input.value;
@@ -11,7 +21,7 @@ var TagInput= React.createClass({
       var id = this.props.task.id;
       var params = {task: {id: id}, tag_name: name};
       this.props.handleUpdateTask(params);
-      this.props.toggleTag();
+      this.state.requestSent = true;
     }
     else{
       this.props.setFlash("Tag name cannot be blank")
