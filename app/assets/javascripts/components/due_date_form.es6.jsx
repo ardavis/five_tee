@@ -23,10 +23,17 @@ var DueDateForm= React.createClass({
     this.props.toggleDueDate();
   },
 
+  onEnter(e){
+    var saveDueDate = this.saveDueDate;
+    if (e.keyCode == 13){
+      saveDueDate();
+    }
+  },
+
   render(){
     return(
       <div>
-        <input ref="due_date_input" className="form-control task due date form"></input>
+        <input onKeyDown={this.onEnter} ref="due_date_input" className="form-control task due date form"></input>
         <button onClick={this.saveDueDate} className="btn btn-primary btn-sm">Save</button>
         <button onClick={this.props.toggleDueDate} className="btn btn-default btn-sm">Cancel</button>
       </div>

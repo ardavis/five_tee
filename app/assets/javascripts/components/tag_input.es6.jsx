@@ -28,10 +28,17 @@ var TagInput= React.createClass({
     }
   },
 
+  onEnter(e){
+    var saveTag = this.saveTag;
+    if (e.keyCode == 13){
+      saveTag();
+    }
+  },
+
   render(){
     return(
       <div>
-        <input ref="tag_input" className="form-control tag input"></input>
+        <input onKeyDown={this.onEnter} ref="tag_input" className="form-control tag input"></input>
         <button onClick={this.saveTag} className="btn btn-primary btn-sm">Save</button>
         <button onClick={this.props.toggleTag} className="btn btn-default btn-sm">Cancel</button>
       </div>

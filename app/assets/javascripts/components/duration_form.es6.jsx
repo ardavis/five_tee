@@ -17,15 +17,22 @@ var DurationForm = React.createClass({
     this.props.toggleDuration();
   },
 
+  onEnter(e){
+    var saveDuration = this.saveDuration;
+    if (e.keyCode == 13){
+      saveDuration();
+    }
+  },
+
   render(){
 
     return(
       <span>
-        <input ref="hours" className="form duration hr"></input>
+        <input onKeyDown={this.onEnter} ref="hours" className="form duration hr"></input>
         <span> hr </span>
-        <input ref="minutes" className="form duration min"></input>
+        <input onKeyDown={this.onEnter} ref="minutes" className="form duration min"></input>
         <span> min </span>
-        <input ref="seconds" className="form duration sec"></input>
+        <input onKeyDown={this.onEnter} ref="seconds" className="form duration sec"></input>
         <span> sec </span>
         <button onClick={this.saveDuration} className="btn btn-primary btn-sm">Save</button>
         <button onClick={this.props.toggleDuration} className="btn btn-default btn-sm">Cancel</button>

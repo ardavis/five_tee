@@ -28,10 +28,17 @@ var TitleForm = React.createClass({
     }
   },
 
+  onEnter(e){
+    var saveTitle = this.saveTitle;
+    if (e.keyCode == 13){
+      saveTitle();
+    }
+  },
+
   render(){
     return(
       <div>
-        <input ref="title_input" className="form-control task title form"></input>
+        <input onKeyDown={this.onEnter} ref="title_input" className="form-control task title form"></input>
         <button onClick={this.saveTitle} className="btn btn-primary btn-sm">Save</button>
         <button onClick={this.props.toggleTitle} className="btn btn-default btn-sm">Cancel</button>
       </div>
