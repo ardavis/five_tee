@@ -41,8 +41,8 @@ var TasksIndex = React.createClass({
     updateTask(params, this);
   },
   
-  handleNewTag(params, tag_form){
-    newTag(params, this, tag_form);
+  handleNewTag(params, new_task_modal, tag_form){
+    newTag(params, this, new_task_modal, tag_form);
   },
   
   setFlash(msg){
@@ -65,7 +65,12 @@ var TasksIndex = React.createClass({
         </IncompleteTask>
       );
     });
-    return rows;
+    if (rows.length > 0){
+      return rows;
+    }
+    else{
+      return <h4>You have no incompleted tasks</h4>
+    }
   },
   
   completeRows(){
@@ -83,7 +88,12 @@ var TasksIndex = React.createClass({
         </CompleteTask>
       );
     });
-    return rows;
+    if (rows.length > 0){
+      return rows;
+    }
+    else{
+      return <h4>You have no completed tasks</h4>
+    }
   },
 
   taskModal(){

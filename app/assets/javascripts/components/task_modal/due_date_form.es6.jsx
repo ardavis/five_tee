@@ -7,7 +7,10 @@ var DueDateForm= React.createClass({
       todayHighlight: true
     });
 
+    var klass = this;
+
     $('.task.due.date.form').on('change', function(){
+      $(klass.refs.due_date_input).focus();
       $('.datepicker').hide();
     });
 

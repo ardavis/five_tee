@@ -23,7 +23,8 @@ var NewTaskTagInput= React.createClass({
       this.state.requestSent = true;
     }
     else{
-      this.props.setFlash("Tag name cannot be blank")
+      this.props.setFlash("Tag name cannot be blank");
+      this.refs.tag_input.focus();
     }
   },
 

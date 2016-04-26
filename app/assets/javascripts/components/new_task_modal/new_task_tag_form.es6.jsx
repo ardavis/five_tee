@@ -31,6 +31,7 @@ var NewTaskTagForm = React.createClass({
       );
     }
     else{
+
       return(
         <NewTaskTagDropdown
           tags={this.props.tags}

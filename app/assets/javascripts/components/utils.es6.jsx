@@ -9,7 +9,9 @@ function newTask(params, klass, new_task_form){
         tasks: data.tasks,
         tags: data.tags,
         flash: null
-      })
+      });
+      new_task_form.setState({request_sent: false});
+      
     },
     error: function(){
       new_task_form.setState({flash: `'${params['task']['title']}' task already exists.`});
@@ -45,7 +47,7 @@ function updateTask(params, klass){
   });
 }
 
-function newTag(params, klass, tag_form){
+function newTag(params, klass, new_task_modal, tag_form){
   $.ajax({
     type: "PATCH",
     url: `/tags/new`,
@@ -54,8 +56,10 @@ function newTag(params, klass, tag_form){
     success: function(data){
       klass.setState({tags: data.tags});
       tag_form.setState({tag: data.tag});
+      new_task_modal.setState({flash: null});
     },
     error: function(){
+      new_task_modal.setState({flash: `'${params['tag']['name']}' tag already exists`});
     }
   });
 }

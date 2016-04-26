@@ -33,9 +33,9 @@ var NewTaskModal = React.createClass({
 
   componentDidUpdate(){
     if (thereAreNoErrors() && this.state.request_sent){
-      this.state.request_sent = false;
       $('.new.task.modal').modal('toggle');
     }
+    this.state.request_sent = false;
   },
 
   setFlash(msg){
@@ -62,6 +62,13 @@ var NewTaskModal = React.createClass({
     }
   },
 
+  onEnter(e){
+    var saveTask = this.saveTask;
+    if (e.keyCode == 13){
+      saveTask();
+    }
+  },
+
   flashDisplay(){
     if (this.state.flash){
       return(<div className="alert alert-danger">{this.state.flash}</div>)
@@ -69,6 +76,10 @@ var NewTaskModal = React.createClass({
     else{
       return null;
     }
+  },
+  
+  handleNewTag(params, tag_form){
+    this.props.handleNewTag(params, this, tag_form);
   },
   
 
@@ -83,17 +94,17 @@ var NewTaskModal = React.createClass({
             </div>
             <div className="modal-body">
               <label>Title:</label>
-              <input ref="title" className="form-control"></input>
+              <input onKeyDown={this.onEnter} ref="title" className="form-control"></input>
               <label>Tag:</label>
               <NewTaskTagForm
                 tags={this.props.tags}
-                handleNewTag={this.props.handleNewTag}
+                handleNewTag={this.handleNewTag}
                 setFlash={this.setFlash}
               ></NewTaskTagForm>
               <label>Due Date:</label>
-              <input ref="due_date" placeholder="MM-DD-YYYY" className="form-control"></input>
+              <input onKeyDown={this.onEnter} ref="due_date" placeholder="MM-DD-YYYY" className="form-control"></input>
               <label>Description:</label>
-              <textarea ref="desc" className="form-control"></textarea>
+              <textarea onKeyDown={this.onEnter} ref="desc" className="form-control"></textarea>
             </div>
             <div className="modal-footer">
               <span><a onClick={this.saveTask} className="btn btn-primary" href="javascript: void(0)" >Save</a></span>

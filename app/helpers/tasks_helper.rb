@@ -1,11 +1,11 @@
 module TasksHelper
 
   def incomplete_tasks
-    current_user.tasks.where(completed_at: nil)
+    current_user.tasks.where(completed_at: nil).order('created_at DESC')
   end
 
   def complete_tasks
-    current_user.tasks.where.not(completed_at: nil)
+    current_user.tasks.where.not(completed_at: nil).order('created_at DESC')
   end
 
   def tasks_hash

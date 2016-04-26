@@ -2,7 +2,6 @@ var NewTaskTagDropdown = React.createClass({
 
 
   tagOptions(){
-    
     var tags = this.props.tags;
     var tag_options = [];
     var handleTagSelect = this.props.handleTagSelect;
