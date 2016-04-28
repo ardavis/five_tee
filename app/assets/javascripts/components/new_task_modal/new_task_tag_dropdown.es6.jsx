@@ -26,7 +26,7 @@ var NewTaskTagDropdown = React.createClass({
     return(
       <div className="dropdown">
         <button className="btn btn-secondary dropdown-toggle" data-toggle="dropdown" type="button">
-          <span value={this.props.tag ? this.props.tag.id : null} className="new task tag">{this.props.tag ? this.props.tag.name : '--------'}</span>
+          <span id="tag_dropdown" value={this.props.tag ? this.props.tag.id : null} className="new task tag">{this.props.tag ? this.props.tag.name : '--------'}</span>
           <span className="caret"></span>
         </button>
         <ul className="dropdown-menu">

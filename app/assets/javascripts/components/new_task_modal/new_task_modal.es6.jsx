@@ -94,7 +94,7 @@ var NewTaskModal = React.createClass({
             </div>
             <div className="modal-body">
               <label>Title:</label>
-              <input onKeyDown={this.onEnter} ref="title" className="form-control"></input>
+              <input id="new_task[title]" onKeyDown={this.onEnter} ref="title" className="form-control"></input>
               <label>Tag:</label>
               <NewTaskTagForm
                 tags={this.props.tags}
@@ -102,9 +102,9 @@ var NewTaskModal = React.createClass({
                 setFlash={this.setFlash}
               ></NewTaskTagForm>
               <label>Due Date:</label>
-              <input onKeyDown={this.onEnter} ref="due_date" placeholder="MM-DD-YYYY" className="form-control"></input>
+              <input id="new_task_duedate" onKeyDown={this.onEnter} ref="due_date" placeholder="MM-DD-YYYY" className="form-control"></input>
               <label>Description:</label>
-              <textarea onKeyDown={this.onEnter} ref="desc" className="form-control"></textarea>
+              <textarea id="new_task_desc" onKeyDown={this.onEnter} ref="desc" className="form-control"></textarea>
             </div>
             <div className="modal-footer">
               <span><a onClick={this.saveTask} className="btn btn-primary" href="javascript: void(0)" >Save</a></span>
