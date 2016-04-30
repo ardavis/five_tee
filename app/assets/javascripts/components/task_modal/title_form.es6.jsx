@@ -38,8 +38,8 @@ var TitleForm = React.createClass({
   render(){
     return(
       <div>
-        <input onKeyDown={this.onEnter} ref="title_input" className="form-control task title form"></input>
-        <button onClick={this.saveTitle} className="btn btn-primary btn-sm">Save</button>
+        <input id="task_title" onKeyDown={this.onEnter} ref="title_input" className="form-control task title form"></input>
+        <button id="save_title" onClick={this.saveTitle} className="btn btn-primary btn-sm">Save</button>
         <button onClick={this.props.toggleTitle} className="btn btn-default btn-sm">Cancel</button>
       </div>
     );

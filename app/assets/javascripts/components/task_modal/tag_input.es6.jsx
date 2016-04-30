@@ -38,8 +38,8 @@ var TagInput= React.createClass({
   render(){
     return(
       <div>
-        <input onKeyDown={this.onEnter} ref="tag_input" className="form-control tag input"></input>
-        <button onClick={this.saveTag} className="btn btn-primary btn-sm">Save</button>
+        <input id="task_tag" onKeyDown={this.onEnter} ref="tag_input" className="form-control tag input"></input>
+        <button id="save_tag" onClick={this.saveTag} className="btn btn-primary btn-sm">Save</button>
         <button onClick={this.props.toggleTag} className="btn btn-default btn-sm">Cancel</button>
       </div>
     );

@@ -28,13 +28,13 @@ var DurationForm = React.createClass({
 
     return(
       <span>
-        <input onKeyDown={this.onEnter} ref="hours" className="form duration hr"></input>
+        <input id="task_hours" onKeyDown={this.onEnter} ref="hours" className="form duration hr"></input>
         <span> hr </span>
-        <input onKeyDown={this.onEnter} ref="minutes" className="form duration min"></input>
+        <input id="task_mins" onKeyDown={this.onEnter} ref="minutes" className="form duration min"></input>
         <span> min </span>
-        <input onKeyDown={this.onEnter} ref="seconds" className="form duration sec"></input>
+        <input id="task_secs" onKeyDown={this.onEnter} ref="seconds" className="form duration sec"></input>
         <span> sec </span>
-        <button onClick={this.saveDuration} className="btn btn-primary btn-sm">Save</button>
+        <button id="save_duration" onClick={this.saveDuration} className="btn btn-primary btn-sm">Save</button>
         <button onClick={this.props.toggleDuration} className="btn btn-default btn-sm">Cancel</button>
       </span>
     );

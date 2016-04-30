@@ -24,8 +24,8 @@ var DescriptionForm = React.createClass({
   render(){
     return(
       <div>
-        <textarea onKeyDown={this.onEnter} ref="desc_input" className="form-control task desc form"></textarea>
-        <button onClick={this.saveDesc} className="btn btn-primary btn-sm">Save</button>
+        <textarea id="task_description" onKeyDown={this.onEnter} ref="desc_input" className="form-control task desc form"></textarea>
+        <button id="save_description" onClick={this.saveDesc} className="btn btn-primary btn-sm">Save</button>
         <button onClick={this.props.toggleDesc} className="btn btn-default btn-sm">Cancel</button>
       </div>
     );

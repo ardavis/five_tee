@@ -58,7 +58,7 @@ var TaskModal = React.createClass({
 
   descLabel(){
     return(
-      <div>
+      <div id="description_label">
         <label>Description:</label>
         {this.state.desc_edit ? '' : <span onClick={this.toggleDesc} className="btn btn-sm glyphicon glyphicon-pencil"></span>}
       </div>
@@ -67,7 +67,7 @@ var TaskModal = React.createClass({
 
   tagLabel(){
     return(
-      <div>
+      <div id="tag_label">
         <label>Tag:</label>
         {this.state.tag_edit ? '' : <span onClick={this.toggleTag} className="btn btn-sm glyphicon glyphicon-pencil"></span>}
       </div>
@@ -76,7 +76,7 @@ var TaskModal = React.createClass({
 
   dueDateLabel(){
     return(
-      <div>
+      <div id="due_date_label">
         <label>Due Date:</label>
         {this.state.due_date_edit ? '' : <span onClick={this.toggleDueDate} className="btn btn-sm glyphicon glyphicon-pencil"></span>}
       </div>
@@ -85,7 +85,7 @@ var TaskModal = React.createClass({
 
   durationLabel(){
     return(
-      <div>
+      <div id="duration_label">
         <label>Duration:</label>
         {this.state.duration_edit ? '' : <span onClick={this.toggleDuration} className="btn btn-sm glyphicon glyphicon-pencil"></span>}
       </div>
@@ -122,7 +122,7 @@ var TaskModal = React.createClass({
     }
     else{
       return(
-        <div>
+        <div id="title_label">
           <h4 className="modal-title">{blankSafe(task.title)}</h4>
           <span onClick={this.toggleTitle} className="btn btn-sm glyphicon glyphicon-pencil"></span>
         </div>
