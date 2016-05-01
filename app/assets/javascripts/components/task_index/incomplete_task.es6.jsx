@@ -1,6 +1,5 @@
 var IncompleteTask = React.createClass({
-
-
+  
   componentDidMount(){
     this.setTimer();
   },
@@ -60,14 +59,14 @@ var IncompleteTask = React.createClass({
   playOrPauseBtn(){
     if (this.isStarted()){
       return(
-        <a href="javascript: void(0)" onClick={this.pause}  className='btn btn-default'>
+        <a href="javascript: void(0)" onClick={this.pause}  className='pause btn btn-default'>
           <span className="glyphicon glyphicon-pause"></span>
         </a>
       );
     }
     else{
       return(
-        <a href="javascript: void(0)" onClick={this.start} className='btn btn-default'>
+        <a href="javascript: void(0)" onClick={this.start} className='start btn btn-default'>
           <span className="glyphicon glyphicon-play"></span>
         </a>
       );
@@ -93,10 +92,10 @@ var IncompleteTask = React.createClass({
         <div className="col-md-4">
           <div className="pull-right">
             {this.playOrPauseBtn()}
-            <a href="javascript: void(0)" onClick={this.complete} className="btn btn-success">
+            <a href="javascript: void(0)" onClick={this.complete} className="complete btn btn-success">
               <span className="glyphicon glyphicon-ok"></span>
             </a>
-            <a href="javascript: void(0)" onClick={this.delete} className="btn btn-danger">
+            <a href="javascript: void(0)" onClick={this.delete} className="delete btn btn-danger">
               <span className="glyphicon glyphicon-trash"></span>
             </a>
           </div>

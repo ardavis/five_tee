@@ -29,7 +29,7 @@ var CompleteTask = React.createClass({
         </div>
         <div className="col-md-4">
           <div className="pull-right">
-            <a href="javascript: void(0)" onClick={this.restart} className="btn btn-default">
+            <a href="javascript: void(0)" onClick={this.restart} className="restart btn btn-default">
               <span className="glyphicon glyphicon-arrow-up"></span>
             </a>
           </div>

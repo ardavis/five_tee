@@ -2,35 +2,11 @@
 %html
   %head
     = favicon_link_tag 'stopwatch.ico'
-    %meta{content: 'text/html; charset=UTF-8', 'http-equiv': 'Content-Type'}/
+    %meta{content: 'text/html; charset=UTF-8', 'http-equiv' => 'Content-Type'}/
     %title FiveTee
     -# Total Time & Task Tracking Training
-    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': true
-    = javascript_include_tag 'application', 'data-turbolinks-track': true
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body
-    .navbar.navbar-inverse
-      .container-fluid
-        %ul.nav.navbar-nav
-          %li= link_to 'Five Tee', root_path
-          - if params[:controller] == 'tasks'
-            %li.new.task= link_to 'New Task', 'javascript: void(0)'
-            %li= link_to 'Manage Tags', 'javascript: void(0)'
-            %li= link_to 'View Archives', 'javascript: void(0)'
-          - if params[:controller] == 'archives'
-            %li= link_to 'Back To Tasks', root_path
-          %li.dropdown
-            %a.dropdown-toggle{'aria-expanded': 'false', 'aria-has-popup': 'true', 'data-toggle': 'dropdown', href: '#', role: 'button'}
-              Download
-              %span.caret
-          - if signed_in?
-            %li= link_to 'Sign Out', destroy_user_session_path, method: :delete
-          - else
-            %li= link_to 'Sign In', new_user_session_path
-
-    .container
-
-      - if alert
-        .alert.alert-danger= alert
-
-      = yield
+    = yield

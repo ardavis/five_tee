@@ -134,13 +134,14 @@ var TasksIndex = React.createClass({
   render(){
     return(
       <div>
+        <Header></Header>
         <div className="container">
           <h1>Tasks</h1>
-          <div>
+          <div id="incomplete_tasks">
             {this.incompleteRows()}
           </div>
           <h1>Completed Tasks</h1>
-          <div>
+          <div id="completed_tasks">
             {this.completeRows()}
           </div>
         </div>

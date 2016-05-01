@@ -13,3 +13,7 @@ end
 def new_duration
   @new_duration = {hours: rand(5), mins: rand(59), secs: rand(59)}
 end
+
+def dom_duration
+  find("div[class='timer'][id='#{@task.id}']").text
+end

@@ -23,6 +23,23 @@ Then(/^I should see all the data I put in$/) do
   expect(page).to have_content(@desc)
 end
 
-When(/^I take note of the current duration$/) do
-  @current_duration = find()
+When(/^I take note of the current task's duration$/) do
+  @current_duration = dom_duration
+end
+
+Then(/^the current duration should be different$/) do
+  expect(@current_duration).to_not eq dom_duration
+end
+
+Then(/^the current duration should be the same$/) do
+  expect(@current_duration).to eq dom_duration
+end
+
+Then(/^the task should be in the "([^"]*)" section$/) do |name|
+  section = find("div[id='#{name}_tasks'")
+  expect(section).to have_content(@task.title)
+end
+
+Then(/^I should not see the task$/) do
+  expect(page).to_not have_content(@task.title)
 end
