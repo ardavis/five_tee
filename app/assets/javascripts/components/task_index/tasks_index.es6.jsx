@@ -14,6 +14,10 @@ var TasksIndex = React.createClass({
 
       // Task modal states
       
+      // Tag Modal states
+      
+      tag_modal: false
+      
     });
   },
 
@@ -22,6 +26,9 @@ var TasksIndex = React.createClass({
     this.setState({new_task_modal: true})
   },
 
+  handleTagModal(){
+    this.setState({tag_modal: true})
+  },
   
   handleNewTask(params, new_task_form){
     newTask(params, this, new_task_form);
@@ -30,10 +37,16 @@ var TasksIndex = React.createClass({
   hideNewModal(){
     this.setState({new_task_modal: false})
   },
+  
+  hideTagModal(){
+    this.setState({tag_modal: false})
+  },
 
   handleTaskButtons(action, id){
     taskButtonAction(action, id, this);
   },
+  
+
 
   handleTaskShow(id){
     getSelectedTask(id, this);
@@ -49,6 +62,14 @@ var TasksIndex = React.createClass({
   
   handleNewTag(params, new_task_modal, tag_form){
     newTag(params, this, new_task_modal, tag_form);
+  },
+  
+  handleUpdateTag(params){
+    updateTag(params, this)
+  },
+
+  handleTagDelete(id){
+    deleteTag(id, this)
   },
   
   setFlash(msg){
@@ -137,10 +158,29 @@ var TasksIndex = React.createClass({
     }
   },
 
+  tagModal(){
+    if (this.state.tag_modal){
+      return(
+        <TagModal
+          tags={this.state.tags}
+          hideTagModal={this.hideTagModal}
+          handleTagDelete={this.handleTagDelete}
+          handleUpdateTag={this.handleUpdateTag}
+        ></TagModal>
+      );
+    }
+    else{
+      return null;
+    }
+  },
+
   render(){
     return(
       <div>
-        <Header handle_new_task_modal={this.handle_new_task_modal}></Header>
+        <Header 
+          handle_new_task_modal={this.handle_new_task_modal}
+          handleTagModal={this.handleTagModal}
+        ></Header>
         <div className="container">
           <h1>Tasks</h1>
           <div id="incomplete_tasks">
@@ -153,6 +193,7 @@ var TasksIndex = React.createClass({
         </div>
         {this.taskModal()}
         {this.newTaskModal()}
+        {this.tagModal()}
       </div>
     );
    }

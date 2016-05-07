@@ -37,11 +37,12 @@ h4{
 }
 
 .scroll{
-  overflow-y: auto;
 }
 
-.small_modal{
+.tag_container{
   max-height: 550px;
+  overflow-y: auto;
+
 }
 
 
@@ -50,5 +51,8 @@ h4{
   margin-left: 0;
 }
 
-
+.well.tag {
+  margin-left: 1%;
+  width: 98%;
+}
 

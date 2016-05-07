@@ -27,5 +27,7 @@ Rails.application.routes.draw do
   # Tags
 
   patch 'tags/new' => 'tags#new'
+  patch 'tags/update' => 'tags#update'
+  patch 'tags/delete' => 'tags#delete'
 
 end

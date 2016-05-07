@@ -6,8 +6,9 @@ module TagsHelper
 
   def react_tag(tag)
     {
-        'name': tag.name,
-        'id': tag.id
+        'name' => tag.name,
+        'id' => tag.id,
+        'tasks' => tag.tasks.count
     }
   end
 

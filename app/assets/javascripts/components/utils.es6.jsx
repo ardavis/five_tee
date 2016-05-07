@@ -64,6 +64,30 @@ function newTag(params, klass, new_task_modal, tag_form){
   });
 }
 
+function updateTag(params, index){
+  $.ajax({
+    type: "PATCH",
+    url: `/tags/update`,
+    data: params,
+    dataType: 'json',
+    success: function(data){
+      index.setState(data);
+    }
+  });
+}
+
+function deleteTag(id, index){
+  $.ajax({
+    type: "PATCH",
+    url: `/tags/delete`,
+    data: {tag: {id: id}},
+    dataType: 'json',
+    success: function(data){
+      index.setState(data);
+    }
+  });
+}
+
 function getSelectedTask(id, index){
   $.ajax({
     type: "PATCH",
@@ -121,6 +145,8 @@ function taskButtonAction(action, id, index){
     }
   });
 }
+
+
 
 function blankSafe(arg){
   return arg ? arg : <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
