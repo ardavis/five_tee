@@ -1,13 +1,22 @@
 var TagModalForm = React.createClass({
 
+  getInitialState(){
+    return(
+      {
+        request_sent: false
+      }
+    );
+  },
+
   componentDidMount(){
     $(this.refs.tag_name).val(this.props.tag.name);
     this.refs.tag_name.focus();
   },
 
   componentDidUpdate(){
-    if (thereAreNoErrors() && this.state.requestSent){
+    if (thereAreNoErrors() && this.state.request_sent){
       this.props.toggleNameForm();
+      this.state.request_sent = false;
     }
   },
   
@@ -21,10 +30,17 @@ var TagModalForm = React.createClass({
         }
       };
       this.props.handleUpdateTag(params);
-      this.state.requestSent = true;
+      this.state.request_sent = true;
     }
     else{
-      this.setFlash)
+      this.props.setFlash('Tag name cannot be blank')
+    }
+  },
+
+  onEnter(e){
+    var saveName = this.saveName;
+    if (e.keyCode == 13){
+      saveName();
     }
   },
 

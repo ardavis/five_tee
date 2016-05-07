@@ -16,7 +16,9 @@ var TasksIndex = React.createClass({
       
       // Tag Modal states
       
-      tag_modal: false
+      tag_modal: false,
+      
+      tag_modal_flash: null
       
     });
   },
@@ -74,6 +76,10 @@ var TasksIndex = React.createClass({
   
   setFlash(msg){
     this.setState({flash: msg});
+  },
+
+  setTagFlash(msg){
+    this.setState({tag_modal_flash: msg});
   },
   
 
@@ -163,9 +169,11 @@ var TasksIndex = React.createClass({
       return(
         <TagModal
           tags={this.state.tags}
+          flash={this.state.tag_modal_flash}
           hideTagModal={this.hideTagModal}
           handleTagDelete={this.handleTagDelete}
           handleUpdateTag={this.handleUpdateTag}
+          setFlash={this.setTagFlash}
         ></TagModal>
       );
     }

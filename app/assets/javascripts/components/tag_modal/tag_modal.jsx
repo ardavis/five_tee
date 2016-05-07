@@ -1,6 +1,5 @@
 var TagModal = React.createClass({
 
-
   componentDidMount(){
     var hideTagModal = this.props.hideTagModal;
     $('.tag.modal').modal('toggle');
@@ -13,6 +12,7 @@ var TagModal = React.createClass({
     var handleTagDelete = this.props.handleTagDelete;
     var handleUpdateTag = this.props.handleUpdateTag;
     var updateTag = this.props.updateTag;
+    var setFlash = this.props.setFlash;
     rows = [];
     this.props.tags.forEach(function(tag){
       rows.push(
@@ -22,6 +22,7 @@ var TagModal = React.createClass({
           handleTagDelete={handleTagDelete}
           updateTag={updateTag}
           handleUpdateTag={handleUpdateTag}
+          setFlash={setFlash}
         ></Tag>
       );
     });
@@ -30,6 +31,14 @@ var TagModal = React.createClass({
     }
     else{
       return <h4>You have no tags</h4>
+    }
+  },
+
+  flashDisplay(){
+    if (this.props.flash){
+      return(
+        <div className="alert alert-danger">{this.props.flash}</div>
+      )
     }
   },
 
@@ -43,6 +52,7 @@ var TagModal = React.createClass({
               <h4>Manage Tags</h4>
             </div>
             <div className="modal-body">
+              {this.flashDisplay()}
               <div className="tag_container">
                 {this.tagRows()}
               </div>

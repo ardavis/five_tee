@@ -72,6 +72,10 @@ function updateTag(params, index){
     dataType: 'json',
     success: function(data){
       index.setState(data);
+      index.setState({tag_modal_flash: null})
+    },
+    error: function(){
+      index.setState({tag_modal_flash: `'${params['tag']['name']}' tag already exists`})
     }
   });
 }

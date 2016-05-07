@@ -16,6 +16,7 @@ var Tag = React.createClass({
   
   toggleNameForm(){
     this.setState({edit_name: !this.state.edit_name})
+    this.props.setFlash(null);
   },
   
   tagNameOrEdit(){
@@ -25,6 +26,7 @@ var Tag = React.createClass({
           tag={this.props.tag}
           toggleNameForm={this.toggleNameForm}
           handleUpdateTag={this.props.handleUpdateTag}
+          setFlash={this.props.setFlash}
         ></TagModalForm>
       );  
     }

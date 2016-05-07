@@ -82,7 +82,7 @@ class TasksController < ApplicationController
     @task = current_user.tasks.find(task_params[:id])
     @task.destroy!
     respond_to do |format|
-      format.json { render json: {tasks: tasks_hash}}
+      format.json { render json: {tasks: tasks_hash, tags: tags_hash}}
     end
   end
 
