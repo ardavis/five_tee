@@ -1,21 +1,27 @@
 var TasksIndex = React.createClass({
-  
 
-  componentWillMount(){
-    this.state = {tasks, selected_task, tags} = this.props;
-    this.state.flash = null;
-  },
+  getInitialState(){
+    return(
+    {
+      // General states
+      tasks: this.props.tasks,
+      selected_task: this.props.selected_task,
+      tags: this.props.tags,
+      flash: null,
 
-  componentDidMount(){
-    this.setListeners();
-  },
+      // New Task Modal states
+      new_task_modal: false,
 
-  setListeners(){
-    var klass = this;
-    $('.new.task').click(function(e){
-      klass.setState({new_task_modal: true})
+      // Task modal states
+      
     });
   },
+
+
+  handle_new_task_modal(){
+    this.setState({new_task_modal: true})
+  },
+
   
   handleNewTask(params, new_task_form){
     newTask(params, this, new_task_form);
@@ -134,7 +140,7 @@ var TasksIndex = React.createClass({
   render(){
     return(
       <div>
-        <Header></Header>
+        <Header handle_new_task_modal={this.handle_new_task_modal}></Header>
         <div className="container">
           <h1>Tasks</h1>
           <div id="incomplete_tasks">

@@ -9,4 +9,6 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body
+    - if alert
+      .alert.alert-danger= alert
     = yield
