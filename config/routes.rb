@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   # Tasks
   get 'tasks/fetch_all' => 'tasks#fetch_all'
 
+  patch 'tasks/filter' => 'tasks#filter'
+
 
   # Task Buttons
 
@@ -29,5 +31,7 @@ Rails.application.routes.draw do
   patch 'tags/new' => 'tags#new'
   patch 'tags/update' => 'tags#update'
   patch 'tags/delete' => 'tags#delete'
+
+
 
 end

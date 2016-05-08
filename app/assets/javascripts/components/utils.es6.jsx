@@ -122,6 +122,22 @@ function timerOff(target){
   target.timer('remove');
 }
 
+function updateFilterTag(params, index){
+  $.ajax({
+    type: "PATCH",
+    url: `/tasks/filter`,
+    data: params,
+    dataType: 'json',
+    success: function(data){
+      index.setState(
+        {
+          tasks: data,
+          filter_tag: params['tag']
+        });
+    }
+  });
+}
+
 function currentDuration(task){
   if (task.started_at){
     var now = Date.now() / 1000 | 0;

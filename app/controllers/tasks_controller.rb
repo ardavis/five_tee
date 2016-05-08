@@ -93,6 +93,17 @@ class TasksController < ApplicationController
     end
   end
 
+  def filter
+    unless params[:tag][:id].blank?
+      @filtered_tasks = current_user.tasks.where(tag_id: params[:tag][:id])
+    else
+      @filtered_tasks = current_user.tasks.all
+    end
+    respond_to do |format|
+      format.json {render json: tasks_hash(@filtered_tasks)}
+    end
+  end
+
 
   def fetch_all
     respond_to do |format|
@@ -106,5 +117,6 @@ class TasksController < ApplicationController
   def task_params
     params.require(:task).permit(:id, :title, :desc, :tag_id, :due_date, :duration)
   end
+
 
 end

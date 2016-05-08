@@ -18,7 +18,11 @@ var TasksIndex = React.createClass({
       
       tag_modal: false,
       
-      tag_modal_flash: null
+      tag_modal_flash: null,
+      
+      // Filter tag state
+      
+      filter_tag: {name: 'All Tags'}
       
     });
   },
@@ -48,8 +52,7 @@ var TasksIndex = React.createClass({
     taskButtonAction(action, id, this);
   },
   
-
-
+  
   handleTaskShow(id){
     getSelectedTask(id, this);
   },
@@ -72,6 +75,10 @@ var TasksIndex = React.createClass({
 
   handleTagDelete(id){
     deleteTag(id, this)
+  },
+
+  handleFilterTag(params){
+    updateFilterTag(params, this);
   },
   
   setFlash(msg){
@@ -190,7 +197,12 @@ var TasksIndex = React.createClass({
           handleTagModal={this.handleTagModal}
         ></Header>
         <div className="container">
-          <h1>Tasks</h1>
+          <h1 className="index_header">Tasks</h1>
+          <TagFilterDropdown 
+            handleFilterTag={this.handleFilterTag}
+            filter_tag={this.state.filter_tag}
+            tags={this.state.tags}
+          ></TagFilterDropdown>
           <div id="incomplete_tasks">
             {this.incompleteRows()}
           </div>
