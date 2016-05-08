@@ -88,6 +88,9 @@ function deleteTag(id, index){
     dataType: 'json',
     success: function(data){
       index.setState(data);
+      if (index.state.filter_tag.id == id){
+        index.setState({filter_tag: {name: 'All Tags'}})
+      }
     }
   });
 }

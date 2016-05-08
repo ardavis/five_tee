@@ -29,7 +29,7 @@ var TagFilterDropdown = React.createClass({
         <div className="btn-group">
           <button
             type="button"
-            className="btn btn-default dropdown-toggle"
+            className="btn filter btn-default dropdown-toggle"
             data-toggle="dropdown"
             aria-haspopup="true"
             aria-expanded="false"

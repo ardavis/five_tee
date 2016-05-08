@@ -10,7 +10,6 @@ Feature: Users should be able to interact with tasks via the buttons
 
   Scenario: Start and pause buttons work
     When I set the current task to task "1"
-    And a bash the shit out of the play and pause button
     When I take note of the current task's duration
     And I click the "start" button
     And I wait a few seconds

@@ -12,10 +12,3 @@ end
 When(/^I click OK$/) do
   page.driver.browser.switch_to.alert.accept
 end
-
-When(/^a bash the shit out of the play and pause button$/) do
-  100.times do
-    find('.complete.btn').click
-    find('.restart.btn').click
-  end
-end

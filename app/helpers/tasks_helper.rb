@@ -8,12 +8,18 @@ module TasksHelper
     current_user.tasks.where.not(completed_at: nil).order('created_at DESC')
   end
 
-  def tasks_hash(tasks=current_user.tasks.all)
-    @incomplete_tasks = tasks.where(completed_at: nil)
-    @complete_tasks = tasks.where.not(completed_at: nil)
+  def tasks_hash
+    if current_user.session.filter_tag_id
+      filtered_tasks = current_user.tasks
+                           .where(tag_id: current_user.session.filter_tag_id)
+                           .order(current_user.session.sort_sql)
+    else
+      filtered_tasks = current_user.tasks
+                           .order(current_user.session.sort_sql)
+    end
     {
-        incomplete: @incomplete_tasks.map{|task| react_task(task)},
-        complete: @complete_tasks.map{|task| react_task(task)}
+        incomplete: filtered_tasks.where(completed_at: nil).map{|task| react_task(task)},
+        complete: filtered_tasks.where.not(completed_at: nil).map{|task| react_task(task)}
     }
   end
 

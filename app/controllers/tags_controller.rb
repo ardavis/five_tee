@@ -26,6 +26,9 @@ class TagsController < ApplicationController
   def delete
     @tag = current_user.tags.find(tag_params[:id])
     if @tag.destroy
+      if current_user.session.filter_tag_id == @tag.id
+        current_user.session.update_attributes(filter_tag_id: nil)
+      end
       respond_to do |format|
         format.json { render json: {tasks: tasks_hash, tags: tags_hash}}
       end
