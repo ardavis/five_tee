@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   root 'tasks#index'
 
   # Tasks
+  get 'tasks/index' => 'tasks#index'
   patch 'tasks/filter' => 'tasks#filter'
   patch 'tasks/sort' => 'tasks#sort'
 
@@ -30,6 +31,10 @@ Rails.application.routes.draw do
   patch 'tags/new' => 'tags#new'
   patch 'tags/update' => 'tags#update'
   patch 'tags/delete' => 'tags#delete'
+
+  # Archives
+  get 'archives/index' => 'archives#index'
+  patch 'archives/new' => 'archives#new'
 
 
 

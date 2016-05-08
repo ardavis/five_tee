@@ -2,7 +2,7 @@ class Task < ActiveRecord::Base
   belongs_to :tag
   belongs_to :user
 
-  validates :title, presence: true, uniqueness: true
+  validates :title, presence: true, uniqueness: {scope: :archive_id}
   validates :desc, length: {maximum: 1000}
 
   scope :incomplete, -> { where(completed_at: nil) }

@@ -18,8 +18,8 @@ module TasksHelper
                            .order(current_user.session.sort_sql)
     end
     {
-        incomplete: filtered_tasks.where(completed_at: nil).map{|task| react_task(task)},
-        complete: filtered_tasks.where.not(completed_at: nil).map{|task| react_task(task)}
+        incomplete: filtered_tasks.where(completed_at: nil).where(archive_id: nil).map{|task| react_task(task)},
+        complete: filtered_tasks.where.not(completed_at: nil).where(archive_id: nil).map{|task| react_task(task)}
     }
   end
 

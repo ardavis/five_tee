@@ -13,23 +13,23 @@ var TasksIndex = React.createClass({
       new_task_modal: false,
 
       // Task modal states
-      
+
       // Tag Modal states
-      
+
       tag_modal: false,
-      
+
       tag_modal_flash: null,
-      
+
       // Filter tag state
-      
+
       filter_tag: {name: 'All Tags'},
-      
+
       // Sort state
-      
+
       sort_options: this.props.sort_options,
 
       sort_label: 'Newest to Oldest'
-      
+
     });
   },
 
@@ -41,7 +41,7 @@ var TasksIndex = React.createClass({
   handleTagModal(){
     this.setState({tag_modal: true})
   },
-  
+
   handleNewTask(params, new_task_form){
     newTask(params, this, new_task_form);
   },
@@ -49,7 +49,7 @@ var TasksIndex = React.createClass({
   hideNewModal(){
     this.setState({new_task_modal: false})
   },
-  
+
   hideTagModal(){
     this.setState({tag_modal: false})
   },
@@ -57,24 +57,24 @@ var TasksIndex = React.createClass({
   handleTaskButtons(action, id){
     taskButtonAction(action, id, this);
   },
-  
-  
+
+
   handleTaskShow(id){
     getSelectedTask(id, this);
   },
-  
+
   unselectTask(){
     this.setState({selected_task: null, flash: null})
   },
-  
+
   handleUpdateTask(params){
     updateTask(params, this);
   },
-  
+
   handleNewTag(params, new_task_modal, tag_form){
     newTag(params, this, new_task_modal, tag_form);
   },
-  
+
   handleUpdateTag(params){
     updateTag(params, this)
   },
@@ -86,11 +86,15 @@ var TasksIndex = React.createClass({
   handleFilterTag(params){
     updateFilterTag(params, this);
   },
-  
+
   handleSortSelect(option){
     updateSort(option, this)
   },
-  
+
+  handleArchive(){
+    archiveTasks(this);
+  },
+
   setFlash(msg){
     this.setState({flash: msg});
   },
@@ -98,7 +102,7 @@ var TasksIndex = React.createClass({
   setTagFlash(msg){
     this.setState({tag_modal_flash: msg});
   },
-  
+
 
   incompleteRows(){
     var handleTaskButtons = this.handleTaskButtons;
@@ -122,7 +126,7 @@ var TasksIndex = React.createClass({
       return <h4>You have no incompleted tasks</h4>
     }
   },
-  
+
   completeRows(){
     var handleTaskButtons = this.handleTaskButtons;
     var handleTaskShow = this.handleTaskShow;
@@ -131,7 +135,7 @@ var TasksIndex = React.createClass({
       rows.push(
         <CompleteTask
           task={task}
-          key={task.id} 
+          key={task.id}
           id={task.id}
           handleTaskButtons={handleTaskButtons}
           handleTaskShow={handleTaskShow}>
@@ -150,7 +154,7 @@ var TasksIndex = React.createClass({
     var task = this.state.selected_task;
     var tags = this.state.tags;
     if (task){
-      return( 
+      return(
         <TaskModal
           task={task}
           tags={tags}
@@ -164,7 +168,7 @@ var TasksIndex = React.createClass({
       return "";
     }
   },
-  
+
   newTaskModal(){
     if (this.state.new_task_modal){
       return(
@@ -202,10 +206,10 @@ var TasksIndex = React.createClass({
   render(){
     return(
       <div>
-        <Header 
+        <TasksHeader
           handle_new_task_modal={this.handle_new_task_modal}
           handleTagModal={this.handleTagModal}
-        ></Header>
+        ></TasksHeader>
         <div className="container">
           <div className="row">
             <div className="col-md-6">
@@ -222,6 +226,7 @@ var TasksIndex = React.createClass({
                 sort_label={this.state.sort_label}
                 handleSortSelect={this.handleSortSelect}
               ></SortDropdown>
+              <button onClick={this.handleArchive} className="btn btn-default">Archive!</button>
             </div>
           </div>
           <div id="incomplete_tasks">

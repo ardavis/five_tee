@@ -157,6 +157,14 @@ function updateSort(params, index){
   });
 }
 
+function archiveTasks(index){
+  $.ajax({
+    type: "PATCH",
+    url: `/archives/new`,
+    dataType: 'json'
+  });
+}
+
 function currentDuration(task){
   if (task.started_at){
     var now = Date.now() / 1000 | 0;
