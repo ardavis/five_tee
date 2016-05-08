@@ -141,6 +141,22 @@ function updateFilterTag(params, index){
   });
 }
 
+function updateSort(params, index){
+  $.ajax({
+    type: "PATCH",
+    url: `/tasks/sort`,
+    data: params,
+    dataType: 'json',
+    success: function(data){
+      index.setState(
+        {
+          tasks: data,
+          sort_label: params.label
+        });
+    }
+  });
+}
+
 function currentDuration(task){
   if (task.started_at){
     var now = Date.now() / 1000 | 0;

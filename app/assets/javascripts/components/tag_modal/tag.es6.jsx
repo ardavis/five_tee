@@ -44,12 +44,12 @@ var Tag = React.createClass({
     var tag = this.props.tag;
     return(
       <div className="row well tag">
-        <div className="col-md-5">
+        <div className="col-md-6">
           <h4>
             {this.tagNameOrEdit()}
           </h4>
         </div>
-        <div className="col-md-3">
+        <div className="col-md-2">
           {"Tasks: " + tag.tasks}
         </div>
         <div className="col-md-4">

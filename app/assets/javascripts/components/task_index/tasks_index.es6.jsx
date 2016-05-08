@@ -22,7 +22,13 @@ var TasksIndex = React.createClass({
       
       // Filter tag state
       
-      filter_tag: {name: 'All Tags'}
+      filter_tag: {name: 'All Tags'},
+      
+      // Sort state
+      
+      sort_options: this.props.sort_options,
+
+      sort_label: 'Newest to Oldest'
       
     });
   },
@@ -79,6 +85,10 @@ var TasksIndex = React.createClass({
 
   handleFilterTag(params){
     updateFilterTag(params, this);
+  },
+  
+  handleSortSelect(option){
+    updateSort(option, this)
   },
   
   setFlash(msg){
@@ -197,12 +207,23 @@ var TasksIndex = React.createClass({
           handleTagModal={this.handleTagModal}
         ></Header>
         <div className="container">
-          <h1 className="index_header">Tasks</h1>
-          <TagFilterDropdown 
-            handleFilterTag={this.handleFilterTag}
-            filter_tag={this.state.filter_tag}
-            tags={this.state.tags}
-          ></TagFilterDropdown>
+          <div className="row">
+            <div className="col-md-6">
+              <h1 className="index_header">Tasks</h1>
+            </div>
+            <div className="col-md-6 dropdowns">
+              <TagFilterDropdown
+                handleFilterTag={this.handleFilterTag}
+                filter_tag={this.state.filter_tag}
+                tags={this.state.tags}
+              ></TagFilterDropdown>
+              <SortDropdown
+                sort_options={this.state.sort_options}
+                sort_label={this.state.sort_label}
+                handleSortSelect={this.handleSortSelect}
+              ></SortDropdown>
+            </div>
+          </div>
           <div id="incomplete_tasks">
             {this.incompleteRows()}
           </div>

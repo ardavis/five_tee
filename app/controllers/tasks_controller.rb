@@ -4,11 +4,12 @@ class TasksController < ApplicationController
 
   include TasksHelper
   include TagsHelper
+  include SessionHelper
 
   def index
     respond_to do |format|
       format.html do
-        render component: 'TasksIndex', props: {tasks: tasks_hash, tags: tags_hash}
+        render component: 'TasksIndex', props: {tasks: tasks_hash, tags: tags_hash, sort_options: sort_options}
       end
     end
   end
@@ -102,10 +103,10 @@ class TasksController < ApplicationController
     end
   end
 
-
-  def fetch_all
+  def sort
+    current_user.session.update_attributes(sort_sql: params[:sql])
     respond_to do |format|
-      format.json { render json: {tasks: tasks_hash}}
+      format.json {render json: tasks_hash}
     end
   end
 
