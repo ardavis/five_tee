@@ -14,13 +14,13 @@ class ArchivesController < ApplicationController
   def new
     @archive = current_user.archives.new()
     if @archive.save
-      filtered_tasks.where(archive_id: id).each do |task|
-        puts "\n\n\n#{task.title}\n\n\n"
+      filtered_tasks.where(archive_id: nil).order(current_user.session.sort_sql).each do |task|
         @task = current_user.tasks.create(task.dup.attributes)
         @task.update(
             archive_id: @archive.id,
             created_at: task.created_at,
-            archive_tag: task.tag_id ?  Tag.find(task.tag_id).name : nil)
+            archive_tag: task.tag_id ?  Tag.find(task.tag_id).name : nil,
+            created_at: Time.now)
       end
       respond_to do |format|
         format.json { render json: {}}
@@ -59,10 +59,12 @@ class ArchivesController < ApplicationController
     {
         incomplete: filtered_tasks.where(completed_at: nil)
                                   .where(archive_id: id)
+                                  .order('created_at ASC')
                                   .map{|task| react_task(task)},
 
         complete: filtered_tasks.where.not(completed_at: nil)
                                 .where(archive_id: id)
+                                .order('created_at ASC')
                                 .map{|task| react_task(task)}
     }
   end
@@ -70,9 +72,9 @@ class ArchivesController < ApplicationController
   def filtered_tasks
     if current_user.session.filter_tag_id
       current_user.tasks.where(tag_id: current_user.session.filter_tag_id)
-                        .order(current_user.session.sort_sql)
+
     else
-      current_user.tasks.order(current_user.session.sort_sql)
+      current_user.tasks
     end
   end
 

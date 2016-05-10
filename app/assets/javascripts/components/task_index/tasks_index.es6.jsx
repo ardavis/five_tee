@@ -28,7 +28,11 @@ var TasksIndex = React.createClass({
 
       sort_options: this.props.sort_options,
 
-      sort_label: 'Newest to Oldest'
+      sort_label: 'Newest to Oldest',
+
+      // Reset Modal State
+
+      reset_modal: false
 
     });
   },
@@ -96,6 +100,10 @@ var TasksIndex = React.createClass({
     if (proceed){
       archiveTasks(this);
     }
+  },
+
+  toggleResetModal(){
+    this.setState({reset_modal: !this.state.reset_modal})
   },
 
   setFlash(msg){
@@ -206,6 +214,16 @@ var TasksIndex = React.createClass({
     }
   },
 
+  resetModal(){
+    if (this.state.reset_modal){
+      return(
+        <ResetTasksModal
+          toggleResetModal={this.toggleResetModal}
+        ></ResetTasksModal>
+      )
+    }
+  },
+
   render(){
     return(
       <div>
@@ -215,10 +233,10 @@ var TasksIndex = React.createClass({
         ></TasksHeader>
         <div className="container">
           <div className="row">
-            <div className="col-md-6">
+            <div className="col-md-4">
               <h1 className="index_header">Tasks</h1>
             </div>
-            <div className="col-md-6 dropdowns">
+            <div className="col-md-8 dropdowns">
               <TagFilterDropdown
                 handleFilterTag={this.handleFilterTag}
                 filter_tag={this.state.filter_tag}
@@ -229,7 +247,10 @@ var TasksIndex = React.createClass({
                 sort_label={this.state.sort_label}
                 handleSortSelect={this.handleSortSelect}
               ></SortDropdown>
-              <button onClick={this.handleArchive} className="btn btn-default">Archive!</button>
+              <span className="archive-btns">
+                <button onClick={this.handleArchive} className="btn btn-default">Archive Tasks</button>
+                <button onClick={this.toggleResetModal} className="btn btn-danger">Reset All Tasks</button>
+              </span>
             </div>
           </div>
           <div id="incomplete_tasks">
@@ -243,6 +264,7 @@ var TasksIndex = React.createClass({
         {this.taskModal()}
         {this.newTaskModal()}
         {this.tagModal()}
+        {this.resetModal()}
       </div>
     );
    }
