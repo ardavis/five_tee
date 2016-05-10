@@ -2,6 +2,30 @@ h4{
   display: inline;
 }
 
+
+
+.archive-collapse{
+  margin-top: -20px;
+  margin-bottom: 20px;
+}
+
+.archive-delete{
+  margin-top: -10px;
+}
+
+.archive-row{
+  height: 60px;
+}
+
+.archive-title{
+  margin-top: -2px;
+  margin-left: -8px;
+}
+
+.box-height{
+  max-height: 500px;
+}
+
 .btn{
   margin: 2.5px 2.5px 2.5px 2.5px;
 }
@@ -41,11 +65,17 @@ h4{
   margin-left: 25px;
 }
 
+.no-pad-marg{
+  padding: 0;
+  margin: 0;
+}
+
 .row.duration{
   float: left;
 }
 
 .scroll{
+  overflow-y: auto;
 }
 
 .tag_container{
@@ -54,9 +84,13 @@ h4{
 
 }
 
+.top-space{
+  margin-top: 10px;
+}
+
 
 .small-well{
-  width: 80%;
+  width: 100%;
   margin-left: 0;
 }
 

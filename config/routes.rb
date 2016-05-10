@@ -35,6 +35,7 @@ Rails.application.routes.draw do
   # Archives
   get 'archives/index' => 'archives#index'
   patch 'archives/new' => 'archives#new'
+  patch 'archives/delete' => 'archives#delete'
 
 
 

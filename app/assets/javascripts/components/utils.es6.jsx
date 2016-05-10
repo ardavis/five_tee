@@ -165,6 +165,18 @@ function archiveTasks(index){
   });
 }
 
+function deleteArchive(params, index){
+  $.ajax({
+    type: "PATCH",
+    url: `/archives/delete`,
+    data: params,
+    dataType: 'json',
+    success: function(data){
+      index.setState({archives: data});
+    }
+  });
+}
+
 function currentDuration(task){
   if (task.started_at){
     var now = Date.now() / 1000 | 0;

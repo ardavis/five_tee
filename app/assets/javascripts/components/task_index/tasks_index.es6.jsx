@@ -92,7 +92,10 @@ var TasksIndex = React.createClass({
   },
 
   handleArchive(){
-    archiveTasks(this);
+    proceed = confirm("Are you sure you want to archive the currently shown tasks?");
+    if (proceed){
+      archiveTasks(this);
+    }
   },
 
   setFlash(msg){
