@@ -27,6 +27,7 @@ var ArchivesIndex = React.createClass({
   handleSelectTask(id){
     getSelectedTask(id, this);
   },
+  
 
   unselectTask(){
     this.setState({selected_task: null});

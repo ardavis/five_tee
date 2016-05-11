@@ -118,13 +118,9 @@ class TasksController < ApplicationController
   end
 
   def download
-    content = File.read("#{Rails.root}/app/views/downloads/task_index_download.html.erb")
-    template = ERB.new(content)
-    kit = PDFKit.new(template.result(binding))
-    kit.stylesheets << "#{Rails.root}/public/bootstrap.min.css"
-    pdf = kit.to_pdf
-    file = kit.to_file("#{Rails.root}/public/hello.pdf")
-    send_file "#{Rails.root}/public/hello.pdf", type: 'application/pdf', file_name: 'hi.pdf'
+    @incomplete_tasks = filtered_tasks.where(archive_id: nil).where(completed_at: nil).order(current_user.session.sort_sql)
+    @complete_tasks = filtered_tasks.where(archive_id: nil).where.not(completed_at: nil).order(current_user.session.sort_sql)
+    render xlsx: 'download.xlsx.axlsx',filename: "tasks_from_#{Time.now.strftime('%m-%d-%Y')}.xlsx"
   end
 
   private

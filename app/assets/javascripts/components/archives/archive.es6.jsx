@@ -26,6 +26,11 @@ var Archive = React.createClass({
       this.props.handleArchiveDelete(this.props.archive.id);
     }
   },
+  
+  download(){
+    var params = {archive: {id: this.props.archive.id}};
+    downloadArchive(params);
+  },
 
   render(){
     return(
@@ -43,7 +48,8 @@ var Archive = React.createClass({
               </a>
             </h3>
           </div>
-          <div className="col-md-1 pull-right archive-delete">
+          <div className="col-md-3 pull-right archive-delete">
+            <a href={`/archives/${this.props.archive.id}/download`} className="download archive btn btn-default">Download</a>
             <a onClick={this.deleteArchive} href="javascript: void(0)" className="delete-archive btn btn-danger">
               <span className="glyphicon glyphicon-trash"></span>
             </a>

@@ -1,0 +1,14 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "taskSheet") do |sheet|
+    sheet.add_row ["Title", "Description", "Tag", "Completed At", "Due Date", "Duration"]
+    sheet.add_row [""]
+    sheet.add_row ["Incomplete Tasks"]
+    @incomplete_tasks.each do |task|
+	sheet.add_row [task.title,task.desc, tag_display(task), task.completed_at, due_date_display(task), "#{duration_display(task.duration)}"]
+    end
+    sheet.add_row [""]
+    sheet.add_row ["Completed Tasks"]
+    @complete_tasks.each do |task|
+	sheet.add_row [task.title,task.desc, tag_display(task),task.completed_at, due_date_display(task), "#{duration_display(task.duration)}"]
+    end
+end

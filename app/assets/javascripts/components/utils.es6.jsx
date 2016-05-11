@@ -234,6 +234,15 @@ function downloadTasks(){
   });
 }
 
+function downloadArchive(params){
+  $.ajax({
+    type: "GET",
+    url: `/archives/download`,
+    data: params,
+    dataType: 'json'
+  });
+}
+
 
 function blankSafe(arg){
   return arg ? arg : <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>

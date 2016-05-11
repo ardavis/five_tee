@@ -39,8 +39,7 @@ Rails.application.routes.draw do
   patch 'archives/new' => 'archives#new'
   patch 'archives/delete' => 'archives#delete'
   patch 'archives/reset' => 'archives#reset'
-
-
+  get 'archives/:id/download' => 'archives#download'
 
 
 end

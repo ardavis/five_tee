@@ -57,6 +57,13 @@ class ArchivesController < ApplicationController
     end
   end
 
+  def download
+    @incomplete_tasks = current_user.tasks.where(archive_id: params[:id]).where(completed_at: nil).order('created_at ASC')
+    @complete_tasks = current_user.tasks.where(archive_id: params[:id]).where.not(completed_at: nil).order('created_at ASC')
+    # @tasks = incomplete_tasks + complete_tasks
+    render xlsx: 'download.xlsx.axlsx',filename: "archive_from_#{Time.now.strftime('%m-%d-%Y')}.xlsx"
+  end
+
   private
 
   def archives_hash

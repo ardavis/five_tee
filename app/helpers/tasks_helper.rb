@@ -75,4 +75,12 @@ module TasksHelper
     end
   end
 
+  def due_date_display(task)
+    task.due_date ? task.due_date.strftime('%m/%d/%Y') : ''
+  end
+
+  def tag_display(task)
+    task.tag ? task.tag.name : ''
+  end
+
 end
