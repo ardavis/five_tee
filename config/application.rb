@@ -25,5 +25,11 @@ module FiveTee
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+
+
+    config.react.server_renderer_options = {
+        files: ["server_rendering.js"], # files to load for prerendering
+    }
+
   end
 end
