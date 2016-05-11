@@ -3,7 +3,9 @@
 #= require turbolinks
 #= require bootstrap-sprockets
 #= require bootstrap-datepicker
-#= require tasks.js.coffee
 #= require jquery.timepicker.js
 #= require bootstrap-timepicker
+#= require react
+#= require react_ujs
+#= require components
 #= require_tree ../../../vendor/assets/javascripts/

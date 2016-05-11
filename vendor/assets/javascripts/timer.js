@@ -107,7 +107,7 @@
      * This method hard binds focus & blur events to pause & resume
      * and recognizes built-in pretty time (for eg 12 sec OR 3:34 min)
      * It won't recognize user created formats.
-     * Users may not always want this hard bound. In such a case,
+     * users may not always want this hard bound. In such a case,
      * do not use the editable property. Instead bind custom functions
      * to blur and focus.
      */

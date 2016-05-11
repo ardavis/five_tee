@@ -1,40 +1,46 @@
 class TagsController < ApplicationController
 
-  before_action :get_tag, only: [:destroy]
+  include TagsHelper
+  include TasksHelper
 
-  before_action :get_sorted_tasks, only: [:create, :destroy]
-
-  def create
+  def new
     @tag = current_user.tags.new(tag_params)
-    @task = params[:current_task].present? ? current_user.tasks.find(params[:current_task].to_i) : current_user.tasks.new()
     if @tag.save
-      @tag = current_user.tags.new()
-      call_coffeescript('tags/reload_scripts/reload_on_new_tag.coffee.erb')
-    else
-      call_coffeescript('tags/reload_scripts/reload_on_fail_tag.coffee.erb')
+      respond_to do |format|
+        format.json { render json: {tags: tags_hash, tag: react_tag(@tag)}}
+      end
     end
   end
 
-  def destroy
-
-    @session = current_user.session
-    @session.update_attributes(filter_tag_id: nil) if @session.filter_tag_id == @tag.id
-    @task = current_user.tasks.new()
-    @tag.destroy
-    @tag = current_user.tags.new()
-    call_coffeescript('tags/reload_scripts/reload_on_tag_delete.coffee.erb')
+  def update
+    @tag = current_user.tags.find(tag_params[:id])
+    if @tag.update_attributes(name: tag_params[:name])
+      respond_to do |format|
+        format.json { render json: {tasks: tasks_hash, tags: tags_hash}}
+      end
+    else
+      puts "HARD FAIL"
+    end
   end
 
+  def delete
+    @tag = current_user.tags.find(tag_params[:id])
+    if @tag.destroy
+      if current_user.session.filter_tag_id == @tag.id
+        current_user.session.update_attributes(filter_tag_id: nil)
+      end
+      respond_to do |format|
+        format.json { render json: {tasks: tasks_hash, tags: tags_hash}}
+      end
+    else
+      puts "HARD FAIL"
+    end
+  end
 
   private
 
   def tag_params
-    params.require(:tag).permit(:name, :user_id)
+    params.require(:tag).permit(:name, :id)
   end
-
-  def get_tag
-    @tag = current_user.tags.find(params[:id])
-  end
-
 
 end
