@@ -67,4 +67,12 @@ module TasksHelper
     fixed_date << date[6..9]
   end
 
+  def filtered_tasks_list
+    if current_user.session.filter_tag_id and current_user.session.filter_tag_id != 0
+      current_user.tasks.where(tag_id: current_user.session.filter_tag_id)
+    else
+      current_user.tasks
+    end
+  end
+
 end

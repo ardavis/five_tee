@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   get 'tasks/index' => 'tasks#index'
   patch 'tasks/filter' => 'tasks#filter'
   patch 'tasks/sort' => 'tasks#sort'
+  patch 'tasks/reset' => 'tasks#reset'
+  get 'tasks/download' => 'tasks#download'
 
 
   # Task Buttons
@@ -36,6 +38,7 @@ Rails.application.routes.draw do
   get 'archives/index' => 'archives#index'
   patch 'archives/new' => 'archives#new'
   patch 'archives/delete' => 'archives#delete'
+  patch 'archives/reset' => 'archives#reset'
 
 
 

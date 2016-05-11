@@ -3,6 +3,7 @@ class ArchivesController < ApplicationController
   include TasksHelper
 
   def index
+    redirect_to '/tasks/index' and return unless current_user.session
     current_user.session.update_attributes(filter_tag_id: nil, sort_sql: 'created_at DESC')
     respond_to do |format|
       format.html do
@@ -19,7 +20,7 @@ class ArchivesController < ApplicationController
         @task.update(
             archive_id: @archive.id,
             created_at: task.created_at,
-            archive_tag: task.tag_id ?  Tag.find(task.tag_id).name : nil,
+            archive_tag: (task.tag_id and task.tag_id != 0) ?  Tag.find(task.tag_id).name : nil,
             created_at: Time.now)
       end
       respond_to do |format|
@@ -34,6 +35,24 @@ class ArchivesController < ApplicationController
       current_user.tasks.where(archive_id: @archive.id).destroy_all
       respond_to do |format|
         format.json { render json: archives_hash}
+      end
+    end
+  end
+
+  def reset
+    @archive = current_user.archives.new()
+    if @archive.save
+      filtered_tasks.where(archive_id: nil).order(current_user.session.sort_sql).each do |task|
+        @task = current_user.tasks.create(task.dup.attributes)
+        @task.update(
+            archive_id: @archive.id,
+            created_at: task.created_at,
+            archive_tag: task.tag_id ?  Tag.find(task.tag_id).name : nil,
+            created_at: Time.now)
+      end
+      filtered_tasks.where(archive_id: nil).each{ |task| task.update_attributes(completed_at: nil, duration: nil)}
+      respond_to do |format|
+        format.json {render json: tasks_hash}
       end
     end
   end
@@ -69,14 +88,7 @@ class ArchivesController < ApplicationController
     }
   end
 
-  def filtered_tasks
-    if current_user.session.filter_tag_id
-      current_user.tasks.where(tag_id: current_user.session.filter_tag_id)
 
-    else
-      current_user.tasks
-    end
-  end
 
   def archive_params
     params.require(:archive).permit(:id)

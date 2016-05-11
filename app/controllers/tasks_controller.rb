@@ -49,6 +49,13 @@ class TasksController < ApplicationController
     end
   end
 
+  def reset
+    filtered_tasks.where(archive_id: nil).each{ |task| task.update_attributes(completed_at: nil, duration: nil)}
+    respond_to do |format|
+      format.json {render json: tasks_hash}
+    end
+  end
+
   def start
     @task = current_user.tasks.find(task_params[:id])
     @task.start!(current_user)
@@ -110,6 +117,15 @@ class TasksController < ApplicationController
     end
   end
 
+  def download
+    content = File.read("#{Rails.root}/app/views/downloads/task_index_download.html.erb")
+    template = ERB.new(content)
+    kit = PDFKit.new(template.result(binding))
+    kit.stylesheets << "#{Rails.root}/public/bootstrap.min.css"
+    pdf = kit.to_pdf
+    file = kit.to_file("#{Rails.root}/public/hello.pdf")
+    send_file "#{Rails.root}/public/hello.pdf", type: 'application/pdf', file_name: 'hi.pdf'
+  end
 
   private
 
@@ -120,6 +136,11 @@ class TasksController < ApplicationController
 
   def task_params
     params.require(:task).permit(:id, :title, :desc, :tag_id, :due_date, :duration)
+  end
+
+  def download_html
+    html = render_to_string(template: "downloads/task_index_download.html.erb")
+    html[0, html.rindex('</div>')]
   end
 
 

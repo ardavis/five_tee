@@ -102,6 +102,18 @@ var TasksIndex = React.createClass({
     }
   },
 
+  handleTasksReset(){
+    resetTasks(this);
+  },
+
+  handleArchiveReset(){
+    archiveResetTasks(this);
+  },
+
+  handleDownload(){
+    downloadTasks();
+  },
+
   toggleResetModal(){
     this.setState({reset_modal: !this.state.reset_modal})
   },
@@ -219,6 +231,8 @@ var TasksIndex = React.createClass({
       return(
         <ResetTasksModal
           toggleResetModal={this.toggleResetModal}
+          handleTasksReset={this.handleTasksReset}
+          handleArchiveReset={this.handleArchiveReset}
         ></ResetTasksModal>
       )
     }
@@ -230,6 +244,7 @@ var TasksIndex = React.createClass({
         <TasksHeader
           handle_new_task_modal={this.handle_new_task_modal}
           handleTagModal={this.handleTagModal}
+          handleDownload={this.handleDownload}
         ></TasksHeader>
         <div className="container">
           <div className="row">

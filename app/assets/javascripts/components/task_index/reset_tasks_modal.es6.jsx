@@ -7,6 +7,16 @@ var ResetTasksModal = React.createClass({
       toggleResetModal();
     });
   },
+  
+  reset(){
+    this.props.handleTasksReset();
+    this.close();
+  },
+
+  archiveAndReset(){
+    this.props.handleArchiveReset();
+    this.close();
+  },
 
   close(){
     $('.reset.modal').modal('toggle');
@@ -18,8 +28,8 @@ var ResetTasksModal = React.createClass({
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-body">
-              <a className="full btn btn-lg btn-default">Archive & Reset Tasks</a>
-              <a className="full btn btn-lg btn-danger">Reset Tasks Only</a>
+              <a onClick={this.archiveAndReset} className="full btn btn-lg btn-default">Archive & Reset Tasks</a>
+              <a onClick={this.reset} className="full btn btn-lg btn-danger">Reset Tasks Only</a>
               <a onClick={this.close} className="full btn btn-lg btn-default">Close</a>
             </div>
           </div>

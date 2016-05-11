@@ -165,6 +165,28 @@ function archiveTasks(index){
   });
 }
 
+function resetTasks(index){
+  $.ajax({
+    type: "PATCH",
+    url: `/tasks/reset`,
+    dataType: 'json',
+    success: function(data){
+      index.setState({tasks: data});
+    }
+  });
+}
+
+function archiveResetTasks(index){
+  $.ajax({
+    type: "PATCH",
+    url: `/archives/reset`,
+    dataType: 'json',
+    success: function(data){
+      index.setState({tasks: data});
+    }
+  });
+}
+
 function deleteArchive(params, index){
   $.ajax({
     type: "PATCH",
@@ -205,6 +227,12 @@ function taskButtonAction(action, id, index){
   });
 }
 
+function downloadTasks(){
+  $.ajax({
+    type: 'GET',
+    url: `/tasks/download`
+  });
+}
 
 
 function blankSafe(arg){
