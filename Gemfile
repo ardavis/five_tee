@@ -49,6 +49,14 @@ gem 'faker'
 
 gem 'will_paginate'
 
+gem 'react-rails'
+
+gem 'pdfkit'
+
+gem 'wkhtmltopdf-binary'
+
+
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 

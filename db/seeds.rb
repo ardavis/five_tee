@@ -14,12 +14,14 @@ Task.create!(title: "#{Faker::Hacker.verb} the #{Faker::Hacker.adjective} #{Fake
 4.times do
   @tag = @user.tags.create!(name: Faker::Hipster.word, user_id: @user.id)
   2.times do
-    Task.create!(title: "#{Faker::Hacker.verb} the #{Faker::Hacker.adjective} #{Faker::Hacker.noun}",
-                 tag_id: @tag.id,
-                 user_id: @user.id,
-                 desc: Faker::Hipster.paragraph(2)[0..199],
-                 duration: rand(20000),
-                 due_date: "#{(rand(11)+1).to_s.rjust(2, '0')}-#{(rand(29)+1).to_s.rjust(2, '0')}-#{Time.now.year}")
+    Task.create!(
+        title: "#{Faker::Hacker.verb} the #{Faker::Hacker.adjective} #{Faker::Hacker.noun}",
+         tag_id: @tag.id,
+         user_id: @user.id,
+         desc: Faker::Hipster.paragraph(2)[0..199],
+         duration: rand(20000),
+         due_date: "#{(rand(11)+1).to_s.rjust(2, '0')}-#{(rand(29)+1).to_s.rjust(2, '0')}-#{Time.now.year}"
+    )
   end
   2.times do
     Task.create!(title: "#{Faker::Hacker.verb} the #{Faker::Hacker.adjective} #{Faker::Hacker.noun}",

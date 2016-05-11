@@ -1,122 +1,143 @@
 class TasksController < ApplicationController
 
-  before_action :get_task, only: [:index, :show, :update, :update_duration, :destroy, :complete,
-                                  :start, :restart, :pause]
-
-  before_action :get_sorted_tasks, only: [:index, :update_duration, :create, :update, :destroy,
-                                          :complete, :start, :pause, :restart, :reset_all]
+  before_action :set_session, only: :index
 
   include TasksHelper
+  include TagsHelper
+  include SessionHelper
 
   def index
-    current_user.session = Session.new(sort_sql: 'lower(title) ASC')
-    @tag = current_user.tags.new
-  end
-
-  def update_duration
-    if @task.started_at
-      @task.pause!
-      @task.start!(current_user)
-    end
-    if @task.update_attributes(task_params)
-      call_coffeescript('tasks/reload_scripts/reload_updated_duration.coffee.erb')
+    respond_to do |format|
+      format.html do
+        render component: 'TasksIndex', props: {tasks: tasks_hash, tags: tags_hash, sort_options: sort_options}
+      end
     end
   end
 
-  def create
+  def new
     @task = current_user.tasks.new(task_params)
-    @task.update_attributes(due_date: fix_date(task_params['due_date']))
+    @task.due_date = fix_date(task_params[:due_date])
     if @task.save
-      @task = Task.new()
-      flash[:success] = 'Task successfully created!'
-      call_coffeescript('tasks/reload_scripts/reload_on_create.coffee.erb')
+      respond_to do |format|
+        format.json { render json: {tasks: tasks_hash, tags: tags_hash}}
+      end
     else
-      call_coffeescript('tasks/reload_scripts/reload_on_fail_create.coffee.erb')
+      render status: 400
     end
   end
 
   def update
-    if @task.update_attributes(task_params)
-      @task.update_attributes(due_date: fix_date(task_params['due_date']))
-      call_coffeescript('tasks/reload_scripts/reload_on_update.coffee.erb')
+    @task = current_user.tasks.find(task_params[:id])
+    @params = task_params
+    @params['due_date'] = fix_date(@params['due_date']) if @params.has_key? 'due_date'
+    @params['started_at'] = Time.now if @params.has_key? 'duration' and @task.started_at
+    if params[:tag_name]
+      @tag = current_user.tags.create(name: params[:tag_name])
+      if @tag.save
+        @params['tag_id'] = @tag.id
+      else
+        render status: 400
+      end
+    end
+    if @task.update_attributes(@params)
+      puts tags_hash
+      respond_to do |format|
+        format.json { render json: {tasks: tasks_hash, tags: tags_hash, selected_task: react_task(@task)}}
+      end
     else
-      call_coffeescript('tasks/reload_scripts/reload_on_fail_update.coffee.erb')
+      render status: 400
     end
   end
 
-  def destroy
-    @task.destroy
-    call_coffeescript('tasks/reload_scripts/restart_reload.coffee.erb')
-  end
-
-  def complete
-    @task.complete!
-    call_coffeescript('tasks/reload_scripts/restart_reload.coffee.erb')
+  def reset
+    filtered_tasks.where(archive_id: nil).each{ |task| task.update_attributes(completed_at: nil, duration: nil)}
+    respond_to do |format|
+      format.json {render json: tasks_hash}
+    end
   end
 
   def start
+    @task = current_user.tasks.find(task_params[:id])
     @task.start!(current_user)
-    call_coffeescript('tasks/button_scripts/playbutton.coffee.erb')
+    respond_to do |format|
+      format.json { render json: {tasks: tasks_hash}}
+    end
   end
 
   def pause
+    @task = current_user.tasks.find(task_params[:id])
     @task.pause!
-    call_coffeescript('tasks/button_scripts/pausebutton.coffee.erb')
+    respond_to do |format|
+      format.json { render json: {tasks: tasks_hash}}
+    end
   end
 
-  def download_all
-    #grab all the tasks, and pass them to the ruby code in the axlsx file, gem handles everything
-    @tasks = current_user.tasks.all
-    render xlsx: 'download.xlsx.axlsx',filename: "allTasks.xlsx"
-  end
-
-  def download_incompleted
-    #grab all the tasks, and pass them to the ruby code in the axlsx file, gem handles everything
-    @tasks = current_user.tasks.incomplete
-    render xlsx: 'download.xlsx.axlsx',filename: "incompletedTasks.xlsx"
-  end
-
-  def download_completed
-    #grab all the tasks, and pass them to the ruby code in the axlsx file, gem handles everything
-    @tasks = current_user.tasks.completed
-    render xlsx: 'download.xlsx.axlsx',filename: 'completedTasks.xlsx'
+  def complete
+    @task = current_user.tasks.find(task_params[:id])
+    @task.complete!
+    respond_to do |format|
+      format.json { render json: {tasks: tasks_hash}}
+    end
   end
 
   def restart
+    @task = current_user.tasks.find(task_params[:id])
     @task.restart!
-    call_coffeescript('tasks/reload_scripts/restart_reload.coffee.erb')
+    respond_to do |format|
+      format.json { render json: {tasks: tasks_hash}}
+    end
   end
 
+  def delete
+    @task = current_user.tasks.find(task_params[:id])
+    @task.destroy!
+    respond_to do |format|
+      format.json { render json: {tasks: tasks_hash, tags: tags_hash}}
+    end
+  end
 
-  def reset_all
-    @current_tasks = filtered_sorted_tasks(current_user.tasks.where(archive_id: nil))
-    if params[:archive] and @current_tasks.count > 0
-      @archive = current_user.archives.create!
-      @current_tasks.each do |task|
-        update_duration_if_running!(task)
-        @task = task.dup
-        @task.update(archive_id: @archive.id, archive_tag: task.tag_id ?  Tag.find(task.tag_id).name : nil)
-        @task.update(created_at: task.created_at)
-        @task.save
-      end
+  def select
+    @task = current_user.tasks.find(task_params[:id])
+    respond_to do |format|
+      format.json { render json: react_task(@task)}
     end
-    @current_tasks.each do |task|
-      task.update(duration: 0, completed_at: nil)
+  end
+
+  def filter
+    current_user.session.update_attributes(filter_tag_id: params[:tag][:id])
+    respond_to do |format|
+      format.json {render json: tasks_hash}
     end
-    call_coffeescript('tasks/reload_scripts/reset_tasks_reload.coffee.erb')
+  end
+
+  def sort
+    current_user.session.update_attributes(sort_sql: params[:sql])
+    respond_to do |format|
+      format.json {render json: tasks_hash}
+    end
+  end
+
+  def download
+    @incomplete_tasks = filtered_tasks.where(archive_id: nil).where(completed_at: nil).order(current_user.session.sort_sql)
+    @complete_tasks = filtered_tasks.where(archive_id: nil).where.not(completed_at: nil).order(current_user.session.sort_sql)
+    render xlsx: 'download.xlsx.axlsx',filename: "tasks_from_#{Time.now.strftime('%m-%d-%Y')}.xlsx"
   end
 
   private
 
-  def task_params
-    params.require(:task).permit(:title, :desc, :due_date, :tag_id, :duration)
+  def set_session
+    current_user.session ||= Session.create(user_id: current_user.id)
+    current_user.session.update_attributes(filter_tag_id: nil, sort_sql: 'created_at DESC')
   end
 
-  def fix_date(date)
-    return '' if date.blank?
-    fixed_date = date[3..5]
-    fixed_date << date[0..2]
-    fixed_date << date[6..9]
+  def task_params
+    params.require(:task).permit(:id, :title, :desc, :tag_id, :due_date, :duration)
   end
+
+  def download_html
+    html = render_to_string(template: "downloads/task_index_download.html.erb")
+    html[0, html.rindex('</div>')]
+  end
+
 
 end

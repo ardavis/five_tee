@@ -5,34 +5,18 @@ class ApplicationController < ActionController::Base
 
   before_action :authenticate_user!
 
-  def get_task
-    if params[:id]
-      @task = current_user.tasks.find(params[:id])
+
+  def filtered_tasks
+    if current_user.session.filter_tag_id and current_user.session.filter_tag_id != 0
+      current_user.tasks.where(tag_id: current_user.session.filter_tag_id)
     else
-      @task = current_user.tasks.new
+      current_user.tasks
     end
   end
 
-  def call_coffeescript(path)
-    respond_to do |format|
-      format.js {render path}
-    end
-  end
-
-  def reset_flash
-    flash[:success] = nil
-  end
-
-  def get_sorted_tasks
-    @incomplete_tasks = current_user.incomplete_tasks.where(archive_id: nil)
-    @completed_tasks = current_user.completed_tasks.where(archive_id: nil)
-  end
-
-  def update_duration_if_running!(task)
-    if task.running?
-      task.pause!
-      task.start!(current_user)
-    end
+  def mid_string(string, start, fin)
+    byebug
+    string[/#{Regexp.escape(start)}(.*?)#{Regexp.escape(fin)}/m, 1]
   end
 
 end

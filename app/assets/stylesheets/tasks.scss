@@ -1,17 +1,75 @@
+h4{
+  display: inline;
+}
+
+.archive-btns{
+  margin-right: -18px;
+  float: right;
+}
+
+.archive-collapse{
+  margin-top: -20px;
+  margin-bottom: 20px;
+}
+
+.archive-delete{
+  padding-left: 5%;
+  margin-top: -10px;
+}
+
+.archive-row{
+  height: 60px;
+}
+
+.archive-title{
+  margin-top: -2px;
+  margin-left: -8px;
+}
+
+.box-height{
+  max-height: 500px;
+}
+
+.btn{
+  margin: 2.5px 2.5px 2.5px 2.5px;
+}
+
+.center{
+  margin: 0 auto;
+}
+
+.download.archive.btn{
+  margin-right: 20px;
+}
+
+.dropdowns{
+  padding-left: 4%;
+  padding-top: 2%;
+}
+
+.duration.form{
+  text-align: right;
+  width: 50px;
+}
+
 .field_with_errors {
   color: red;
 }
 
+.full.btn{
+  width: 100%;
+}
+
+.glyphicon-pencil{
+  margin-bottom: 10px;
+}
+
+.index_header{
+  display: inline-block;
+}
+
 .left{
   float: left;
-}
-
-.duration_input{
-  text-align: right;
-}
-
-.scroll{
-  overflow-y: auto;
 }
 
 .medium-well{
@@ -19,22 +77,46 @@
   margin-left: 25px;
 }
 
-.small_modal{
-  max-height: 550px;
+.no-pad-marg{
+  padding: 0;
+  margin: 0;
 }
 
-.center{
-  margin: 0 auto;
+.row.duration{
+  float: left;
 }
+
+.scroll{
+  overflow-y: auto;
+}
+
+.tag_container{
+  max-height: 550px;
+  overflow-y: auto;
+
+}
+
+.top-space{
+  margin-top: 10px;
+}
+
 
 .small-well{
-  width: 80%;
+  width: 100%;
   margin-left: 0;
 }
 
+<<<<<<< HEAD
+.well.tag {
+  margin-left: 1%;
+  width: 98%;
+}
+
+=======
 
 
 //.archive_btn{
 //  color: white;
 //  background-color: #4a98ff;
 //}
+>>>>>>> f304a9a9777a5d5b1b09da4f0fb7dae329375155
