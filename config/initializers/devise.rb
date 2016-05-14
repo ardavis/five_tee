@@ -8,6 +8,7 @@ Devise.setup do |config|
   # by default. You can change it below and use your own secret key.
   # config.secret_key = '2d838d49a37c84dd70c24c4bd0a61308f63a51b14d41e1afe5515c01262f6def80f91017b6b5bbcf9952226465c27035e8799c625cdc536f802d59c8224e5edd'
 
+  config.secret_key = '8bf1671ce51e5fc6c1cad9aaf2dbc87db1ba23a04ef29ebea1bf3ce9bc64ffe75539c87a530c24ef1a7113deab0b0e4adafc8c474285b19ffa76bd942065f556'
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
@@ -233,7 +234,7 @@ Devise.setup do |config|
   # config.navigational_formats = ['*/*', :html]
 
   # The default HTTP method used to sign out a resource. Default is :delete.
-  config.sign_out_via = :delete
+  config.sign_out_via = :get
 
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
