@@ -9,7 +9,6 @@ var TasksHeader = React.createClass({
             <li><a onClick={this.props.handleTagModal} role="button" href="javascript: void(0)">Manage Tags</a></li>
             <li><a role="button" href="tasks/download">Download Tasks</a></li>
             <li><a role="button" href="/archives/index">View Archives</a></li>
-            <li><a role="button" href="/users/sign_out">Sign Out</a></li>
           </ul>
         </div>
       </div>
