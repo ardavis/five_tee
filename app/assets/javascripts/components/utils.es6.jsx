@@ -116,7 +116,7 @@ function thereAreNoErrors(){
 
 function timerOn(target, start_time){
   target.timer({
-    seconds: start_time-13,
+    seconds: start_time,
     format: '%h hr %m min %s sec'
   });
 }
