@@ -99,7 +99,6 @@ var TaskModal = React.createClass({
       timerOff(elem);
       var now = Date.now() / 1000 | 0;
       var start_time = task.duration + now - task.started_at;
-      console.log(start_time);
       timerOn(elem, start_time);
       $('.no.timer').html('')
     }
