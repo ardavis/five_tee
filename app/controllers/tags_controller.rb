@@ -1,22 +1,20 @@
 class TagsController < ApplicationController
 
-  include TagsHelper
-  include TasksHelper
 
   def new
-    @tag = current_user.tags.new(tag_params)
+    @tag = Tag.new(tag_params)
     if @tag.save
       respond_to do |format|
-        format.json { render json: {tags: tags_hash, tag: react_tag(@tag)}}
+        format.json { render json: {tags: current_user.tags_hash, tag: @tag.react_tag}}
       end
     end
   end
 
   def update
-    @tag = current_user.tags.find(tag_params[:id])
+    @tag = Tag.find(tag_params[:id])
     if @tag.update_attributes(name: tag_params[:name])
       respond_to do |format|
-        format.json { render json: {tasks: tasks_hash, tags: tags_hash}}
+        format.json { render json: {tasks: current_user.tasks_hash, tags: current_user.tags_hash}}
       end
     else
       puts "HARD FAIL"
@@ -24,13 +22,11 @@ class TagsController < ApplicationController
   end
 
   def delete
-    @tag = current_user.tags.find(tag_params[:id])
+    @tag = Tag.find(tag_params[:id])
     if @tag.destroy
-      if current_user.session.filter_tag_id == @tag.id
-        current_user.session.update_attributes(filter_tag_id: nil)
-      end
+      current_user.session.update_attributes(filter_tag_id: nil) if current_user.session.filter_tag_id == @tag.id
       respond_to do |format|
-        format.json { render json: {tasks: tasks_hash, tags: tags_hash}}
+        format.json { render json: {tasks: current_user.tasks_hash, tags: current_user.tags_hash}}
       end
     else
       puts "HARD FAIL"

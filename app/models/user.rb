@@ -13,11 +13,26 @@ class User < ActiveRecord::Base
   has_many :archives, dependent: :destroy
 
   def incomplete_tasks
-    tasks.incomplete
+    incomplete_tasks = tasks.incomplete
+    incomplete_tasks = incomplete_tasks.where(tag_id: session.filter_tag_id) if session.filter_tag_id
+    incomplete_tasks.order(session.sort_sql)
   end
 
   def completed_tasks
-    tasks.completed
+    complete_tasks = tasks.completed
+    complete_tasks = complete_tasks.where(tag_id: session.filter_tag_id) if session.filter_tag_id
+    complete_tasks.order(session.sort_sql)
+  end
+
+  def tasks_hash
+    {
+        incomplete: incomplete_tasks.map{|task| task.react_task},
+        complete: completed_tasks.map{|task| task.react_task}
+    }
+  end
+
+  def tags_hash
+    tags.map{|tag| tag.react_tag}
   end
 
   private
