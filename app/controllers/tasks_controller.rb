@@ -1,7 +1,5 @@
 class TasksController < ApplicationController
 
-  before_action :set_session, only: :index
-
   include TasksHelper
   include TagsHelper
   include SessionHelper
@@ -9,7 +7,7 @@ class TasksController < ApplicationController
   def index
     respond_to do |format|
       format.html do
-        render component: 'TasksIndex', props: {tasks: tasks_hash, tags: tags_hash, sort_options: sort_options}
+        render component: 'TasksIndex', props: {tasks: tasks_hash, tags: tags_hash, sort_options: sort_options, sort_title: current_user.session.sort_title}
       end
     end
   end
@@ -124,11 +122,6 @@ class TasksController < ApplicationController
   end
 
   private
-
-  def set_session
-    current_user.session ||= Session.create(user_id: current_user.id)
-    current_user.session.update_attributes(filter_tag_id: nil, sort_sql: 'created_at DESC')
-  end
 
   def task_params
     params.require(:task).permit(:id, :title, :desc, :tag_id, :due_date, :duration)

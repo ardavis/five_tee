@@ -28,7 +28,7 @@ var TasksIndex = React.createClass({
 
       sort_options: this.props.sort_options,
 
-      sort_label: 'Newest to Oldest',
+      sort_label: this.props.sort_title,
 
       // Reset Modal State
 
@@ -284,4 +284,3 @@ var TasksIndex = React.createClass({
     );
    }
 });
-

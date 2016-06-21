@@ -1,11 +1,28 @@
 module TasksHelper
 
   def incomplete_tasks
-    current_user.tasks.where(completed_at: nil).order('created_at DESC')
+
+    if current_user.session.filter_tag_id
+
+      current_user.tasks.where(completed_at: nil)
+                        .where(tag_id: current_user.session.filter_tag_id)
+                        .order(current_user.session.sort_sql)
+
+    else
+      current_user.tasks.where(completed_at: nil)
+                        .order(current_user.session.sort_sql)
+    end
   end
 
   def complete_tasks
-    current_user.tasks.where.not(completed_at: nil).order('created_at DESC')
+    if current_user.session.filter_tag_id
+      current_user.tasks.where.not(completed_at: nil)
+                        .where(filter_tag_id: current_user.session.filter_tag_id)
+                        .order(current_user.session.sort_sql)
+    else
+      current_user.tasks.where.not(completed_at: nil)
+                        .order(current_user.session.sort_sql)
+    end
   end
 
   def tasks_hash
