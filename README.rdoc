@@ -1,6 +1,0 @@
-To do:
-
-
-- Duration lowered and removed extraneous duration
-
-- If you go from new tag modal to manage tags and back, the tag dropdown no longer works

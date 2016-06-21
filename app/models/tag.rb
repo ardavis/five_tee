@@ -4,5 +4,13 @@ class Tag < ActiveRecord::Base
 
   validates :name, presence: true, uniqueness: {scope: :user_id}, length: {minimum: 1, maximum: 20}
 
+  def react_tag
+    {
+        'name' => name,
+        'id' => id,
+        'tasks' => tasks.count
+    }
+  end
+
 
 end
