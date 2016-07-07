@@ -31,6 +31,31 @@ class User < ActiveRecord::Base
     }
   end
 
+  def archives_hash
+    archives = []
+    self.archives.order('created_at DESC').each do |a|
+      archive = {
+          created_at: a.created_at,
+          created_at_display: a.created_at.in_time_zone('America/New_York').strftime('%m-%d-%Y %I:%M %P'),
+          id: a.id,
+          tasks: a.archive_tasks_hash
+      }
+      archives.push(archive)
+    end
+    archives
+  end
+
+
+  def filtered_tasks
+    if self.session.filter_tag_id and self.session.filter_tag_id != 0
+      self.tasks.where(tag_id: self.session.filter_tag_id)
+    else
+      self.tasks
+    end
+  end
+
+
+
   def tags_hash
     tags.map{|tag| tag.react_tag}
   end
@@ -42,5 +67,7 @@ class User < ActiveRecord::Base
                                   filter_tag_id: nil,
                                   sort_sql: 'created_at DESC'
   end
+
+
 
 end
