@@ -40,7 +40,7 @@ class ArchivesController < ApplicationController
   end
 
   def reset
-    @archive = current_user.archives.new()
+    @archive = current_user.archives.new
     if @archive.save
       current_user.filtered_tasks.where(archive_id: nil).order(current_user.session.sort_sql).each do |task|
         @task = current_user.tasks.create(task.dup.attributes)

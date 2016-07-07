@@ -26,8 +26,8 @@ class User < ActiveRecord::Base
 
   def tasks_hash
     {
-        incomplete: incomplete_tasks.map{|task| task.react_task},
-        complete: completed_tasks.map{|task| task.react_task}
+        incomplete: incomplete_tasks.where(archive_id: nil).map{|task| task.react_task},
+        complete: completed_tasks.where(archive_id: nil).map{|task| task.react_task}
     }
   end
 
