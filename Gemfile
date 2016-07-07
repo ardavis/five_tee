@@ -55,7 +55,6 @@ gem 'pdfkit'
 
 gem 'wkhtmltopdf-binary'
 
-gem 'rails_12factor'
 
 
 # Use ActiveModel has_secure_password
