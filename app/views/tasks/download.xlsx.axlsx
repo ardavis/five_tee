@@ -4,11 +4,11 @@ wb.add_worksheet(name: "taskSheet") do |sheet|
     sheet.add_row [""]
     sheet.add_row ["Incomplete Tasks"]
     @incomplete_tasks.each do |task|
-	sheet.add_row [task.title,task.desc, tag_display(task), task.completed_at, due_date_display(task), "#{duration_display(task.duration)}"]
+	     sheet.add_row [task.title,task.desc, task.tag_display, task.completed_at, task.due_date_display, "#{task.duration_display}"]
     end
     sheet.add_row [""]
     sheet.add_row ["Completed Tasks"]
     @complete_tasks.each do |task|
-	sheet.add_row [task.title,task.desc, tag_display(task),task.completed_at, due_date_display(task), "#{duration_display(task.duration)}"]
+	     sheet.add_row [task.title,task.desc, task.tag_display, task.completed_at, task.due_date_display, "#{task.duration_display}"]
     end
 end
